@@ -3,6 +3,8 @@ import 'package:waimao/views/flow_statistics/visitors_info.dart';
 import 'package:waimao/views/flow_statistics/visitors_info_select.dart';
 import 'package:waimao/views/home_page.dart';
 import 'package:waimao/views/login_page.dart';
+import 'package:waimao/views/message/message.dart';
+import 'package:waimao/views/mine/index.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,6 +12,8 @@ class MyApp extends StatelessWidget {
   final routes = <String, WidgetBuilder> {
     LoginPage.tag: (context) => LoginPage(),
     HomePage.tag: (context) => HomePage(),
+    MinePage.tag: (context) => MinePage(),
+    Message.tag: (context) => Message(),
     VisitorsInfo.tag: (context) => VisitorsInfo(),
     VisitorsInfoSelect.tag: (context) => VisitorsInfoSelect()
   };
@@ -37,6 +41,6 @@ class MyApp extends StatelessWidget {
   }
 
   showWelcomePage() {
-    return VisitorsInfo();
+    return LoginPage();
   }
 }
