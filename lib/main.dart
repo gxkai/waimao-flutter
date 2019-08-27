@@ -1,6 +1,6 @@
-import 'package:demo/views/home_page.dart';
-import 'package:demo/views/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:waimao/views/home_page.dart';
+import 'package:waimao/views/login_page.dart';
 
 void main() => runApp(MyApp());
 
