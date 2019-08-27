@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import "package:waimao/views/home_page.dart";
 import "package:waimao/views/mine/index.dart";
+import "package:waimao/views/message/message.dart";
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({
@@ -56,7 +57,7 @@ class MyDrawer extends StatelessWidget {
                     title: const Text('询盘信息'),
                     contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
                     onTap: (){
-
+                      Navigator.of(context).pushNamed(Message.tag);
                     }
                   ),
                   Divider(height:10.0,indent:0.0,color: Colors.black26,),

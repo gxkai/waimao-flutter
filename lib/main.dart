@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:waimao/views/home_page.dart';
 import 'package:waimao/views/login_page.dart';
 import 'package:waimao/views/mine/index.dart';
+import 'package:waimao/views/message/message.dart';
 
 void main() => runApp(MyApp());
 
@@ -10,6 +11,7 @@ class MyApp extends StatelessWidget {
     LoginPage.tag: (context) => LoginPage(),
     HomePage.tag: (context) => HomePage(),
     MinePage.tag: (context) => MinePage(),
+    Message.tag: (context) => Message(),
   };
   // This widget is the root of your application.
   @override

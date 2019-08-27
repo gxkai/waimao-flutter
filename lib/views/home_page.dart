@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:waimao/views/mine/index.dart';
+import 'package:waimao/views/message/message.dart';
 import 'package:waimao/views/components/drawer.dart';
 
 class HomePage extends StatefulWidget {
