@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:waimao/views/home_page.dart';
 import 'package:waimao/views/login_page.dart';
+import 'package:waimao/views/mine/index.dart';
 
 void main() => runApp(MyApp());
 
@@ -8,6 +9,7 @@ class MyApp extends StatelessWidget {
   final routes = <String, WidgetBuilder> {
     LoginPage.tag: (context) => LoginPage(),
     HomePage.tag: (context) => HomePage(),
+    MinePage.tag: (context) => MinePage(),
   };
   // This widget is the root of your application.
   @override
