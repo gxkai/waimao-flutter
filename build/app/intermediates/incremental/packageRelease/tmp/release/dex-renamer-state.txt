@@ -1,0 +1,4 @@
+#Mon Aug 26 08:05:02 CST 2019
+base.0=/Users/guxukai/IdeaProjects/demo/build/app/intermediates/transforms/dexMerger/release/0
+path.0=classes.dex
+renamed.0=classes.dex
