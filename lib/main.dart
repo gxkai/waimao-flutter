@@ -3,6 +3,7 @@ import 'package:waimao/views/home_page.dart';
 import 'package:waimao/views/login_page.dart';
 import 'package:waimao/views/mine/index.dart';
 import 'package:waimao/views/message/message.dart';
+import 'package:waimao/views/ranking/ranking.dart';
 
 void main() => runApp(MyApp());
 
@@ -12,12 +13,13 @@ class MyApp extends StatelessWidget {
     HomePage.tag: (context) => HomePage(),
     MinePage.tag: (context) => MinePage(),
     Message.tag: (context) => Message(),
+    Ranking.tag: (context) => Ranking(),
   };
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: '外贸易',
       theme: ThemeData(
         // This is the theme of your application.
         //

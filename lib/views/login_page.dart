@@ -3,7 +3,7 @@ import 'package:waimao/views/home_page.dart';
 
 class LoginPage extends StatefulWidget {
 
-  static String tag = 'login-page';
+  static String tag = '登录';
 
   @override
   _LoginPageState createState() => new _LoginPageState();
