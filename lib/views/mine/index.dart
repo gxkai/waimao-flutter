@@ -5,7 +5,7 @@ import 'package:waimao/views/mine/changePassword.dart';
 import 'package:waimao/views/mine/about.dart';
 
 class MinePage extends StatelessWidget {
-  static String tag = 'mine-page';
+  static String tag = '我的';
 
   @override
   Widget build(BuildContext context) {

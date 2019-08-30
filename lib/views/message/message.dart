@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:waimao/views/message/message_detail.dart';
 
 class Message extends StatefulWidget {
-  static String tag = 'message-page';
+  static String tag = '询盘信息';
 
   @override
   _MessageState createState() => _MessageState();
