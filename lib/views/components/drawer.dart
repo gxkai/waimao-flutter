@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:waimao/views/flow_statistics/flow_statistics.dart';
 import "package:waimao/views/home_page.dart";
 import "package:waimao/views/mine/index.dart";
 import "package:waimao/views/message/message.dart";
@@ -76,7 +77,7 @@ class MyDrawer extends StatelessWidget {
                     title: const Text('访客流量'),
                     contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
                     onTap: (){
-                      print('访客流量');
+                      Navigator.of(context).pushNamed(FlowStatistics.tag);
                     },
                   ),
                   Divider(height:10.0,indent:0.0,color: Colors.black26,),
