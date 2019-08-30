@@ -553,6 +553,9 @@ class AccessTimeState extends State<AccessTime> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    DataUtils.visitByHour({'fromDate': '2018-03-06', 'toDate': '2018-03-06'}).then((result) {
+      print(result);
+    });
   }
 
   @override

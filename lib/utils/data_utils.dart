@@ -2,6 +2,7 @@ import 'dart:async' show Future;
 
 import 'package:waimao/api/api.dart';
 import 'package:waimao/main.dart';
+import 'package:waimao/model/visit_by_day_info.dart';
 
 import './net_utils.dart';
 import '../model/user_info.dart';
@@ -31,10 +32,21 @@ class DataUtils{
     return response['success'];
   }
 
-  // 登陆获取用户信息
-  // ignore: missing_return
-  static Future<UserInfo> VisitByHour(Map<String,String> params) async{
+  // 访客
+  static Future visitByHour(Map<String,String> params) async{
     var response = await NetUtils.get(Api.VisitByHour, params);
-    print(response['data']);
+    return response['data'];
+  }
+
+  // 访客流量
+  static Future<List<VisitByDayInfo>> visitByDay(Map<String,String> params) async{
+    var response = await NetUtils.get(Api.VisitByDay, params);
+    List<Object> list = response['data'];
+    List<VisitByDayInfo> vList = new List();
+    list.forEach((f) {
+      VisitByDayInfo visitByDayInfo = VisitByDayInfo.fromJson(f);
+      vList.add(visitByDayInfo);
+    });
+    return vList;
   }
 }

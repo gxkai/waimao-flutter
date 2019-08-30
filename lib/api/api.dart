@@ -8,5 +8,7 @@ class Api{
   
   static const String LOGOUT = BASE_URL+'logout'; //退出登陆
 
-  static const String VisitByHour = BASE_URL + '/client/VisitByHour';
+  static const String VisitByHour = BASE_URL + '/client/visitByHour';
+
+  static const String VisitByDay = BASE_URL + '/client/visitByDay';
 }

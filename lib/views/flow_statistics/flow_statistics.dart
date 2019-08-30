@@ -1,6 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:waimao/charts/line_chart/stacked_area.dart';
+import 'package:intl/intl.dart';
+import 'package:waimao/charts/combo_chart/date_time_line_point.dart';
+import 'package:waimao/model/visit_by_day_info.dart';
+import 'package:waimao/utils/data_utils.dart';
 import 'package:waimao/views/flow_statistics/visitors_info_select.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class FlowStatistics extends StatefulWidget {
   static String tag = 'flow-statistics';
@@ -10,6 +15,18 @@ class FlowStatistics extends StatefulWidget {
 }
 
 class FlowStatisticsState extends State<FlowStatistics> {
+  List<VisitByDayInfo> rows = [];
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: true);
+
+  void _onRefresh() async {
+    // monitor network fetch
+    await Future.delayed(Duration(milliseconds: 1000));
+    loadData();
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,137 +35,127 @@ class FlowStatisticsState extends State<FlowStatistics> {
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {
-                Navigator.pop(context);
-            }
-                ),
+              Navigator.pop(context);
+            }),
         actions: <Widget>[
           IconButton(
-            icon: Icon(IconData(0xe67e, fontFamily: "iconfont"),
-              color: Colors.white,),
+              icon: Icon(
+                IconData(0xe67e, fontFamily: "iconfont"),
+                color: Colors.white,
+              ),
               onPressed: () {
                 Navigator.of(context).pushNamed(FlowStatisticsSelect.tag);
-              }
-          ),
+              }),
         ],
       ),
-      body: Container(
-        padding: EdgeInsets.all(15),
-        alignment: AlignmentDirectional.topCenter,
-        color:  Color.fromRGBO(237, 237, 237, 1),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Card(
-              color: Colors.white,
-              child: Container(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      children: <Widget>[
-                        Text("最近30天浏览/访客量", style: TextStyle(color: Colors.black),)
-                      ],
-                    ),
-                    SizedBox(height: 20,),
-                    Table(
-                      border: TableBorder.all(
-                          color: Color.fromRGBO(241, 241, 241, 1),
-                          width: 1.0,
-                          style: BorderStyle.solid),
-                      children: const [
-                        TableRow(
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(241, 241, 241, 1)),
-                            children: const [
-                              TableCell(
-                                  child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text("日期"),
+      body: SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
+        child: Container(
+          padding: EdgeInsets.all(15),
+          alignment: AlignmentDirectional.topCenter,
+          color: Color.fromRGBO(237, 237, 237, 1),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Card(
+                  color: Colors.white,
+                  child: Container(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Text(
+                                "最近30天浏览/访客量",
+                                style: TextStyle(color: Colors.black),
+                              )
+                            ],
+                          ),
+                          Container(
+                            height: 300,
+                            padding: EdgeInsets.all(16.0),
+                            child: ListView(
+                              children: <Widget>[
+                                DataTable(
+                                  columnSpacing: 20,
+                                  columns: [
+                                    DataColumn(
+                                      label: Text('日期'),
                                     ),
-                                  )),
-                              TableCell(
-                                  child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text("浏览量PV"),
+                                    DataColumn(
+                                      label: Text('浏览量uv'),
                                     ),
-                                  )),
-                              TableCell(
-                                  child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text("访客量UV"),
+                                    DataColumn(
+                                      label: Text('访客量pv'),
                                     ),
-                                  ))
-                            ]),
-                        TableRow(
-                            decoration: BoxDecoration(
-                                color: Color.fromRGBO(255, 255, 255, 1)),
-                            children: const [
-                              TableCell(
-                                  child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text("2019-07-31"),
-                                    ),
-                                  )),
-                              TableCell(
-                                  child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text("68"),
-                                    ),
-                                  )),
-                              TableCell(
-                                  child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text("28"),
-                                    ),
-                                  ))
-                            ]),
-                      ],
-                    )
-                  ],
-                )
-              )
-            ),
-            SizedBox(height: 10,),
-            Card(
-                color: Colors.white,
-                child: Container(
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      children: <Widget>[
-                        Row(
-                          children: <Widget>[
-                            Text("最近30天浏览/访客量折线图", style: TextStyle(color: Colors.black),)
-                          ],
-                        ),
-                        Container(
-                          height: 200,
-                          child: StackedAreaLineChart.withSampleData(),
-                        )
-                      ],
-                    )
-                )
-            ),
-            Row(
-              children: <Widget>[
-              ],
-            )
-          ],
+                                  ],
+                                  rows: rows.map((row) {
+                                    return DataRow(cells: [
+                                      DataCell(Text(new DateFormat('yyyy-MM-dd').format(row.key))),
+                                      DataCell(Text(row.pv.toString())),
+                                      DataCell(Text(row.uv.toString())),
+                                    ]);
+                                  }).toList(),
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ))),
+              SizedBox(
+                height: 10,
+              ),
+              Card(
+                  color: Colors.white,
+                  child: Container(
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            children: <Widget>[
+                              Text(
+                                "最近30天浏览/访客量折线图",
+                                style: TextStyle(color: Colors.black),
+                              )
+                            ],
+                          ),
+                          Container(
+                            height: 200,
+                            child: DateTimeComboLinePointChart.withVisitByDayData(rows),
+                          )
+                        ],
+                      ))),
+            ],
+          ),
         ),
-      )
+      ),
     );
   }
 
   @override
   void initState() {
     // TODO: implement initState
-
     super.initState();
+  }
+
+  loadData() {
+    var formatter = new DateFormat('yyyy-MM-dd');
+    var from = new DateTime.now().add(new Duration(days: -29));
+    var to = new DateTime.now();
+    String fromDate = formatter.format(from);
+    String toDate = formatter.format(to);
+    print(fromDate);
+    print(toDate);
+    DataUtils.visitByDay({'fromDate': fromDate, 'toDate': toDate})
+        .then((result) {
+      setState(() {
+        rows = result;
+      });
+    });
   }
 
   @override

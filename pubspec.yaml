@@ -32,6 +32,8 @@ dependencies:
   dio: ^2.0.15
   flutter_webview_plugin: ^0.3.4
   cookie_jar: ^1.0.0
+  # 下拉刷新
+  pull_to_refresh: ^1.5.4
   flutter:
     sdk: flutter
 

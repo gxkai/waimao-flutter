@@ -46,8 +46,8 @@ class _MyAppState extends State<MyApp> {
   }
 
   showWelcomePage() {
-    var Authorization = sp.get('Authorization');
-    if(Authorization != null) {
+    var authorization = sp.get('Authorization');
+    if(authorization != null) {
       return HomePage();
     } else {
       return LoginPage();
