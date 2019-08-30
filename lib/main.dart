@@ -13,6 +13,7 @@ import 'package:waimao/views/home_page.dart';
 import 'package:waimao/views/login_page.dart';
 import 'package:waimao/views/message/message.dart';
 import 'package:waimao/views/mine/index.dart';
+import 'package:waimao/views/ranking/ranking.dart';
 
 //import 'views/welcome_page/index.dart';
 
@@ -35,7 +36,8 @@ class _MyAppState extends State<MyApp> {
     AccessTime.tag: (context) => AccessTime(),
     TerminalDevice.tag: (context) => TerminalDevice(),
     ArealDistribution.tag: (context) => ArealDistribution(),
-    FlowStatisticsSelect.tag: (context) => FlowStatisticsSelect()
+    FlowStatisticsSelect.tag: (context) => FlowStatisticsSelect(),
+    Ranking.tag: (context) => Ranking()
   };
 
   @override
