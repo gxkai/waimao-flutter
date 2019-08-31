@@ -254,7 +254,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.white,
                   ),
                   hintText: "账号",
-                  hintStyle: TextStyle(color: Colors.white38),
+                  hintStyle: TextStyle(color: Colors.white),
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)
                   ),
@@ -295,7 +295,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.white,
                   ),
                   hintText: "密码",
-                  hintStyle: TextStyle(color: Colors.white38),
+                  hintStyle: TextStyle(color: Colors.white),
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)
                   ),
@@ -337,7 +337,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.white,
                   ),
                   hintText: "网址",
-                  hintStyle: TextStyle(color: Colors.white38),
+                  hintStyle: TextStyle(color: Colors.white),
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)
                   ),
@@ -383,7 +383,7 @@ class _LoginPageState extends State<LoginPage> {
                   }
                 },
                 child: Text(
-                  "登陆",
+                  "登 录",
                   style: TextStyle(color: Colors.white),
                 )))
       ],

@@ -3,7 +3,10 @@ import 'package:waimao/views/components/drawer.dart';
 import 'package:waimao/views/mine/product.dart';
 import 'package:waimao/views/mine/changePassword.dart';
 import 'package:waimao/views/mine/about.dart';
+import 'package:waimao/views/login_page.dart';
+import 'package:waimao/utils/shared_preferences.dart';
 
+SpUtil sp;
 class MinePage extends StatelessWidget {
   static String tag = '我的';
 
@@ -36,6 +39,24 @@ class Index extends StatefulWidget {
 }
 
 class _IndexState extends State{
+  String role;
+  String username;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getInfo();
+  }
+
+  getInfo() async{
+    sp = await SpUtil.getInstance();
+    print(sp.get('role'));
+    setState(() {
+      role = sp.get('role');
+      username = sp.get('username');
+    });
+  }
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -51,8 +72,8 @@ class _IndexState extends State{
                 ),
                 child: ListTile(
                   leading: Image.asset("assets/images/logo.png", width: 40.0,),
-                  title: Text("超级管理员"),
-                  subtitle: Text("登录账号：master"),
+                  title: Text("${ role }"),
+                  subtitle: Text("登录账号：${ username }"),
                 ),
               ),
               Container(
@@ -103,16 +124,30 @@ class _IndexState extends State{
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(5.0)
                 ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 15.0),
-                  child: Text('退出登录',
-                    textAlign:TextAlign.center,
-                    style: TextStyle(fontSize: 16.0),
+                child: InkWell(
+                  onTap: () {
+                    print('退出登录');
+                    loginOut();
+                    Navigator.of(context).pushNamedAndRemoveUntil(LoginPage.tag, (route) => route == null);
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 15.0),
+                    child: Text('退出登录',
+                      textAlign:TextAlign.center,
+                      style: TextStyle(fontSize: 16.0),
+                    ),
                   ),
-                ),
+                )
               )
             ]
         )
     );
   }
+  
+  void loginOut() async{
+    sp = await SpUtil.getInstance();
+    sp.remove('Authorization');
+    sp.remove('role');
+    sp.remove('username');
+  } 
 }

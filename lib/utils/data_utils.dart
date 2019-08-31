@@ -12,9 +12,12 @@ class DataUtils{
   // 登陆获取用户信息
   static Future<UserInfo> doLogin(Map<String,String> params) async{
     var response = await NetUtils.post(Api.DO_LOGIN, params);
-    print(response['data']['user']);
+
     UserInfo userInfo = UserInfo.fromJson(response['data']['user']);
     sp.putString('Authorization', "${response['data']['token']['token_type']} ${response['data']['token']['access_token']}");
+    sp.putString('role', userInfo.role);            // 角色
+    sp.putString('username', userInfo.username);    // 用户名
+    sp.putString('version', userInfo.version);      // 程序版本
     return userInfo;
   }
 

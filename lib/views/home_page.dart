@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:waimao/views/message/message.dart';
 import 'package:waimao/views/ranking/ranking.dart';
 import 'package:waimao/views/components/drawer.dart';
+import 'package:waimao/utils/net_utils.dart';
+import 'package:waimao/views/flow_statistics/flow_statistics.dart';
 
 class HomePage extends StatefulWidget {
   static String tag = '首页';
@@ -57,6 +59,7 @@ class _HomeContentState extends State<HomeContent> {
           child: Card(
             color: Colors.lightBlue,
             elevation: 5.0,
+            margin: const EdgeInsets.all(10.0),
             child: new Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -148,6 +151,7 @@ class _HomeContentState extends State<HomeContent> {
           child: Card(
             color: Colors.lightBlueAccent,
             elevation: 5.0,
+            margin: const EdgeInsets.only(left: 10.0, right: 10.0),
             child: new Column(
               //横轴起始测对齐
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -234,11 +238,12 @@ class _HomeContentState extends State<HomeContent> {
 
         InkWell(
           onTap: () {
-            Navigator.of(context).pushNamed(Message.tag);
+            Navigator.of(context).pushNamed(FlowStatistics.tag);
           },
           child: Card(
             color: Colors.deepPurpleAccent,
             elevation: 5.0,
+            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
             child: new Column(
               //横轴起始测对齐
               crossAxisAlignment: CrossAxisAlignment.start,
