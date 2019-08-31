@@ -6,6 +6,7 @@ import 'package:waimao/model/visit_by_day_info.dart';
 
 import './net_utils.dart';
 import '../model/user_info.dart';
+import '../model/product.dart';
 
 class DataUtils{
   // 登陆获取用户信息
@@ -48,5 +49,12 @@ class DataUtils{
       vList.add(visitByDayInfo);
     });
     return vList;
+  }
+
+  // 我的产品
+  static Future myProduct() async {
+    var response = await NetUtils.get(Api.MyProduct);
+    Product products = Product.fromJson(response['data']);
+    return products;
   }
 }

@@ -16,7 +16,7 @@ class MinePage extends StatelessWidget {
         centerTitle: true,
         leading: Builder(builder: (context) {
           return IconButton(
-            icon: Icon(Icons.menu, color: Colors.white),
+            icon: Icon(Icons.menu, color: Colors.black),
             onPressed: () {
               // 打开侧边菜单
               Scaffold.of(context).openDrawer();
@@ -68,7 +68,7 @@ class _IndexState extends State{
                         title: Text("我的产品"),
                         trailing: Icon(Icons.arrow_forward_ios, size: 14.0,),
                         onTap: (){
-                          Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => Product()));
+                          Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => MyProduct()));
                         },
                       ),
                     ),

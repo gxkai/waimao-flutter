@@ -70,7 +70,7 @@ class _RenderListState extends State<RenderList> {
             child: Container(
               decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(10.0)
+                  borderRadius: BorderRadius.circular(5.0)
               ),
               child: ListView(
                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
