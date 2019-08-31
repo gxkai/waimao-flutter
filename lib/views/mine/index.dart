@@ -42,6 +42,28 @@ class _IndexState extends State{
   String role;
   String username;
 
+  // 退出登录弹窗
+  _logOutDialog() {
+    return AlertDialog(
+      content: Text('确定退出登录吗？'),
+      actions: <Widget>[
+        FlatButton(
+          child: Text('取消'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        FlatButton(
+          child: Text('确定'),
+          onPressed: () {
+            logOut();
+            Navigator.of(context).pushNamedAndRemoveUntil(LoginPage.tag, (route) => route == null);
+          },
+        ),
+      ],
+    );
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -125,11 +147,9 @@ class _IndexState extends State{
                   borderRadius: BorderRadius.circular(5.0)
                 ),
                 child: InkWell(
-                  onTap: () {
-                    print('退出登录');
-                    loginOut();
-                    Navigator.of(context).pushNamedAndRemoveUntil(LoginPage.tag, (route) => route == null);
-                  },
+                  onTap: () => showDialog(
+                    context: context, builder: (_) => _logOutDialog()
+                  ),
                   child: Padding(
                     padding: EdgeInsets.symmetric(vertical: 15.0),
                     child: Text('退出登录',
@@ -144,10 +164,9 @@ class _IndexState extends State{
     );
   }
   
-  void loginOut() async{
+  void logOut() async{
     sp = await SpUtil.getInstance();
-    sp.remove('Authorization');
-    sp.remove('role');
-    sp.remove('username');
+    // 清空本地存储的信息
+    sp.clear();
   } 
 }
