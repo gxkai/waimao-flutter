@@ -20,9 +20,7 @@ class FlowStatisticsState extends State<FlowStatistics> {
       RefreshController(initialRefresh: true);
 
   void _onRefresh() async {
-    // monitor network fetch
-    await Future.delayed(Duration(milliseconds: 1000));
-    loadData();
+    await loadData();
     // if failed,use refreshFailed()
     _refreshController.refreshCompleted();
   }
@@ -142,19 +140,15 @@ class FlowStatisticsState extends State<FlowStatistics> {
     super.initState();
   }
 
-  loadData() {
+  loadData() async {
     var formatter = new DateFormat('yyyy-MM-dd');
     var from = new DateTime.now().add(new Duration(days: -29));
     var to = new DateTime.now();
     String fromDate = formatter.format(from);
     String toDate = formatter.format(to);
-    print(fromDate);
-    print(toDate);
-    DataUtils.visitByDay({'fromDate': fromDate, 'toDate': toDate})
-        .then((result) {
-      setState(() {
-        rows = result;
-      });
+    List<VisitByDayInfo> list = await DataUtils.visitByDay({'fromDate': fromDate, 'toDate': toDate});
+    setState(() {
+      rows = list;
     });
   }
 

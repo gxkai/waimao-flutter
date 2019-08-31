@@ -33,41 +33,12 @@ class DatumLegendWithMeasures extends StatelessWidget {
 
   DatumLegendWithMeasures(this.seriesList, {this.animate});
 
-  factory DatumLegendWithMeasures.withSampleData() {
+  factory DatumLegendWithMeasures.withSampleData(List<LinearSales> list) {
     return new DatumLegendWithMeasures(
-      _createSampleData(),
+      _createSampleData(list),
       // Disable animations for image tests.
       animate: false,
     );
-  }
-
-  // EXCLUDE_FROM_GALLERY_DOCS_START
-  // This section is excluded from being copied to the gallery.
-  // It is used for creating random series data to demonstrate animation in
-  // the example app only.
-  factory DatumLegendWithMeasures.withRandomData() {
-    return new DatumLegendWithMeasures(_createRandomData());
-  }
-
-  /// Create random data.
-  static List<charts.Series<LinearSales, int>> _createRandomData() {
-    final random = new Random();
-
-    final data = [
-      new LinearSales(2014, random.nextInt(100)),
-      new LinearSales(2015, random.nextInt(100)),
-      new LinearSales(2016, random.nextInt(100)),
-      new LinearSales(2017, random.nextInt(100)),
-    ];
-
-    return [
-      new charts.Series<LinearSales, int>(
-        id: 'Sales',
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
-        data: data,
-      )
-    ];
   }
   // EXCLUDE_FROM_GALLERY_DOCS_END
 
@@ -110,7 +81,7 @@ class DatumLegendWithMeasures extends StatelessWidget {
           // Optionally provide a measure formatter to format the measure value.
           // If none is specified the value is formatted as a decimal.
           measureFormatter: (num value) {
-            return value == null ? '-' : '${value}k';
+            return value == null ? '-' : '$value';
           },
         ),
       ],
@@ -118,20 +89,14 @@ class DatumLegendWithMeasures extends StatelessWidget {
   }
 
   /// Create series list with one series
-  static List<charts.Series<LinearSales, int>> _createSampleData() {
-    final data = [
-      new LinearSales(2014, 100),
-      new LinearSales(2015, 75),
-      new LinearSales(2016, 25),
-      new LinearSales(2017, 5),
-    ];
+  static List<charts.Series<LinearSales, String>> _createSampleData(List<LinearSales> list) {
 
     return [
-      new charts.Series<LinearSales, int>(
+      new charts.Series<LinearSales, String>(
         id: 'Sales',
         domainFn: (LinearSales sales, _) => sales.year,
         measureFn: (LinearSales sales, _) => sales.sales,
-        data: data,
+        data: list,
       )
     ];
   }
@@ -139,7 +104,7 @@ class DatumLegendWithMeasures extends StatelessWidget {
 
 /// Sample linear data type.
 class LinearSales {
-  final int year;
+  final String year;
   final int sales;
 
   LinearSales(this.year, this.sales);

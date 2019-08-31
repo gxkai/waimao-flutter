@@ -2,11 +2,14 @@ import 'dart:async' show Future;
 
 import 'package:waimao/api/api.dart';
 import 'package:waimao/main.dart';
+import 'package:waimao/model/product.dart';
+import 'package:waimao/model/visit_by_country_info.dart';
 import 'package:waimao/model/visit_by_day_info.dart';
+import 'package:waimao/model/visit_by_hour_info.dart';
+import 'package:waimao/model/visit_by_os_info.dart';
 
 import './net_utils.dart';
 import '../model/user_info.dart';
-import '../model/product.dart';
 
 class DataUtils{
   // 登陆获取用户信息
@@ -36,10 +39,16 @@ class DataUtils{
     return response['success'];
   }
 
-  // 访客
-  static Future visitByHour(Map<String,String> params) async{
+  // 访客流量
+  static Future<List<VisitByHourInfo>> visitByHour(Map<String,String> params) async{
     var response = await NetUtils.get(Api.VisitByHour, params);
-    return response['data'];
+    List<Object> list = response['data'];
+    List<VisitByHourInfo> vList = new List();
+    list.forEach((f) {
+      VisitByHourInfo visitByHourInfo = VisitByHourInfo.fromJson(f);
+      vList.add(visitByHourInfo);
+    });
+    return vList;
   }
 
   // 访客流量
@@ -59,5 +68,29 @@ class DataUtils{
     var response = await NetUtils.get(Api.MyProduct);
     Product products = Product.fromJson(response['data']);
     return products;
+  }
+
+  // 访客流量
+  static Future<List<VisitByCountryInfo>> visitByCountry(Map<String,String> params) async{
+    var response = await NetUtils.get(Api.VisitByCountry, params);
+    List<Object> list = response['data'];
+    List<VisitByCountryInfo> vList = new List();
+    list.forEach((f) {
+      VisitByCountryInfo visitByCountryInfo = VisitByCountryInfo.fromJson(f);
+      vList.add(visitByCountryInfo);
+    });
+    return vList;
+  }
+
+  // 访客流量
+  static Future<List<VisitByOsInfo>> visitByOs(Map<String,String> params) async{
+    var response = await NetUtils.get(Api.VisitByOs, params);
+    List<Object> list = response['data'];
+    List<VisitByOsInfo> vList = new List();
+    list.forEach((f) {
+      VisitByOsInfo visitByOsInfo = VisitByOsInfo.fromJson(f);
+      vList.add(visitByOsInfo);
+    });
+    return vList;
   }
 }

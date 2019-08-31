@@ -58,19 +58,6 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: 'title',
-      theme: new ThemeData(
-        primaryColor: Colors.lightBlueAccent,
-        backgroundColor: Color(0xFFEFEFEF),
-        accentColor: Color(0xFF888888),
-        textTheme: TextTheme(
-          //设置Material的默认字体样式
-          body1: TextStyle(color: Color(0xFF888888), fontSize: 16.0),
-        ),
-        iconTheme: IconThemeData(
-          color: Colors.lightBlueAccent,
-          size: 35.0,
-        ),
-      ),
       home: new Scaffold(body: showWelcomePage()),
       debugShowCheckedModeBanner: false,
       routes: routes,

@@ -12,5 +12,9 @@ class Api{
 
   static const String VisitByDay = BASE_URL + '/client/visitByDay';
 
+  static const String VisitByCountry = BASE_URL + '/client/country';
+
+  static const String VisitByOs = BASE_URL + '/client/os';
+
   static const String MyProduct = BASE_URL + '/client/my';
 }
