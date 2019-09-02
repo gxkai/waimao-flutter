@@ -68,8 +68,7 @@ class ArealDistributionState extends State<ArealDistribution>
       padding: EdgeInsets.all(15),
       alignment: AlignmentDirectional.topCenter,
       color: Color.fromRGBO(237, 237, 237, 1),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: ListView(
         children: <Widget>[
           Card(
               color: Colors.white,
