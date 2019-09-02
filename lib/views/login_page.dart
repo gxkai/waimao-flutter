@@ -250,7 +250,7 @@ class _LoginPageState extends State<LoginPage> {
 
               decoration: new InputDecoration(
                   prefixIcon: Icon(
-                    IconData(0xe618, fontFamily: "iconfont"),
+                    IconData(0xe63a, fontFamily: "iconfont"),
                     color: Colors.white,
                   ),
                   hintText: "账号",
@@ -333,7 +333,7 @@ class _LoginPageState extends State<LoginPage> {
               focusNode: _siteFocusNode,
               decoration: new InputDecoration(
                   prefixIcon: Icon(
-                    IconData(0xe618, fontFamily: "iconfont"),
+                    IconData(0xe62b, fontFamily: "iconfont"),
                     color: Colors.white,
                   ),
                   hintText: "网址",

@@ -17,11 +17,11 @@ class UserInfo implements UserInfoInterface {
   UserInfo({this.username, this.password, this.site});
 
   factory UserInfo.fromJSON(Map json){
-    return UserInfo(username: json['username'],password: json['password']);
+    return UserInfo(username: json['username'],password: json['password'], site: json['site']);
   }
 
   Object toMap() {
-    return {'username': username, 'password': password};
+    return {'username': username, 'password': password, 'site': site};
   }
 }
 
@@ -38,7 +38,7 @@ class UserInfoControlModel {
   // 插入新的缓存
   Future insert(UserInfo userInfo) {
     var result =
-        sql.insert({'username': userInfo.username, 'password': userInfo.password});
+        sql.insert({'username': userInfo.username, 'password': userInfo.password, 'site': userInfo.site});
     return result;
   }
 

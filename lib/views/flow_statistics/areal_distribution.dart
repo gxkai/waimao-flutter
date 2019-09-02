@@ -176,7 +176,7 @@ class ArealDistributionState extends State<ArealDistribution>
         actions: <Widget>[
           IconButton(
               icon: Icon(
-                IconData(0xe67e, fontFamily: "iconfont"),
+                IconData(0xe65f, fontFamily: "iconfont"),
                 color: Colors.white,
               ),
               onPressed: () {

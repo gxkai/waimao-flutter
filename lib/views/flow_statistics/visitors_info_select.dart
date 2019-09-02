@@ -49,7 +49,7 @@ class FlowStatisticsSelectState extends State<FlowStatisticsSelect> {
                 GestureDetector(
                   child: Column(
                     children: <Widget>[
-                      Icon(Icons.home),
+                      Icon(IconData(0xe636, fontFamily: "iconfont")),
                       SizedBox(
                         height: 10,
                       ),
@@ -63,7 +63,7 @@ class FlowStatisticsSelectState extends State<FlowStatisticsSelect> {
                 GestureDetector(
                   child: Column(
                     children: <Widget>[
-                      Icon(Icons.home),
+                      Icon(IconData(0xe619, fontFamily: "iconfont")),
                       SizedBox(
                         height: 10,
                       ),
@@ -77,7 +77,7 @@ class FlowStatisticsSelectState extends State<FlowStatisticsSelect> {
                 GestureDetector(
                   child: Column(
                     children: <Widget>[
-                      Icon(Icons.home),
+                      Icon(IconData(0xe65b, fontFamily: "iconfont")),
                       SizedBox(
                         height: 10,
                       ),
@@ -91,7 +91,7 @@ class FlowStatisticsSelectState extends State<FlowStatisticsSelect> {
                 GestureDetector(
                   child: Column(
                     children: <Widget>[
-                      Icon(Icons.home),
+                      Icon(IconData(0xe673, fontFamily: "iconfont")),
                       SizedBox(
                         height: 10,
                       ),
