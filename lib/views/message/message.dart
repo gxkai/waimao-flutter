@@ -68,12 +68,24 @@ class _RenderListState extends State<RenderList> {
 
   List<Message> messages = [];
 
+  // 上拉加载提示
+  bool _isAll = false;
+
   RefreshController _refreshController = RefreshController(initialRefresh: true);
+  ScrollController _scrollController = ScrollController(); //listview的控制器
+  int _page = 1; //加载的页数
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        print('加载更多');
+        _getMore(widget.type);
+      }
+    });
   }
 
   void _onRefresh() async {
@@ -83,10 +95,25 @@ class _RenderListState extends State<RenderList> {
   }
 
   getData(int type) async{
-    List<Message> list = await DataUtils.message({'type':type});
+    List<Message> list = await DataUtils.message({'type':type, 'page':1, 'limit':10});
     setState(() {
       messages = list;
     });
+  }
+
+  _getMore(int type) async {
+      int newPage = _page + 1;
+      List<Message> newList =await DataUtils.message({'type':type, 'page':newPage, 'limit':10});
+      if (newList.isEmpty) {
+        setState(() {
+          _isAll = true;
+        });
+      } else {
+        setState(() {
+          messages.addAll(newList);
+          _page = newPage;
+        });
+      }
   }
 
   @override
@@ -106,13 +133,13 @@ class _RenderListState extends State<RenderList> {
                   borderRadius: BorderRadius.circular(5.0)
               ),
               child: ListView(
-                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                padding: const EdgeInsets.only(bottom: 10.0, left: 5.0, right: 5.0),
                 children: <Widget>[
                   DataTable(
                       columnSpacing: 30.0,
                       columns: [
                         DataColumn(label: Text('发件人')),
-                        DataColumn(label: Text('未读')),
+                        DataColumn(label: Text('状态')),
                         DataColumn(label: Text('询盘时间')),
                         DataColumn(label: Text('操作')),
                       ],
@@ -123,8 +150,8 @@ class _RenderListState extends State<RenderList> {
                             SizedBox(
                                 width: 60.0,
                                 child: RaisedButton(
-                                    color: Colors.blue,
-                                    child: Text('未读',
+                                    color: row.isRead == 1 ? Colors.grey : Colors.blue,
+                                    child: Text(row.isRead == 1 ? '已读' : '未读',
                                       style: TextStyle(color: Colors.white),
                                     ),
                                     onPressed: () {
@@ -143,8 +170,13 @@ class _RenderListState extends State<RenderList> {
                           )
                         ]);
                       }).toList(),
-                  )
+                  ),
+                  _isAll ? Container(
+                      padding: EdgeInsets.symmetric(vertical: 10.0),
+                      child: Text('没有更多内容', textAlign: TextAlign.center,)
+                  ) : Container()
                 ],
+                controller: _scrollController,
               ),
             )
         )
@@ -154,7 +186,7 @@ class _RenderListState extends State<RenderList> {
 }
 
 
-
+// 询盘详情
 class DetailPage extends StatelessWidget {
 
   final Message message;
