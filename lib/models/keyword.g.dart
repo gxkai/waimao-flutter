@@ -8,16 +8,16 @@ part of 'keyword.dart';
 
 Keyword _$KeywordFromJson(Map<String, dynamic> json) {
   return Keyword()
-    ..current_page = json['current_page'] as num
+    ..currentPage = json['current_page'] as num
     ..data = (json['data'] as List)
         ?.map((e) =>
             e == null ? null : KeywordData.fromJson(e as Map<String, dynamic>))
         ?.toList()
-    ..last_page = json['last_page'] as num;
+    ..lastPage = json['last_page'] as num;
 }
 
 Map<String, dynamic> _$KeywordToJson(Keyword instance) => <String, dynamic>{
-      'current_page': instance.current_page,
+      'current_page': instance.currentPage,
       'data': instance.data,
-      'last_page': instance.last_page
+      'last_page': instance.lastPage
     };

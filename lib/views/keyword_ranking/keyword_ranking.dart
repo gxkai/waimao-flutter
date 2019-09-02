@@ -243,8 +243,8 @@ class KeywordRankingState extends State<KeywordRanking> {
     Keyword keyword = await DataUtils.visitByKeywordData(
         {"limit": _limit.toString(), "page": _currentPage.toString()});
     List<KeywordData> list = keyword.data;
-    num currentPage = keyword.current_page;
-    num lastPage = keyword.last_page;
+    num currentPage = keyword.currentPage;
+    num lastPage = keyword.lastPage;
     if (_tableRows.length > 1) {
       _tableRows.removeRange(1, _tableRows.length);
     }

@@ -6,9 +6,9 @@ part 'keyword.g.dart';
 class Keyword {
     Keyword();
 
-    num current_page;
+    @JsonKey(name: 'current_page') num currentPage;
     List<KeywordData> data;
-    num last_page;
+    @JsonKey(name: 'last_page') num lastPage;
     
     factory Keyword.fromJson(Map<String,dynamic> json) => _$KeywordFromJson(json);
     Map<String, dynamic> toJson() => _$KeywordToJson(this);
