@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:waimao/views/message/message_detail.dart';
+import 'package:intl/intl.dart';
+import 'package:waimao/utils/data_utils.dart';
+import 'package:waimao/model/message.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class Message extends StatefulWidget {
+class MessageList extends StatefulWidget {
   static String tag = '询盘信息';
 
   @override
   _MessageState createState() => _MessageState();
 }
 
-class _MessageState extends State<Message> {
+class _MessageState extends State<MessageList> {
   TabController _tabController;
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,12 @@ class _MessageState extends State<Message> {
       child: new Scaffold(
         appBar: new AppBar(
           title: new Text('询盘信息'),
-          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.pop(context);
+            }
+          ),
           bottom: new PreferredSize(
               preferredSize: Size.fromHeight(48),
               child: Material(
@@ -30,8 +38,8 @@ class _MessageState extends State<Message> {
                   unselectedLabelColor: Colors.black54,
                   tabs: <Widget>[
                     new Tab(text: '所有信息'),
-                    new Tab(text: '已读信息'),
                     new Tab(text: '未读信息'),
+                    new Tab(text: '已读信息'),
                   ],
                 ),
               ),
@@ -39,9 +47,9 @@ class _MessageState extends State<Message> {
         ),
         body: new TabBarView(
           children: <Widget>[
-            new Center(child: RenderList(type: 1)),
+            new Center(child: RenderList(type: 0)),
             new Center(child: RenderList(type: 2)),
-            new Center(child: RenderList(type: 3)),
+            new Center(child: RenderList(type: 1)),
           ],
         ),
       ),
@@ -58,12 +66,37 @@ class RenderList extends StatefulWidget {
 
 class _RenderListState extends State<RenderList> {
 
+  List<Message> messages = [];
+
+  RefreshController _refreshController = RefreshController(initialRefresh: true);
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  void _onRefresh() async {
+    await getData(widget.type);
+    // if failed,use refreshFailed()
+    _refreshController.refreshCompleted();
+  }
+
+  getData(int type) async{
+    List<Message> list = await DataUtils.message({'type':type});
+    setState(() {
+      messages = list;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-        onRefresh: (){
-          _onRefresh();
-        },
+    return SmartRefresher(
+        enablePullDown: true,
+        enablePullUp: false,
+        header: WaterDropHeader(),
+        controller: _refreshController,
+        onRefresh: _onRefresh,
         child: Container(
             padding: const EdgeInsets.all(10.0),
             color: Colors.grey[300],
@@ -76,47 +109,40 @@ class _RenderListState extends State<RenderList> {
                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 children: <Widget>[
                   DataTable(
+                      columnSpacing: 30.0,
                       columns: [
                         DataColumn(label: Text('发件人')),
                         DataColumn(label: Text('未读')),
                         DataColumn(label: Text('询盘时间')),
                         DataColumn(label: Text('操作')),
                       ],
-                      rows: [
-                        DataRow(cells: [
-                          DataCell(Text('张三')),
-                          DataCell(RaisedButton(child: Text('未读'),onPressed: (){showDetail();})),
-                          DataCell(Text('2019-6-1')),
+                      rows: messages.map((row) {
+                        return DataRow(cells: [
+                          DataCell(Text(row.name)),
+                          DataCell(
+                            SizedBox(
+                                width: 60.0,
+                                child: RaisedButton(
+                                    color: Colors.blue,
+                                    child: Text('未读',
+                                      style: TextStyle(color: Colors.white),
+                                    ),
+                                    onPressed: () {
+
+                                    }
+                                )
+                            ),
+                          ),
+                          DataCell(Text(new DateFormat('yyyy-MM-dd').format(
+                              row.createdAt))),
                           DataCell(
                               Text('查看'),
-                              onTap: (){
-                                showDetail();
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage(message: row),));
                               }
-                          ),
-                        ]),
-                        DataRow(cells: [
-                          DataCell(Text('张三')),
-                          DataCell(RaisedButton(child: Text('未读'),onPressed: (){showDetail();})),
-                          DataCell(Text('2019-6-1')),
-                          DataCell(
-                              Text('查看'),
-                              onTap: (){
-                                showDetail();
-                              }
-                          ),
-                        ]),
-                        DataRow(cells: [
-                          DataCell(Text('张三')),
-                          DataCell(RaisedButton(child: Text('未读'),onPressed: (){showDetail();})),
-                          DataCell(Text('2019-6-1')),
-                          DataCell(
-                              Text('查看'),
-                              onTap: (){
-                                showDetail();
-                              }
-                          ),
-                        ]),
-                      ]
+                          )
+                        ]);
+                      }).toList(),
                   )
                 ],
               ),
@@ -125,16 +151,63 @@ class _RenderListState extends State<RenderList> {
 
     );
   }
+}
 
-  void showDetail() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (ctx) => MessageDetail()));
-  }
-  Future<Null> _onRefresh() async {
-    await Future.delayed(Duration(milliseconds: 1000), () {
-      print('refresh');
-      setState(() {
 
-      });
-    });
+
+class DetailPage extends StatelessWidget {
+
+  final Message message;
+
+  DetailPage({Key key, this.message}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('询盘信息'),
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.pop(context);
+            }
+        ),
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(10.0),
+        color: Colors.grey[200],
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5.0)
+          ),
+          child: ListView(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            children: <Widget>[
+              ListTile(
+                title: Text('发件人: ${ message.name }'),
+              ),
+              Divider(height:10.0,indent:0.0,color: Colors.black26,),
+              ListTile(
+                title: Text('电话: ${ message.phone }'),
+              ),
+              Divider(height:10.0,indent:0.0,color: Colors.black26,),
+              ListTile(
+                title: Text('邮箱: ${ message.email }'),
+              ),
+              Divider(height:10.0,indent:0.0,color: Colors.black26,),
+              ListTile(
+                title: Text('地址: ${ message.address }'),
+              ),
+              Divider(height:10.0,indent:0.0,color: Colors.black26,),
+              ListTile(
+                title: Text('内容: ${ message.content }'),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

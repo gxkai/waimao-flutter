@@ -7,6 +7,7 @@ import 'package:waimao/model/visit_by_country_info.dart';
 import 'package:waimao/model/visit_by_day_info.dart';
 import 'package:waimao/model/visit_by_hour_info.dart';
 import 'package:waimao/model/visit_by_os_info.dart';
+import 'package:waimao/model/message.dart';
 
 import './net_utils.dart';
 import '../model/user_info.dart';
@@ -68,6 +69,18 @@ class DataUtils{
     var response = await NetUtils.get(Api.MyProduct);
     Product products = Product.fromJson(response['data']);
     return products;
+  }
+
+  // 询盘列表
+  static Future message(Map<String, int> params) async {
+    var response = await NetUtils.get(Api.Message, params);
+    List<Object> list = response['data']['data'];
+    List<Message> vList = new List();
+    list.forEach((f){
+      Message messages = Message.fromJson(f);
+      vList.add(messages);
+    });
+    return vList;
   }
 
   // 访客流量

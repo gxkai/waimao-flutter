@@ -18,5 +18,7 @@ class Api{
 
   static const String MyProduct = BASE_URL + '/client/my';
 
+  static const String Message = BASE_URL + '/client/message';
+
   static const String VisitByKeyword = BASE_URL + '/client/keyword';
 }

@@ -31,7 +31,12 @@ class _AboutState extends State<About> {
     return Scaffold(
       appBar: AppBar(
         title: Text('关于'),
-        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () {
+            Navigator.pop(context);
+          }
+        ),
       ),
       body: Container(
         color: Colors.white,

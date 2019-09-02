@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
     LoginPage.tag: (context) => LoginPage(),
     HomePage.tag: (context) => HomePage(),
     MinePage.tag: (context) => MinePage(),
-    Message.tag: (context) => Message(),
+    MessageList.tag: (context) => MessageList(),
     FlowStatistics.tag: (context) => FlowStatistics(),
     AccessTime.tag: (context) => AccessTime(),
     TerminalDevice.tag: (context) => TerminalDevice(),

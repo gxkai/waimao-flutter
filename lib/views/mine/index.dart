@@ -16,10 +16,9 @@ class MinePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("我的"),
-        centerTitle: true,
         leading: Builder(builder: (context) {
           return IconButton(
-            icon: Icon(Icons.menu, color: Colors.black),
+            icon: Icon(Icons.menu),
             onPressed: () {
               // 打开侧边菜单
               Scaffold.of(context).openDrawer();
@@ -48,13 +47,13 @@ class _IndexState extends State{
       content: Text('确定退出登录吗？'),
       actions: <Widget>[
         FlatButton(
-          child: Text('取消'),
+          child: Text('取消', style: TextStyle(color: Colors.blue[500]),),
           onPressed: () {
             Navigator.of(context).pop();
           },
         ),
         FlatButton(
-          child: Text('确定'),
+          child: Text('确定', style: TextStyle(color: Colors.blue[500]),),
           onPressed: () {
             logOut();
             Navigator.of(context).pushNamedAndRemoveUntil(LoginPage.tag, (route) => route == null);
@@ -146,15 +145,19 @@ class _IndexState extends State{
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(5.0)
                 ),
-                child: InkWell(
-                  onTap: () => showDialog(
-                    context: context, builder: (_) => _logOutDialog()
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 15.0),
-                    child: Text('退出登录',
-                      textAlign:TextAlign.center,
-                      style: TextStyle(fontSize: 16.0),
+                child: Material(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5.0),
+                  child: InkWell(
+                    onTap: () => showDialog(
+                        context: context, builder: (_) => _logOutDialog()
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 15.0),
+                      child: Text('退出登录',
+                        textAlign:TextAlign.center,
+                        style: TextStyle(fontSize: 16.0, color: Colors.black),
+                      ),
                     ),
                   ),
                 )

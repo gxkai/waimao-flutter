@@ -22,7 +22,12 @@ class _MyProductState extends State<MyProduct> {
     return Scaffold(
       appBar: AppBar(
         title: Text("我的产品"),
-        centerTitle: true,
+        leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () {
+              Navigator.pop(context);
+            }
+        ),
       ),
       body: Container(
             color: Colors.grey[200],

@@ -59,7 +59,7 @@ class MyDrawer extends StatelessWidget {
                     title: const Text('询盘信息'),
                     contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
                     onTap: (){
-                      Navigator.of(context).pushNamed(Message.tag);
+                      Navigator.of(context).pushNamed(MessageList.tag);
                     }
                   ),
                   Divider(height:10.0,indent:0.0,color: Colors.black26,),
