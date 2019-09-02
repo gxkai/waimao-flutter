@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:waimao/views/flow_statistics/flow_statistics.dart';
 import "package:waimao/views/home_page.dart";
+import 'package:waimao/views/keyword_ranking/keyword_ranking.dart';
 import "package:waimao/views/mine/index.dart";
 import "package:waimao/views/message/message.dart";
-import 'package:waimao/views/ranking/ranking.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({
@@ -68,7 +68,7 @@ class MyDrawer extends StatelessWidget {
                     title: const Text('关键词排名'),
                     contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
                     onTap: (){
-                      Navigator.of(context).pushNamed(Ranking.tag);
+                      Navigator.of(context).pushNamed(KeywordRanking.tag);
                     },
                   ),
                   Divider(height:10.0,indent:0.0,color: Colors.black26,),

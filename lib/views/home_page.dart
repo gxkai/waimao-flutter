@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:waimao/views/keyword_ranking/keyword_ranking.dart';
 import 'package:waimao/views/message/message.dart';
-import 'package:waimao/views/ranking/ranking.dart';
 import 'package:waimao/views/components/drawer.dart';
-import 'package:waimao/utils/data_utils.dart';
 import 'package:waimao/views/flow_statistics/flow_statistics.dart';
 
 class HomePage extends StatefulWidget {
@@ -167,7 +166,7 @@ class _HomeContentState extends State<HomeContent> {
             color: Colors.lightBlueAccent,
             child: InkWell(
               onTap: () {
-                Navigator.of(context).pushNamed(Ranking.tag);
+                Navigator.of(context).pushNamed(KeywordRanking.tag);
               },
               child: new Column(
                 //横轴起始测对齐

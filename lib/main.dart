@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluro/fluro.dart';
-import 'package:flutter/rendering.dart';
-import 'package:waimao/utils/data_utils.dart';
 import 'package:waimao/utils/provider.dart';
 import 'package:waimao/utils/shared_preferences.dart';
 import 'package:waimao/views/flow_statistics/access_time.dart';
@@ -10,10 +7,10 @@ import 'package:waimao/views/flow_statistics/flow_statistics.dart';
 import 'package:waimao/views/flow_statistics/terminal_device.dart';
 import 'package:waimao/views/flow_statistics/visitors_info_select.dart';
 import 'package:waimao/views/home_page.dart';
+import 'package:waimao/views/keyword_ranking/keyword_ranking.dart';
 import 'package:waimao/views/login_page.dart';
 import 'package:waimao/views/message/message.dart';
 import 'package:waimao/views/mine/index.dart';
-import 'package:waimao/views/ranking/ranking.dart';
 
 //import 'views/welcome_page/index.dart';
 
@@ -37,7 +34,7 @@ class _MyAppState extends State<MyApp> {
     TerminalDevice.tag: (context) => TerminalDevice(),
     ArealDistribution.tag: (context) => ArealDistribution(),
     FlowStatisticsSelect.tag: (context) => FlowStatisticsSelect(),
-    Ranking.tag: (context) => Ranking()
+    KeywordRanking.tag: (context) => KeywordRanking()
   };
 
   @override

@@ -2,12 +2,14 @@ import 'dart:async' show Future;
 
 import 'package:waimao/api/api.dart';
 import 'package:waimao/main.dart';
+import 'package:waimao/model/keyword_count.dart';
+import 'package:waimao/model/message.dart';
 import 'package:waimao/model/product.dart';
 import 'package:waimao/model/visit_by_country_info.dart';
 import 'package:waimao/model/visit_by_day_info.dart';
 import 'package:waimao/model/visit_by_hour_info.dart';
 import 'package:waimao/model/visit_by_os_info.dart';
-import 'package:waimao/model/message.dart';
+import 'package:waimao/models/keyword.dart';
 
 import './net_utils.dart';
 import '../model/user_info.dart';
@@ -105,5 +107,19 @@ class DataUtils{
       vList.add(visitByOsInfo);
     });
     return vList;
+  }
+
+  // 关键词排名
+  static Future<KeywordCount> visitByKeywordCount() async{
+    var response = await NetUtils.get(Api.VisitByKeyword, {"limit": "1", "page": "1"});
+    KeywordCount keywordCount = KeywordCount.fromJson(response['data']['count']);
+    return keywordCount;
+  }
+
+  // 关键词排名
+  static Future<Keyword> visitByKeywordData(Map<String,String> params) async{
+    var response = await NetUtils.get(Api.VisitByKeyword, params);
+    Keyword keyword = Keyword.fromJson(response['data']['data']);
+    return keyword;
   }
 }
