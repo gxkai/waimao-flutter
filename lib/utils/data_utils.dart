@@ -10,6 +10,7 @@ import 'package:waimao/model/visit_by_day_info.dart';
 import 'package:waimao/model/visit_by_hour_info.dart';
 import 'package:waimao/model/visit_by_os_info.dart';
 import 'package:waimao/models/keyword.dart';
+import 'package:waimao/models/dashboard.dart';
 
 import './net_utils.dart';
 import '../model/user_info.dart';
@@ -121,5 +122,12 @@ class DataUtils{
     var response = await NetUtils.get(Api.VisitByKeyword, params);
     Keyword keyword = Keyword.fromJson(response['data']['data']);
     return keyword;
+  }
+
+  //首页
+  static Future<Dashboard> dashboard() async{
+    var response = await NetUtils.get(Api.Dashboard);
+    Dashboard dashboard = Dashboard.fromJson(response['data']);
+    return dashboard;
   }
 }

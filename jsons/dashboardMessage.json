@@ -1,0 +1,5 @@
+{
+  "unread": 6,
+  "read": 9,
+  "@JsonKey(name: '_count') num": "messageCount"
+}
