@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:waimao/charts/legends/datum_legend_with_measures.dart';
 import 'package:waimao/model/visit_by_country_info.dart';
-import 'package:waimao/model/visit_by_hour_info.dart';
 import 'package:waimao/utils/data_utils.dart';
 import 'package:waimao/views/flow_statistics/visitors_info_select.dart';
 import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
@@ -51,15 +50,23 @@ class ArealDistributionState extends State<ArealDistribution>
   String toDate;
 
   void _onRefresh() async {
-    await _loadData(fromDate, toDate);
-    // if failed,use refreshFailed()
-    _refreshController.refreshCompleted();
+    try {
+      await _loadData(fromDate, toDate);
+      // if failed,use refreshFailed()
+      _refreshController.refreshCompleted();
+    } catch(e) {
+      _refreshController.loadFailed();
+    }
   }
 
   void _onRefreshDefault() async {
-    await _loadData(fromDate, toDate);
-    // if failed,use refreshFailed()
-    _refreshControllerDefault.refreshCompleted();
+    try {
+      await _loadData(fromDate, toDate);
+      // if failed,use refreshFailed()
+      _refreshControllerDefault.refreshCompleted();
+    } catch(e) {
+      _refreshControllerDefault.loadFailed();
+    }
   }
 
   @override

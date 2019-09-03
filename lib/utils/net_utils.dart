@@ -1,22 +1,19 @@
 import 'dart:async';
-import 'dart:io';
-import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:waimao/main.dart';
-import 'package:waimao/utils/loading.dart';
-import 'package:waimao/utils/shared_preferences.dart';
 import 'dart:convert';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class NetUtils {
   static Dio instance() {
-    Map<String,dynamic> optHeader = {
-      'accept-language':'zh-cn',
-      'content-type':'application/json'
+    Map<String, dynamic> optHeader = {
+      'accept-language': 'zh-cn',
+      'content-type': 'application/json'
     };
 
-    var dio = new Dio(BaseOptions(connectTimeout: 30000,headers: optHeader));
-
+    var dio = new Dio(BaseOptions(connectTimeout: 30000, headers: optHeader));
     // 增加拦截器
     dio.interceptors.add(
       InterceptorsWrapper(
@@ -30,7 +27,11 @@ class NetUtils {
           var result = jsonDecode(resp.toString());
           var status = result['status'];
           var message = result['message'];
-          if(status == 'error') {
+          if (status == 'error') {
+            Fluttertoast.showToast(
+                msg: message,
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER);
             dio.reject(message);
           }
           return resp;
@@ -38,6 +39,10 @@ class NetUtils {
         // 接口报错时处理
         onError: (DioError error) {
           print('onError');
+          Fluttertoast.showToast(
+              msg: '网络异常',
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.CENTER);
           return error;
         },
       ),
