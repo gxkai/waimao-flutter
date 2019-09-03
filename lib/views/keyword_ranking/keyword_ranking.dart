@@ -157,20 +157,20 @@ class KeywordRankingState extends State<KeywordRanking> {
               children: <Widget>[
                 MaterialButton(
                   onPressed: () async {
-                    setState(() {
-                      if (_currentPage > 1) {
+                    if (_currentPage > 1) {
+                      setState(() {
                         _currentPage--;
+                      });
+                      try {
+                        setState(() {
+                          _loading = true;
+                        });
+                        await _loadKeyword();
+                      } finally {
+                        setState(() {
+                          _loading = false;
+                        });
                       }
-                    });
-                    try {
-                      setState(() {
-                        _loading = true;
-                      });
-                      await _loadKeyword();
-                    } finally {
-                      setState(() {
-                        _loading = false;
-                      });
                     }
                   },
                   child: Text(_currentPage > 1 ? '上一页' : ''),
@@ -178,20 +178,20 @@ class KeywordRankingState extends State<KeywordRanking> {
                 Text("$_currentPage / $_lastPage"),
                 MaterialButton(
                   onPressed: () async {
-                    setState(() {
-                      if (_currentPage < _lastPage) {
+                    if (_currentPage < _lastPage) {
+                      setState(() {
                         _currentPage++;
+                      });
+                      try {
+                        setState(() {
+                          _loading = true;
+                        });
+                        await _loadKeyword();
+                      } finally {
+                        setState(() {
+                          _loading = false;
+                        });
                       }
-                    });
-                    try {
-                      setState(() {
-                        _loading = true;
-                      });
-                      await _loadKeyword();
-                    } finally {
-                      setState(() {
-                        _loading = false;
-                      });
                     }
                   },
                   child: Text(_currentPage < _lastPage ? '下一页' : ''),
