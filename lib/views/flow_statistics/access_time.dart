@@ -35,9 +35,7 @@ class AccessTimeState extends State<AccessTime> with SingleTickerProviderStateMi
   ];
   List<VisitByHourInfo> items = [];
   RefreshController _refreshController =
-      RefreshController(initialRefresh: true);
-  RefreshController _refreshControllerDefault =
-  RefreshController(initialRefresh: false);
+      RefreshController(initialRefresh: false);
   static var formatter = new DateFormat('yyyy-MM-dd');
   String b29 = formatter.format(new DateTime.now().add(new Duration(days: -29)));
   String b6 =  formatter.format(new DateTime.now().add(new Duration(days: -6)));
@@ -54,16 +52,6 @@ class AccessTimeState extends State<AccessTime> with SingleTickerProviderStateMi
       _refreshController.loadFailed();
     }
     // if failed,use refreshFailed()
-  }
-
-  void _onRefreshDefault() async {
-    try {
-      await _loadData(fromDate, toDate);
-      // if failed,use refreshFailed()
-      _refreshControllerDefault.refreshCompleted();
-    } catch(e) {
-      _refreshControllerDefault.loadFailed();
-    }
   }
 
   @override
@@ -578,14 +566,7 @@ class AccessTimeState extends State<AccessTime> with SingleTickerProviderStateMi
       _kTabPage,
       _kTabPage,
       _kTabPage,
-      SmartRefresher(
-        enablePullDown: true,
-        enablePullUp: false,
-        header: WaterDropHeader(),
-        controller: _refreshControllerDefault,
-        onRefresh: _onRefreshDefault,
-        child: _kTabPageContainer,
-      ),
+      _kTabPage
     ];
     return Scaffold(
       appBar: AppBar(
@@ -633,6 +614,7 @@ class AccessTimeState extends State<AccessTime> with SingleTickerProviderStateMi
     super.initState();
     fromDate = b0;
     toDate = b0;
+    _loadData(fromDate, toDate);
     // 添加监听器
     tabController = TabController(length: _kTabs.length, vsync: this)
       ..addListener(() async {
@@ -642,21 +624,25 @@ class AccessTimeState extends State<AccessTime> with SingleTickerProviderStateMi
               print(0);
               fromDate = b0;
               toDate = b0;
+              _loadData(fromDate, toDate);
               break;
             case 1:
               print(1);
               fromDate = b1;
               toDate = b1;
+              _loadData(fromDate, toDate);
               break;
             case 2:
               print(2);
               fromDate = b6;
               toDate = b0;
+              _loadData(fromDate, toDate);
               break;
             case 3:
               print(3);
               fromDate = b29;
               toDate = b0;
+              _loadData(fromDate, toDate);
               break;
             case 4:
               print(4);

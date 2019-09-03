@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class NetUtils {
+  static dynamic ctx;
   static Dio instance() {
     Map<String, dynamic> optHeader = {
       'accept-language': 'zh-cn',

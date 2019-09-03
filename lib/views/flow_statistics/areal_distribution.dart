@@ -37,8 +37,6 @@ class ArealDistributionState extends State<ArealDistribution>
     ),
   ];
   RefreshController _refreshController =
-      RefreshController(initialRefresh: true);
-  RefreshController _refreshControllerDefault =
       RefreshController(initialRefresh: false);
   static var formatter = new DateFormat('yyyy-MM-dd');
   String b29 =
@@ -59,16 +57,6 @@ class ArealDistributionState extends State<ArealDistribution>
     }
   }
 
-  void _onRefreshDefault() async {
-    try {
-      await _loadData(fromDate, toDate);
-      // if failed,use refreshFailed()
-      _refreshControllerDefault.refreshCompleted();
-    } catch(e) {
-      _refreshControllerDefault.loadFailed();
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     final _kTabPageContainer = Container(
@@ -76,7 +64,7 @@ class ArealDistributionState extends State<ArealDistribution>
       alignment: AlignmentDirectional.topCenter,
       color: Color.fromRGBO(237, 237, 237, 1),
       child: ListView(
-        children: <Widget>[
+        children: items.isEmpty ? [Center(child: Text("没有数据"),)] : [
           Card(
               color: Colors.white,
               child: Container(
@@ -100,7 +88,7 @@ class ArealDistributionState extends State<ArealDistribution>
                           Text(
                             "日期范围:$fromDate-$toDate",
                             style: TextStyle(
-                              fontSize: 12
+                                fontSize: 12
                             ),
                           )
                         ],
@@ -162,14 +150,7 @@ class ArealDistributionState extends State<ArealDistribution>
       _kTabPage,
       _kTabPage,
       _kTabPage,
-      SmartRefresher(
-        enablePullDown: true,
-        enablePullUp: false,
-        header: WaterDropHeader(),
-        controller: _refreshControllerDefault,
-        onRefresh: _onRefreshDefault,
-        child: _kTabPageContainer,
-      ),
+      _kTabPage
     ];
     return Scaffold(
       appBar: AppBar(
@@ -233,6 +214,7 @@ class ArealDistributionState extends State<ArealDistribution>
     super.initState();
     fromDate = b0;
     toDate = b0;
+    _loadData(fromDate, toDate);
     // 添加监听器
     tabController = TabController(length: _kTabs.length, vsync: this)
       ..addListener(() async {
@@ -242,21 +224,25 @@ class ArealDistributionState extends State<ArealDistribution>
               print(0);
               fromDate = b0;
               toDate = b0;
+              _loadData(fromDate, toDate);
               break;
             case 1:
               print(1);
               fromDate = b1;
               toDate = b1;
+              _loadData(fromDate, toDate);
               break;
             case 2:
               print(2);
               fromDate = b6;
               toDate = b0;
+              _loadData(fromDate, toDate);
               break;
             case 3:
               print(3);
               fromDate = b29;
               toDate = b0;
+              _loadData(fromDate, toDate);
               break;
             case 4:
               print(4);

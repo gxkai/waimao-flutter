@@ -36,8 +36,6 @@ class TerminalDeviceState extends State<TerminalDevice>
     ),
   ];
   RefreshController _refreshController =
-      RefreshController(initialRefresh: true);
-  RefreshController _refreshControllerDefault =
       RefreshController(initialRefresh: false);
   static var formatter = new DateFormat('yyyy-MM-dd');
   String b29 =
@@ -55,16 +53,6 @@ class TerminalDeviceState extends State<TerminalDevice>
       _refreshController.refreshCompleted();
     } catch (e) {
       _refreshController.loadFailed();
-    }
-  }
-
-  void _onRefreshDefault() async {
-    try {
-      await _loadData(fromDate, toDate);
-      // if failed,use refreshFailed()
-      _refreshControllerDefault.refreshCompleted();
-    } catch (e) {
-      _refreshControllerDefault.loadFailed();
     }
   }
 
@@ -126,14 +114,7 @@ class TerminalDeviceState extends State<TerminalDevice>
       _kTabPage,
       _kTabPage,
       _kTabPage,
-      SmartRefresher(
-        enablePullDown: true,
-        enablePullUp: false,
-        header: WaterDropHeader(),
-        controller: _refreshControllerDefault,
-        onRefresh: _onRefreshDefault,
-        child: _kTabPageContainer,
-      ),
+      _kTabPage
     ];
     return Scaffold(
       appBar: AppBar(
@@ -205,6 +186,7 @@ class TerminalDeviceState extends State<TerminalDevice>
     super.initState();
     fromDate = b0;
     toDate = b0;
+    _loadData(fromDate, toDate);
     // 添加监听器
     tabController = TabController(length: _kTabs.length, vsync: this)
       ..addListener(() async {
@@ -214,21 +196,25 @@ class TerminalDeviceState extends State<TerminalDevice>
               print(0);
               fromDate = b0;
               toDate = b0;
+              _loadData(fromDate, toDate);
               break;
             case 1:
               print(1);
               fromDate = b1;
               toDate = b1;
+              _loadData(fromDate, toDate);
               break;
             case 2:
               print(2);
               fromDate = b6;
               toDate = b0;
+              _loadData(fromDate, toDate);
               break;
             case 3:
               print(3);
               fromDate = b29;
               toDate = b0;
+              _loadData(fromDate, toDate);
               break;
             case 4:
               print(4);
