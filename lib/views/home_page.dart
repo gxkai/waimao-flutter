@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'dart:math';
 import 'package:waimao/views/keyword_ranking/keyword_ranking.dart';
 import 'package:waimao/views/message/message.dart';
 import 'package:waimao/views/components/drawer.dart';
+import 'package:waimao/utils/data_utils.dart';
+import 'package:waimao/models/dashboard.dart';
 import 'package:waimao/views/flow_statistics/flow_statistics.dart';
 
 class HomePage extends StatefulWidget {
@@ -32,31 +35,49 @@ class HomeContent extends StatefulWidget {
 
 class _HomeContentState extends State<HomeContent> {
 
-  int messageCount = 24;
-  int todayCount = 8;
-  int unread = 14;
-  int readed = 10;
+  int messageCount = 0;
+  int todayCount = 0;
+  int unread = 0;
+  int isRead = 0;
 
-  int keywords = 5;
-  int firstPageKeywords = 4;
-  int secondPageKeywords = 10;
-  int thirdPageKeywords = 8;
+  int keywords = 0;
+  int firstPageKeywords = 0;
+  int secondPageKeywords = 0;
+  int thirdPageKeywords = 0;
 
-  int pv = 381;
-  int uv = 84;
-  String newVisit = "22%";
+  int pv = 0;
+  int uv = 0;
+  num divide = 0;
+  num newVisit = 0;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    //getData();
+    getData();
   }
-//  getData() {
-//    DataUtils.homeData().then((result) {
-//      print(result);
-//    });
-//  }
+
+  getData() async{
+    Dashboard dashboard = await DataUtils.dashboard();
+    setState(() {
+      messageCount = dashboard.message.read + dashboard.message.unread;
+      todayCount = dashboard.message.messageCount;
+      unread = dashboard.message.unread;
+      isRead = dashboard.message.read;
+
+      keywords = dashboard.keyword.keywordCount;
+      firstPageKeywords = dashboard.keyword.page1;
+      secondPageKeywords = dashboard.keyword.page2;
+      thirdPageKeywords =  dashboard.keyword.page3;
+
+      pv = dashboard.visit.pv;
+      uv = dashboard.visit.uv;
+      if (dashboard.visit.pv != 0) {
+        divide = (dashboard.visit.uv/dashboard.visit.pv)*100;
+        newVisit = divide.floor();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -141,7 +162,7 @@ class _HomeContentState extends State<HomeContent> {
                           child:  new Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
-                              new Text("${ readed }", style: TextStyle(color: Colors.white, fontSize: 20.0)),
+                              new Text("${ isRead }", style: TextStyle(color: Colors.white, fontSize: 20.0)),
                               new Text(""),
                               new Text("已读询盘", style: TextStyle(color: Colors.white)),
                             ],
@@ -333,7 +354,7 @@ class _HomeContentState extends State<HomeContent> {
                             child:  new Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
-                                new Text("${ newVisit }", style: TextStyle(color: Colors.white, fontSize: 20.0)),
+                                new Text("${ newVisit }%", style: TextStyle(color: Colors.white, fontSize: 20.0)),
                                 new Text(""),
                                 new Text("新访量百分比", style: TextStyle(color: Colors.white)),
                               ],
@@ -352,7 +373,7 @@ class _HomeContentState extends State<HomeContent> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0),
           child: Text(
-              "Copyright ©2018 祥云平台",
+              "Copyright ©2019 祥云平台",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 12.0, color: Colors.grey)
           ),

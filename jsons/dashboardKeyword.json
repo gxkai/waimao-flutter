@@ -1,0 +1,6 @@
+{
+  "page1": 0,
+  "page2": 0,
+  "page3": 0,
+  "@JsonKey(name: '_count') num": "keywordCount"
+}
