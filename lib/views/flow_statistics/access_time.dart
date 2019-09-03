@@ -47,15 +47,23 @@ class AccessTimeState extends State<AccessTime> with SingleTickerProviderStateMi
   String toDate;
 
   void _onRefresh() async {
-    await _loadData(fromDate, toDate);
+    try {
+      await _loadData(fromDate, toDate);
+      _refreshController.refreshCompleted();
+    } catch(e) {
+      _refreshController.loadFailed();
+    }
     // if failed,use refreshFailed()
-    _refreshController.refreshCompleted();
   }
 
   void _onRefreshDefault() async {
-    await _loadData(fromDate, toDate);
-    // if failed,use refreshFailed()
-    _refreshControllerDefault.refreshCompleted();
+    try {
+      await _loadData(fromDate, toDate);
+      // if failed,use refreshFailed()
+      _refreshControllerDefault.refreshCompleted();
+    } catch(e) {
+      _refreshControllerDefault.loadFailed();
+    }
   }
 
   @override

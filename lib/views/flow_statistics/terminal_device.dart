@@ -49,15 +49,23 @@ class TerminalDeviceState extends State<TerminalDevice>
   String toDate;
 
   void _onRefresh() async {
-    await _loadData(fromDate, toDate);
-    // if failed,use refreshFailed()
-    _refreshController.refreshCompleted();
+    try {
+      await _loadData(fromDate, toDate);
+      // if failed,use refreshFailed()
+      _refreshController.refreshCompleted();
+    } catch (e) {
+      _refreshController.loadFailed();
+    }
   }
 
   void _onRefreshDefault() async {
-    await _loadData(fromDate, toDate);
-    // if failed,use refreshFailed()
-    _refreshControllerDefault.refreshCompleted();
+    try {
+      await _loadData(fromDate, toDate);
+      // if failed,use refreshFailed()
+      _refreshControllerDefault.refreshCompleted();
+    } catch (e) {
+      _refreshControllerDefault.loadFailed();
+    }
   }
 
   @override
@@ -171,14 +179,14 @@ class TerminalDeviceState extends State<TerminalDevice>
   }
 
   _loadData(String fromDate, String toDate) async {
-    List<VisitByOsInfo> list = await DataUtils.visitByOs(
-        {'fromDate': fromDate, 'toDate': toDate});
+    List<VisitByOsInfo> list =
+        await DataUtils.visitByOs({'fromDate': fromDate, 'toDate': toDate});
     lsList.clear();
     int mobile = 0;
     int pc = 0;
     RegExp m = new RegExp(r"^(Windows|Mac|Linux)");
     list.forEach((item) {
-      if(m.hasMatch(item.key)) {
+      if (m.hasMatch(item.key)) {
         pc += item.docCount;
       } else {
         mobile += item.docCount;

@@ -20,9 +20,13 @@ class FlowStatisticsState extends State<FlowStatistics> {
       RefreshController(initialRefresh: true);
 
   void _onRefresh() async {
-    await loadData();
-    // if failed,use refreshFailed()
-    _refreshController.refreshCompleted();
+    try {
+      await loadData();
+      // if failed,use refreshFailed()
+      _refreshController.refreshCompleted();
+    } catch (e) {
+      _refreshController.refreshFailed();
+    }
   }
 
   @override
@@ -92,7 +96,8 @@ class FlowStatisticsState extends State<FlowStatistics> {
                                   ],
                                   rows: rows.map((row) {
                                     return DataRow(cells: [
-                                      DataCell(Text(new DateFormat('yyyy-MM-dd').format(row.key))),
+                                      DataCell(Text(new DateFormat('yyyy-MM-dd')
+                                          .format(row.key))),
                                       DataCell(Text(row.pv.toString())),
                                       DataCell(Text(row.uv.toString())),
                                     ]);
@@ -122,7 +127,9 @@ class FlowStatisticsState extends State<FlowStatistics> {
                           ),
                           Container(
                             height: 200,
-                            child: DateTimeComboLinePointChart.withVisitByDayData(rows),
+                            child:
+                                DateTimeComboLinePointChart.withVisitByDayData(
+                                    rows),
                           )
                         ],
                       ))),
@@ -145,7 +152,8 @@ class FlowStatisticsState extends State<FlowStatistics> {
     var to = new DateTime.now();
     String fromDate = formatter.format(from);
     String toDate = formatter.format(to);
-    List<VisitByDayInfo> list = await DataUtils.visitByDay({'fromDate': fromDate, 'toDate': toDate});
+    List<VisitByDayInfo> list =
+        await DataUtils.visitByDay({'fromDate': fromDate, 'toDate': toDate});
     setState(() {
       rows = list;
     });

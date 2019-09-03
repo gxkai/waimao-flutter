@@ -50,15 +50,23 @@ class ArealDistributionState extends State<ArealDistribution>
   String toDate;
 
   void _onRefresh() async {
-    await _loadData(fromDate, toDate);
-    // if failed,use refreshFailed()
-    _refreshController.refreshCompleted();
+    try {
+      await _loadData(fromDate, toDate);
+      // if failed,use refreshFailed()
+      _refreshController.refreshCompleted();
+    } catch(e) {
+      _refreshController.loadFailed();
+    }
   }
 
   void _onRefreshDefault() async {
-    await _loadData(fromDate, toDate);
-    // if failed,use refreshFailed()
-    _refreshControllerDefault.refreshCompleted();
+    try {
+      await _loadData(fromDate, toDate);
+      // if failed,use refreshFailed()
+      _refreshControllerDefault.refreshCompleted();
+    } catch(e) {
+      _refreshControllerDefault.loadFailed();
+    }
   }
 
   @override
