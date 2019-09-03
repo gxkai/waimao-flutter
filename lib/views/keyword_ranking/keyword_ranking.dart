@@ -179,6 +179,12 @@ class KeywordRankingState extends State<KeywordRanking> {
     return Scaffold(
         appBar: AppBar(
           title: Text('关键词排名'),
+          leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: () {
+                Navigator.pop(context);
+              }
+          ),
         ),
         body: Container(
           color: Colors.grey[200],

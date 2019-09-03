@@ -66,6 +66,7 @@ class _RenderListState extends State<RenderList> {
   List<Message> messages = [];
 
   // 上拉加载提示
+  bool _isLoading = false;
   bool _isAll = false;
 
   RefreshController _refreshController =
@@ -98,25 +99,33 @@ class _RenderListState extends State<RenderList> {
 
   getData(int type) async {
     List<Message> list =
-        await DataUtils.message({'type': type, 'page': 1, 'limit': 10});
+        await DataUtils.message({'type': type, 'page': 1, 'limit': 12});
     setState(() {
       messages = list;
     });
   }
 
   _getMore(int type) async {
-    int newPage = _page + 1;
-    List<Message> newList =
-        await DataUtils.message({'type': type, 'page': newPage, 'limit': 10});
-    if (newList.isEmpty) {
+    if (!_isLoading) {
       setState(() {
-        _isAll = true;
+        _isLoading = true;
       });
-    } else {
-      setState(() {
-        messages.addAll(newList);
-        _page = newPage;
-      });
+      int newPage = _page + 1;
+      List<Message> newList =
+      await DataUtils.message({'type': type, 'page': newPage, 'limit': 12});
+      if (newList.isEmpty) {
+        setState(() {
+          _isAll = true;
+        });
+      } else {
+        await Future.delayed(Duration(milliseconds: 500), () {
+          setState(() {
+            messages.addAll(newList);
+            _page = newPage;
+            _isLoading = false;
+          });
+        });
+      }
     }
   }
 
@@ -180,11 +189,29 @@ class _RenderListState extends State<RenderList> {
                             '没有更多内容',
                             textAlign: TextAlign.center,
                           ))
-                      : Container()
+                      : _isLoading ?Column(
+                        children: <Widget>[
+                          SizedBox(
+                              height: 20.0,
+                              child: Image.asset('assets/images/loading.gif')
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: 10.0),
+                            child: Text('加载更多'),
+                          )
+                        ],
+                      ) : Container()
                 ],
                 controller: _scrollController,
               ),
             )));
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _scrollController.dispose();
   }
 }
 
