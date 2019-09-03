@@ -215,7 +215,7 @@ class _LoginPageState extends State<LoginPage> {
               '获取的数据：${_userInfo.username} ${_userInfo.password} ${_userInfo.site}');
           setState(() {
             _userNameEditingController.text = _userInfo.username;
-            _passwordEditingController.text = _userInfo.password;
+            _passwordEditingController.text = "";
             _siteEditingController.text = _userInfo.site;
             username = _userInfo.username;
             password = _userInfo.password;
