@@ -112,7 +112,7 @@ class ArealDistributionState extends State<ArealDistribution>
                         label: Text('序列'),
                       ),
                       DataColumn(
-                        label: Text('日期'),
+                        label: Text('国家地区'),
                       ),
                       DataColumn(
                         label: Text('浏览量uv'),

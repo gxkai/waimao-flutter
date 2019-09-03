@@ -73,7 +73,7 @@ class TerminalDeviceState extends State<TerminalDevice>
                       Row(
                         children: <Widget>[
                           Text(
-                            "访问者国家地区比重",
+                            "终端比重",
                             style: TextStyle(
                               color: Colors.black,
                               fontSize: 18,

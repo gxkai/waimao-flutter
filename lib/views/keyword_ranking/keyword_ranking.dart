@@ -156,7 +156,9 @@ class KeywordRankingState extends State<KeywordRanking> {
                 MaterialButton(
                   onPressed: () {
                     setState(() {
-                      _currentPage--;
+                      if(_currentPage > 1) {
+                        _currentPage--;
+                      }
                     });
                     _loadKeyword();
                   },
@@ -166,7 +168,9 @@ class KeywordRankingState extends State<KeywordRanking> {
                 MaterialButton(
                   onPressed: () {
                     setState(() {
-                      _currentPage++;
+                      if(_currentPage < _lastPage) {
+                        _currentPage++;
+                      }
                     });
                     _loadKeyword();
                   },
