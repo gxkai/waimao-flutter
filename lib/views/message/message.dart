@@ -192,7 +192,7 @@ class _RenderListState extends State<RenderList> {
                       : _isLoading ?Column(
                         children: <Widget>[
                           SizedBox(
-                              height: 20.0,
+                              height: 30.0,
                               child: Image.asset('assets/images/loading.gif')
                           ),
                           Padding(
