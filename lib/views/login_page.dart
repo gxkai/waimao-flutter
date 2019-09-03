@@ -1,181 +1,8 @@
-//import 'package:flutter/material.dart';
-//import 'package:waimao/model/user_info_cache.dart';
-//import 'package:waimao/utils/data_utils.dart';
-//import 'package:waimao/views/home_page.dart';
-//
-//class LoginPage extends StatefulWidget {
-//  static String tag = 'login-page';
-//
-//  @override
-//  _LoginPageState createState() => new _LoginPageState();
-//}
-//
-//class _LoginPageState extends State<LoginPage> {
-//  // 利用FocusNode和_focusScopeNode来控制焦点 可以通过FocusNode.of(context)来获取widget树中默认的_focusScopeNode
-//  FocusNode _emailFocusNode = new FocusNode();
-//  FocusNode _passwordFocusNode = new FocusNode();
-//  FocusScopeNode _focusScopeNode = new FocusScopeNode();
-//  UserInfoControlModel _userInfoControlModel = new UserInfoControlModel();
-//
-//  GlobalKey<FormState> _signInFormKey = new GlobalKey();
-//
-//  bool isShowPassWord = false;
-//  String username = '';
-//  String password = '';
-//  bool isLoading = false;
-//
-//  @override
-//  Widget build(BuildContext context) {
-//    final logo = Container(
-//      width: 50,
-//      height: 50,
-//      decoration: BoxDecoration(
-//          shape: BoxShape.rectangle,
-//          image: DecorationImage(
-//              image: AssetImage("assets/images/logo.png"), fit: BoxFit.cover)),
-//    );
-//    final name = Text(
-//      "外贸易",
-//      style: TextStyle(fontSize: 20, color: Colors.white),
-//    );
-//
-//    final username = TextFormField(
-//      keyboardType: TextInputType.text,
-//      autofocus: false,
-//      initialValue: 'master',
-//      decoration: InputDecoration(
-//          prefixIcon: Icon(IconData(0xe63a, fontFamily: "iconfont")),
-//          hintText: '账号',
-//          fillColor: Color.fromRGBO(100, 100, 200, 0.1),
-//          filled: true,
-//          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-//          border: OutlineInputBorder(
-//              borderRadius: BorderRadius.circular(8.0),
-//              borderSide: BorderSide.none)),
-//    );
-//
-//    final password = TextFormField(
-//      keyboardType: TextInputType.text,
-//      autofocus: false,
-//      initialValue: '',
-//      decoration: InputDecoration(
-//          prefixIcon: Icon(IconData(0xe618, fontFamily: "iconfont")),
-//          hintText: '密码',
-//          fillColor: Color.fromRGBO(100, 100, 200, 0.1),
-//          filled: true,
-//          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-//          border: OutlineInputBorder(
-//              borderRadius: BorderRadius.circular(8.0),
-//              borderSide: BorderSide.none)),
-//    );
-//
-//    final site = TextFormField(
-//      keyboardType: TextInputType.text,
-//      autofocus: false,
-//      initialValue: '',
-//      decoration: InputDecoration(
-//          prefixIcon: Icon(IconData(0xe634, fontFamily: "iconfont")),
-//          hintText: '网址',
-//          fillColor: Color.fromRGBO(100, 100, 200, 0.1),
-//          filled: true,
-//          contentPadding: EdgeInsets.fromLTRB(20.0, 10.0, 20.0, 10.0),
-//          border: OutlineInputBorder(
-//              borderRadius: BorderRadius.circular(8.0),
-//              borderSide: BorderSide.none)),
-//    );
-//
-//    final loginButton = Row(
-//      children: <Widget>[
-//        Expanded(
-//            child: MaterialButton(
-//                color: Colors.blue,
-//                elevation: 20,
-//                onPressed: () {
-//                  Navigator.of(context).pushNamed(HomePage.tag);
-//                },
-//                child: Text(
-//                  "登陆",
-//                  style: TextStyle(color: Colors.white),
-//                )))
-//      ],
-//    );
-//
-//    return Container(
-//      padding: EdgeInsets.symmetric(horizontal: 44),
-//      decoration: BoxDecoration(
-//          image: DecorationImage(
-//              image: AssetImage("assets/images/login_bg.png"),
-//              fit: BoxFit.cover)),
-//      alignment: AlignmentDirectional.topCenter,
-//      child: Column(
-//        children: <Widget>[
-//          SizedBox(
-//            height: 150.0,
-//          ),
-//          logo,
-//          SizedBox(
-//            height: 5.0,
-//          ),
-//          name,
-//          SizedBox(
-//            height: 30.0,
-//          ),
-//          username,
-//          SizedBox(
-//            height: 20.0,
-//          ),
-//          password,
-//          SizedBox(
-//            height: 20.0,
-//          ),
-//          site,
-//          SizedBox(
-//            height: 30.0,
-//          ),
-//          loginButton
-//        ],
-//      ),
-//    );
-//  }
-//
-//  // 登陆操作
-//  doLogin() {
-//    _signInFormKey.currentState.save();
-//    setState(() {
-//      isLoading = true;
-//    });
-//    DataUtils.doLogin({'username': username, 'password': password})
-//        .then((result) {
-//      print(result);
-//      setState(() {
-//        isLoading = false;
-//      });
-//      try {
-//        _userInfoControlModel.deleteAll().then((result) {
-//          // print('删除结果：$result');
-//          _userInfoControlModel
-//              .insert(UserInfo(password: password, username: username))
-//              .then((value) {
-//            // print('存储成功:$value');
-//            Navigator.of(context).pushNamed(HomePage.tag);
-//          });
-//        });
-//      } catch (err) {
-//      }
-//    }).catchError((onError) {
-//      print(onError);
-//      setState(() {
-//        isLoading = false;
-//      });
-//    });
-//  }
-//}
-
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:waimao/model/user_info_cache.dart';
 import 'package:waimao/utils/data_utils.dart';
 import 'package:waimao/views/home_page.dart';
+import 'package:loading_overlay/loading_overlay.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
@@ -202,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
   String username = '';
   String password = '';
   String site = '';
-  bool isLoading = false;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -256,18 +83,13 @@ class _LoginPageState extends State<LoginPage> {
                   hintText: "账号",
                   hintStyle: TextStyle(color: Colors.white),
                   enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  )
-              ),
+                      borderSide: BorderSide(color: Colors.grey))),
               style: new TextStyle(fontSize: 16, color: Colors.white),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -297,18 +119,13 @@ class _LoginPageState extends State<LoginPage> {
                   hintText: "密码",
                   hintStyle: TextStyle(color: Colors.white),
                   enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  )
-              ),
+                      borderSide: BorderSide(color: Colors.grey))),
               style: new TextStyle(fontSize: 16, color: Colors.white),
               obscureText: true,
               validator: (value) {
@@ -339,18 +156,13 @@ class _LoginPageState extends State<LoginPage> {
                   hintText: "网址",
                   hintStyle: TextStyle(color: Colors.white),
                   enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   errorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   focusedErrorBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  ),
+                      borderSide: BorderSide(color: Colors.grey)),
                   focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.grey)
-                  )
-              ),
+                      borderSide: BorderSide(color: Colors.grey))),
               style: new TextStyle(fontSize: 16, color: Colors.white),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -394,7 +206,7 @@ class _LoginPageState extends State<LoginPage> {
   doLogin() {
     _signInFormKey.currentState.save();
     setState(() {
-      isLoading = true;
+      _isLoading = true;
     });
     DataUtils.doLogin(
             {'username': username, 'password': password, 'site': site})
@@ -404,7 +216,8 @@ class _LoginPageState extends State<LoginPage> {
         _userInfoControlModel.deleteAll().then((result) {
           // print('删除结果：$result');
           _userInfoControlModel
-              .insert(UserInfo(password: password, username: username, site: site))
+              .insert(
+                  UserInfo(password: password, username: username, site: site))
               .then((value) {
             // print('存储成功:$value');
             Navigator.of(context).pushAndRemoveUntil(
@@ -419,7 +232,11 @@ class _LoginPageState extends State<LoginPage> {
       }
     }).catchError((onError) {
       print(onError);
-    });
+    }).whenComplete(() {
+      setState(() {
+        _isLoading = false;
+      });
+    }) ;
   }
 
 // 点击控制密码是否显示
@@ -432,7 +249,9 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+        body: LoadingOverlay(
+      isLoading: _isLoading,
+      child: SingleChildScrollView(
         child: Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
@@ -468,6 +287,6 @@ class _LoginPageState extends State<LoginPage> {
           ),
         ),
       ),
-    );
+    ));
   }
 }
