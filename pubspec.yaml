@@ -36,6 +36,8 @@ dependencies:
   pull_to_refresh: ^1.5.4
   # 时间范围选择器
   date_range_picker: ^1.0.5
+  # 提示
+  fluttertoast: ^3.1.2
   flutter:
     sdk: flutter
 
