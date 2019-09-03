@@ -72,11 +72,9 @@ class _HomeContentState extends State<HomeContent> {
 
       pv = dashboard.visit.pv;
       uv = dashboard.visit.uv;
-      if (dashboard.visit.pv == 0) {
-        newVisit = 0;
-      } else {
+      if (dashboard.visit.pv != 0) {
         divide = (dashboard.visit.uv/dashboard.visit.pv)*100;
-        newVisit = divide;
+        newVisit = divide.floor();
       }
     });
   }
