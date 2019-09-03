@@ -373,7 +373,7 @@ class _HomeContentState extends State<HomeContent> {
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 10.0),
           child: Text(
-              "Copyright ©2018 祥云平台",
+              "Copyright ©2019 祥云平台",
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 12.0, color: Colors.grey)
           ),

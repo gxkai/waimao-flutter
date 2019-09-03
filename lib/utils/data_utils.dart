@@ -130,4 +130,10 @@ class DataUtils{
     Dashboard dashboard = Dashboard.fromJson(response['data']);
     return dashboard;
   }
+
+  // 修改密码
+  static Future changePassword(Map<String, String> params) async {
+    var response = await NetUtils.post(Api.ChangePassword, params);
+    return response['state'];
+  }
 }

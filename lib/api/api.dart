@@ -23,4 +23,6 @@ class Api{
   static const String VisitByKeyword = BASE_URL + '/client/keyword';
 
   static const String Dashboard = BASE_URL + '/client/dashboard';//首页
+
+  static const String ChangePassword = BASE_URL + '/client/passwd/reset';//修改密码
 }
