@@ -4,6 +4,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:waimao/charts/legends/datum_legend_with_measures.dart';
 import 'package:waimao/model/visit_by_os_info.dart';
 import 'package:waimao/utils/data_utils.dart';
+import 'package:waimao/utils/progress_dialog.dart';
 import 'package:waimao/views/flow_statistics/visitors_info_select.dart';
 import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 
@@ -16,6 +17,7 @@ class TerminalDevice extends StatefulWidget {
 
 class TerminalDeviceState extends State<TerminalDevice>
     with SingleTickerProviderStateMixin {
+  bool _loading = false;
   TabController tabController;
   List<LinearSales> lsList = new List();
   final _kTabs = <Tab>[
@@ -136,27 +138,48 @@ class TerminalDeviceState extends State<TerminalDevice>
         ],
       ),
       body: Scaffold(
-        appBar: PreferredSize(
-            child: AppBar(
-              backgroundColor: Colors.white,
-              elevation: 0,
-              bottom: TabBar(
-                tabs: _kTabs,
-                labelColor: Colors.blue,
-                labelStyle: TextStyle(fontSize: 15),
-                unselectedLabelColor: Colors.black,
-                indicatorSize: TabBarIndicatorSize.label,
-                labelPadding: EdgeInsets.zero,
+          appBar: PreferredSize(
+              child: AppBar(
+                backgroundColor: Colors.white,
+                elevation: 0,
+                bottom: TabBar(
+                  tabs: _kTabs,
+                  labelColor: Colors.blue,
+                  labelStyle: TextStyle(fontSize: 15),
+                  unselectedLabelColor: Colors.black,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  labelPadding: EdgeInsets.zero,
+                  controller: tabController,
+                ),
+              ),
+              preferredSize: Size.fromHeight(60)),
+          body: Stack(
+            children: <Widget>[
+              TabBarView(
+                children: _kTabPages,
                 controller: tabController,
               ),
-            ),
-            preferredSize: Size.fromHeight(60)),
-        body: TabBarView(
-          children: _kTabPages,
-          controller: tabController,
-        ),
-      ),
+              ProgressDialog(
+                  isLoading: _loading,
+                  message: '正在加载...',
+                  alpha: 0.35,
+                  child: Container()),
+            ],
+          )),
     );
+  }
+
+  void _initData(String fromDate, String toDate) async {
+    try {
+      setState(() {
+        _loading = true;
+      });
+      await _loadData(fromDate, toDate);
+    } finally {
+      setState(() {
+        _loading = false;
+      });
+    }
   }
 
   _loadData(String fromDate, String toDate) async {
@@ -186,7 +209,7 @@ class TerminalDeviceState extends State<TerminalDevice>
     super.initState();
     fromDate = b0;
     toDate = b0;
-    _loadData(fromDate, toDate);
+    _initData(fromDate, toDate);
     // 添加监听器
     tabController = TabController(length: _kTabs.length, vsync: this)
       ..addListener(() async {

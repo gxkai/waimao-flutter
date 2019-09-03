@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:waimao/model/user_info_cache.dart';
 import 'package:waimao/utils/data_utils.dart';
+import 'package:waimao/utils/progress_dialog.dart';
 import 'package:waimao/views/home_page.dart';
 import 'package:loading_overlay/loading_overlay.dart';
 
@@ -11,6 +12,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool _loading = false;
   // 利用FocusNode和_focusScopeNode来控制焦点 可以通过FocusNode.of(context)来获取widget树中默认的_focusScopeNode
   FocusNode _emailFocusNode = new FocusNode();
   FocusNode _passwordFocusNode = new FocusNode();
@@ -206,7 +208,7 @@ class _LoginPageState extends State<LoginPage> {
   doLogin() {
     _signInFormKey.currentState.save();
     setState(() {
-      _isLoading = true;
+      _loading = true;
     });
     DataUtils.doLogin(
             {'username': username, 'password': password, 'site': site})
@@ -234,9 +236,9 @@ class _LoginPageState extends State<LoginPage> {
       print(onError);
     }).whenComplete(() {
       setState(() {
-        _isLoading = false;
+        _loading = false;
       });
-    }) ;
+    });
   }
 
 // 点击控制密码是否显示
@@ -249,44 +251,50 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: LoadingOverlay(
-      isLoading: _isLoading,
-      child: SingleChildScrollView(
-        child: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-//          color: Theme.of(context).primaryColor,
-          alignment: AlignmentDirectional.topCenter,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: AssetImage("assets/images/login_bg.png"),
-                  fit: BoxFit.cover)),
+        body: Stack(
+      children: <Widget>[
+        SingleChildScrollView(
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.85,
-            child: Stack(
-              children: <Widget>[
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    SizedBox(height: 150.0),
-                    Image.asset(
-                      'assets/images/logo.png',
-                      fit: BoxFit.contain,
-                      width: 50.0,
-                      height: 50.0,
-                    ),
-                    SizedBox(height: 50.0),
-                    buildSignInTextForm(),
-                    SizedBox(height: 50.0),
-                    buildSignInButton(),
-                    SizedBox(height: 35.0),
-                  ],
-                ),
-              ],
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+//          color: Theme.of(context).primaryColor,
+            alignment: AlignmentDirectional.topCenter,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/images/login_bg.png"),
+                    fit: BoxFit.cover)),
+            child: Container(
+              width: MediaQuery.of(context).size.width * 0.85,
+              child: Stack(
+                children: <Widget>[
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: <Widget>[
+                      SizedBox(height: 150.0),
+                      Image.asset(
+                        'assets/images/logo.png',
+                        fit: BoxFit.contain,
+                        width: 50.0,
+                        height: 50.0,
+                      ),
+                      SizedBox(height: 50.0),
+                      buildSignInTextForm(),
+                      SizedBox(height: 50.0),
+                      buildSignInButton(),
+                      SizedBox(height: 35.0),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
+        ProgressDialog(
+            isLoading: _loading,
+            message: '正在加载...',
+            alpha: 0.35,
+            child: Container()),
+      ],
     ));
   }
 }

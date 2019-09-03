@@ -4,6 +4,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:waimao/charts/legends/datum_legend_with_measures.dart';
 import 'package:waimao/model/visit_by_country_info.dart';
 import 'package:waimao/utils/data_utils.dart';
+import 'package:waimao/utils/progress_dialog.dart';
 import 'package:waimao/views/flow_statistics/visitors_info_select.dart';
 import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 
@@ -16,6 +17,7 @@ class ArealDistribution extends StatefulWidget {
 
 class ArealDistributionState extends State<ArealDistribution>
     with SingleTickerProviderStateMixin {
+  bool _loading = false;
   TabController tabController;
   List<LinearSales> lsList = new List();
   List<VisitByCountryInfo> items = new List();
@@ -52,7 +54,7 @@ class ArealDistributionState extends State<ArealDistribution>
       await _loadData(fromDate, toDate);
       // if failed,use refreshFailed()
       _refreshController.refreshCompleted();
-    } catch(e) {
+    } catch (e) {
       _refreshController.loadFailed();
     }
   }
@@ -64,77 +66,85 @@ class ArealDistributionState extends State<ArealDistribution>
       alignment: AlignmentDirectional.topCenter,
       color: Color.fromRGBO(237, 237, 237, 1),
       child: ListView(
-        children: items.isEmpty ? [Center(child: Text("没有数据"),)] : [
-          Card(
-              color: Colors.white,
-              child: Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            "访问者国家地区比重",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
+        children: items.isEmpty
+            ? [
+                Center(
+                  child: Text("没有数据"),
+                )
+              ]
+            : [
+                Card(
+                    color: Colors.white,
+                    child: Container(
+                        padding: EdgeInsets.all(10),
+                        child: Column(
+                          children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Text(
+                                  "访问者国家地区比重",
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                  ),
+                                )
+                              ],
                             ),
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 10,),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            "日期范围:$fromDate-$toDate",
-                            style: TextStyle(
-                                fontSize: 12
+                            SizedBox(
+                              height: 10,
                             ),
-                          )
-                        ],
-                      ),
-                      Container(
-                        height: 200,
-                        child: DatumLegendWithMeasures.withSampleData(lsList),
-                      )
-                    ],
-                  ))),
-          Card(
-            child: Container(
-              height: 300,
-              padding: EdgeInsets.all(16.0),
-              child: ListView(
-                children: <Widget>[
-                  DataTable(
-                    columnSpacing: 20,
-                    columns: [
-                      DataColumn(
-                        label: Text('序列'),
-                      ),
-                      DataColumn(
-                        label: Text('国家地区'),
-                      ),
-                      DataColumn(
-                        label: Text('浏览量uv'),
-                      ),
-                      DataColumn(
-                        label: Text('访客量pv'),
-                      ),
-                    ],
-                    rows: items.map((item) {
-                      return DataRow(cells: [
-                        DataCell(Text((items.indexOf(item) + 1).toString())),
-                        DataCell(Text(item.key)),
-                        DataCell(Text(item.pv.toString())),
-                        DataCell(Text(item.uv.toString())),
-                      ]);
-                    }).toList(),
+                            Row(
+                              children: <Widget>[
+                                Text(
+                                  "日期范围:$fromDate-$toDate",
+                                  style: TextStyle(fontSize: 12),
+                                )
+                              ],
+                            ),
+                            Container(
+                              height: 200,
+                              child: DatumLegendWithMeasures.withSampleData(
+                                  lsList),
+                            )
+                          ],
+                        ))),
+                Card(
+                  child: Container(
+                    height: 300,
+                    padding: EdgeInsets.all(16.0),
+                    child: ListView(
+                      children: <Widget>[
+                        DataTable(
+                          columnSpacing: 20,
+                          columns: [
+                            DataColumn(
+                              label: Text('序列'),
+                            ),
+                            DataColumn(
+                              label: Text('国家地区'),
+                            ),
+                            DataColumn(
+                              label: Text('浏览量uv'),
+                            ),
+                            DataColumn(
+                              label: Text('访客量pv'),
+                            ),
+                          ],
+                          rows: items.map((item) {
+                            return DataRow(cells: [
+                              DataCell(
+                                  Text((items.indexOf(item) + 1).toString())),
+                              DataCell(Text(item.key)),
+                              DataCell(Text(item.pv.toString())),
+                              DataCell(Text(item.uv.toString())),
+                            ]);
+                          }).toList(),
+                        ),
+                      ],
+                    ),
                   ),
-                ],
-              ),
-            ),
-          )
-        ],
+                )
+              ],
       ),
     );
     final _kTabPage = SmartRefresher(
@@ -172,27 +182,48 @@ class ArealDistributionState extends State<ArealDistribution>
         ],
       ),
       body: Scaffold(
-        appBar: PreferredSize(
-            child: AppBar(
-              backgroundColor: Colors.white,
-              elevation: 0,
-              bottom: TabBar(
-                tabs: _kTabs,
-                labelColor: Colors.blue,
-                labelStyle: TextStyle(fontSize: 15),
-                unselectedLabelColor: Colors.black,
-                indicatorSize: TabBarIndicatorSize.label,
-                labelPadding: EdgeInsets.zero,
+          appBar: PreferredSize(
+              child: AppBar(
+                backgroundColor: Colors.white,
+                elevation: 0,
+                bottom: TabBar(
+                  tabs: _kTabs,
+                  labelColor: Colors.blue,
+                  labelStyle: TextStyle(fontSize: 15),
+                  unselectedLabelColor: Colors.black,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  labelPadding: EdgeInsets.zero,
+                  controller: tabController,
+                ),
+              ),
+              preferredSize: Size.fromHeight(60)),
+          body: Stack(
+            children: <Widget>[
+              TabBarView(
+                children: _kTabPages,
                 controller: tabController,
               ),
-            ),
-            preferredSize: Size.fromHeight(60)),
-        body: TabBarView(
-          children: _kTabPages,
-          controller: tabController,
-        ),
-      ),
+              ProgressDialog(
+                  isLoading: _loading,
+                  message: '正在加载...',
+                  alpha: 0.35,
+                  child: Container()),
+            ],
+          )),
     );
+  }
+
+  void _initData(String fromDate, String toDate) async {
+    try {
+      setState(() {
+        _loading = true;
+      });
+      await _loadData(fromDate, toDate);
+    } finally {
+      setState(() {
+        _loading = false;
+      });
+    }
   }
 
   _loadData(String fromDate, String toDate) async {
@@ -214,7 +245,7 @@ class ArealDistributionState extends State<ArealDistribution>
     super.initState();
     fromDate = b0;
     toDate = b0;
-    _loadData(fromDate, toDate);
+    _initData(fromDate, toDate);
     // 添加监听器
     tabController = TabController(length: _kTabs.length, vsync: this)
       ..addListener(() async {

@@ -4,6 +4,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:waimao/charts/combo_chart/numeric_line_point.dart';
 import 'package:waimao/model/visit_by_hour_info.dart';
 import 'package:waimao/utils/data_utils.dart';
+import 'package:waimao/utils/progress_dialog.dart';
 import 'package:waimao/views/flow_statistics/visitors_info_select.dart';
 import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
 
@@ -14,7 +15,9 @@ class AccessTime extends StatefulWidget {
   AccessTimeState createState() => new AccessTimeState();
 }
 
-class AccessTimeState extends State<AccessTime> with SingleTickerProviderStateMixin {
+class AccessTimeState extends State<AccessTime>
+    with SingleTickerProviderStateMixin {
+  bool _loading = false;
   TabController tabController;
   final _kTabs = <Tab>[
     Tab(
@@ -37,9 +40,10 @@ class AccessTimeState extends State<AccessTime> with SingleTickerProviderStateMi
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   static var formatter = new DateFormat('yyyy-MM-dd');
-  String b29 = formatter.format(new DateTime.now().add(new Duration(days: -29)));
-  String b6 =  formatter.format(new DateTime.now().add(new Duration(days: -6)));
-  String b1 =  formatter.format(new DateTime.now().add(new Duration(days: -1)));
+  String b29 =
+      formatter.format(new DateTime.now().add(new Duration(days: -29)));
+  String b6 = formatter.format(new DateTime.now().add(new Duration(days: -6)));
+  String b1 = formatter.format(new DateTime.now().add(new Duration(days: -1)));
   String b0 = formatter.format(new DateTime.now());
   String fromDate;
   String toDate;
@@ -48,7 +52,7 @@ class AccessTimeState extends State<AccessTime> with SingleTickerProviderStateMi
     try {
       await _loadData(fromDate, toDate);
       _refreshController.refreshCompleted();
-    } catch(e) {
+    } catch (e) {
       _refreshController.loadFailed();
     }
     // if failed,use refreshFailed()
@@ -588,23 +592,34 @@ class AccessTimeState extends State<AccessTime> with SingleTickerProviderStateMi
         ],
       ),
       body: Scaffold(
-        appBar: PreferredSize(
-            child: AppBar(
-              backgroundColor: Colors.white,
-              elevation: 0,
-              bottom: TabBar(
-                tabs: _kTabs,
-                labelColor: Colors.blue,
-                labelStyle: TextStyle(fontSize: 15),
-                unselectedLabelColor: Colors.black,
-                indicatorSize: TabBarIndicatorSize.label,
-                labelPadding: EdgeInsets.zero,
+          appBar: PreferredSize(
+              child: AppBar(
+                backgroundColor: Colors.white,
+                elevation: 0,
+                bottom: TabBar(
+                  tabs: _kTabs,
+                  labelColor: Colors.blue,
+                  labelStyle: TextStyle(fontSize: 15),
+                  unselectedLabelColor: Colors.black,
+                  indicatorSize: TabBarIndicatorSize.label,
+                  labelPadding: EdgeInsets.zero,
+                  controller: tabController,
+                ),
+              ),
+              preferredSize: Size.fromHeight(60)),
+          body: Stack(
+            children: <Widget>[
+              TabBarView(
+                children: _kTabPages,
                 controller: tabController,
               ),
-            ),
-            preferredSize: Size.fromHeight(60)),
-        body: TabBarView(children: _kTabPages, controller: tabController,),
-      ),
+              ProgressDialog(
+                  isLoading: _loading,
+                  message: '正在加载...',
+                  alpha: 0.35,
+                  child: Container()),
+            ],
+          )),
     );
   }
 
@@ -614,35 +629,35 @@ class AccessTimeState extends State<AccessTime> with SingleTickerProviderStateMi
     super.initState();
     fromDate = b0;
     toDate = b0;
-    _loadData(fromDate, toDate);
+    _initData(fromDate, toDate);
     // 添加监听器
     tabController = TabController(length: _kTabs.length, vsync: this)
       ..addListener(() async {
-        if(tabController.index.toDouble() == tabController.animation.value){
+        if (tabController.index.toDouble() == tabController.animation.value) {
           switch (tabController.index) {
             case 0:
               print(0);
               fromDate = b0;
               toDate = b0;
-              _loadData(fromDate, toDate);
+              _initData(fromDate, toDate);
               break;
             case 1:
               print(1);
               fromDate = b1;
               toDate = b1;
-              _loadData(fromDate, toDate);
+              _initData(fromDate, toDate);
               break;
             case 2:
               print(2);
               fromDate = b6;
               toDate = b0;
-              _loadData(fromDate, toDate);
+              _initData(fromDate, toDate);
               break;
             case 3:
               print(3);
               fromDate = b29;
               toDate = b0;
-              _loadData(fromDate, toDate);
+              _initData(fromDate, toDate);
               break;
             case 4:
               print(4);
@@ -651,12 +666,11 @@ class AccessTimeState extends State<AccessTime> with SingleTickerProviderStateMi
                   initialFirstDate: new DateTime.now(),
                   initialLastDate: new DateTime.now(),
                   firstDate: new DateTime(2000),
-                  lastDate: new DateTime.now()
-              );
+                  lastDate: new DateTime.now());
               if (picked != null && picked.length == 2) {
                 fromDate = formatter.format(picked[0]);
                 toDate = formatter.format(picked[1]);
-                _loadData(fromDate, toDate);
+                _initData(fromDate, toDate);
               }
               break;
           }
@@ -665,10 +679,24 @@ class AccessTimeState extends State<AccessTime> with SingleTickerProviderStateMi
   }
 
   _loadData(String fromDate, String toDate) async {
-    List<VisitByHourInfo> list = await DataUtils.visitByHour({'fromDate': fromDate, 'toDate': toDate});
+    List<VisitByHourInfo> list =
+        await DataUtils.visitByHour({'fromDate': fromDate, 'toDate': toDate});
     setState(() {
       items = list;
     });
+  }
+
+  void _initData(String fromDate, String toDate) async {
+    try {
+      setState(() {
+        _loading = true;
+      });
+      await _loadData(fromDate, toDate);
+    } finally {
+      setState(() {
+        _loading = false;
+      });
+    }
   }
 
   @override

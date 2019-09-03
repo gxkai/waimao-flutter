@@ -3,6 +3,7 @@ import 'package:waimao/model/keyword_count.dart';
 import 'package:waimao/models/keyword.dart';
 import 'package:waimao/models/keywordData.dart';
 import 'package:waimao/utils/data_utils.dart';
+import 'package:waimao/utils/progress_dialog.dart';
 
 class KeywordRanking extends StatefulWidget {
   static String tag = 'keyword-ranking';
@@ -12,6 +13,7 @@ class KeywordRanking extends StatefulWidget {
 }
 
 class KeywordRankingState extends State<KeywordRanking> {
+  bool _loading = false;
   int _limit = 5;
   int _currentPage = 1;
   int _lastPage = 1;
@@ -154,25 +156,43 @@ class KeywordRankingState extends State<KeywordRanking> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 MaterialButton(
-                  onPressed: () {
+                  onPressed: () async {
                     setState(() {
-                      if(_currentPage > 1) {
+                      if (_currentPage > 1) {
                         _currentPage--;
                       }
                     });
-                    _loadKeyword();
+                    try {
+                      setState(() {
+                        _loading = true;
+                      });
+                      await _loadKeyword();
+                    } finally {
+                      setState(() {
+                        _loading = false;
+                      });
+                    }
                   },
                   child: Text(_currentPage > 1 ? '上一页' : ''),
                 ),
                 Text("$_currentPage / $_lastPage"),
                 MaterialButton(
-                  onPressed: () {
+                  onPressed: () async {
                     setState(() {
-                      if(_currentPage < _lastPage) {
+                      if (_currentPage < _lastPage) {
                         _currentPage++;
                       }
                     });
-                    _loadKeyword();
+                    try {
+                      setState(() {
+                        _loading = true;
+                      });
+                      await _loadKeyword();
+                    } finally {
+                      setState(() {
+                        _loading = false;
+                      });
+                    }
                   },
                   child: Text(_currentPage < _lastPage ? '下一页' : ''),
                 )
@@ -187,18 +207,27 @@ class KeywordRankingState extends State<KeywordRanking> {
               icon: Icon(Icons.arrow_back_ios),
               onPressed: () {
                 Navigator.pop(context);
-              }
-          ),
+              }),
         ),
-        body: Container(
-          color: Colors.grey[200],
-          child: Container(
-              margin: EdgeInsets.all(10.0),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(5.0),
-              ),
-              child: ListView(children: <Widget>[RankingCount, RankingList])),
+        body: Stack(
+          children: <Widget>[
+            Container(
+              color: Colors.grey[200],
+              child: Container(
+                  margin: EdgeInsets.all(10.0),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  child:
+                      ListView(children: <Widget>[RankingCount, RankingList])),
+            ),
+            ProgressDialog(
+                isLoading: _loading,
+                message: '正在加载...',
+                alpha: 0.35,
+                child: Container()),
+          ],
         ));
   }
 
@@ -300,8 +329,17 @@ class KeywordRankingState extends State<KeywordRanking> {
   }
 
   _loadData() async {
-    _loadKeywordCount();
-    _loadKeyword();
+    try {
+      setState(() {
+        _loading = true;
+      });
+      await _loadKeywordCount();
+      await _loadKeyword();
+    } finally {
+      setState(() {
+        _loading = false;
+      });
+    }
   }
 
   @override
