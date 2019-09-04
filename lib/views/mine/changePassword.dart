@@ -21,20 +21,20 @@ class _ChangePasswordState extends State<ChangePassword> {
     var _form = _formKey.currentState;
     _form.save();
 
-    if (newPassword != rnewPassword) {
-      Fluttertoast.showToast(
-          msg: "两次输入的新密码不一致",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.CENTER,
-          timeInSecForIos: 1,
-          backgroundColor: Color.fromRGBO(0, 0, 0, 0.8),
-          textColor: Colors.white,
-          fontSize: 16.0
-      );
-      return ;
-    }
-
     if (_form.validate()) {
+
+      if (newPassword != rnewPassword) {
+        Fluttertoast.showToast(
+            msg: "两次输入的新密码不一致",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.CENTER,
+            timeInSecForIos: 1,
+            backgroundColor: Color.fromRGBO(0, 0, 0, 0.8),
+            textColor: Colors.white,
+            fontSize: 16.0
+        );
+        return ;
+      }
 
       sp = await SpUtil.getInstance();
       String username = sp.get('username');
