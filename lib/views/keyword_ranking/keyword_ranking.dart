@@ -311,12 +311,6 @@ class KeywordRankingState extends State<KeywordRanking> {
             textColor: Colors.white,
             highlightColor: Colors.blue[700],
             splashColor: Colors.blue[700],
-            shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: Colors.white,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(8)),
             child: Text('${_rank[item.page]}: ${item.number}'),
           ),
         ),
