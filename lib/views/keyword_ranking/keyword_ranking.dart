@@ -247,7 +247,7 @@ class KeywordRankingState extends State<KeywordRanking> {
               padding: EdgeInsets.all(10),
               child: Text(
                 '序号',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(color: Colors.black, fontSize: 14),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -255,13 +255,13 @@ class KeywordRankingState extends State<KeywordRanking> {
               padding: EdgeInsets.all(10),
               child: Text(
                 '关键词',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: TextStyle(color: Colors.black, fontSize: 14),
               ),
             ),
             Text(
               '最新排名',
               textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(color: Colors.black, fontSize: 14),
             ),
           ]),
     );

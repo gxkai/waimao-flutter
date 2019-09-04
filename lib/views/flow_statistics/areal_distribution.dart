@@ -112,8 +112,9 @@ class ArealDistributionState extends State<ArealDistribution>
                 Card(
                   child: Container(
                     height: 300,
-                    padding: EdgeInsets.all(16.0),
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: ListView(
+                      padding: EdgeInsets.only(bottom: 20.0),
                       children: <Widget>[
                         DataTable(
                           columnSpacing: 20,
@@ -236,9 +237,21 @@ class ArealDistributionState extends State<ArealDistribution>
     List<VisitByCountryInfo> list = await DataUtils.visitByCountry(
         {'fromDate': fromDate, 'toDate': toDate});
     lsList.clear();
-    list.forEach((item) {
-      lsList.add(new LinearSales(item.key, item.pv));
-    });
+
+    int count = 0;
+
+    for(int i = 0; i < list.length; i++) {
+      if (i < 6) {
+        lsList.add(new LinearSales(list[i].key, list[i].pv));
+      } else {
+        count += list[i].pv;
+      }
+    }
+
+    if (list.length > 6) {
+      lsList.add(new LinearSales('其他', count));
+    }
+
     setState(() {
       items = list;
       lsList = lsList;
