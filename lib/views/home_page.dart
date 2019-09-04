@@ -106,12 +106,7 @@ class _HomeContentState extends State<HomeContent> {
                           fontWeight: FontWeight.w700
                       ),
                     ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.more_horiz, color: Colors.white,),
-                      onPressed: (){
-                        //Navigator.of(context).push(MaterialPageRoute(builder: (ctx)=> new Message()));
-                      },
-                    ),
+                    trailing: Icon(Icons.more_horiz, color: Colors.white,),
                   ),
                   ListTile(
                     leading: Icon(IconData(0xe6fd, fontFamily: "iconfont"), size: 40.0, color: Colors.white,),
@@ -195,19 +190,14 @@ class _HomeContentState extends State<HomeContent> {
                 children: [
                   new ListTile(
                     title: Text(
-                      '昨日关键词排名',
+                      '关键词排名',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 20.0,
                           fontWeight: FontWeight.w700
                       ),
                     ),
-                    trailing: IconButton(
-                      icon: Icon(Icons.more_horiz, color: Colors.white,),
-                      onPressed: (){
-                        print('点击昨日关键词排名');
-                      },
-                    ),
+                    trailing: Icon(Icons.more_horiz, color: Colors.white,),
                   ),
                   ListTile(
                     leading: Icon(IconData(0xe661, fontFamily: "iconfont"), size: 40.0, color: Colors.white,),
@@ -297,12 +287,7 @@ class _HomeContentState extends State<HomeContent> {
                             fontWeight: FontWeight.w700
                         ),
                       ),
-                      trailing: IconButton(
-                        icon: Icon(Icons.more_horiz, color: Colors.white,),
-                        onPressed: (){
-                          print('点击访客流量');
-                        },
-                      ),
+                      trailing: Icon(Icons.more_horiz, color: Colors.white,),
                     ),
                     ListTile(
                       leading: Icon(IconData(0xe61f, fontFamily: "iconfont"), size: 40.0, color: Colors.white,),

@@ -4,7 +4,6 @@ import 'package:waimao/api/api.dart';
 import 'package:waimao/main.dart';
 import 'package:waimao/model/keyword_count.dart';
 import 'package:waimao/model/message.dart';
-import 'package:waimao/model/product.dart';
 import 'package:waimao/model/visit_by_country_info.dart';
 import 'package:waimao/model/visit_by_day_info.dart';
 import 'package:waimao/model/visit_by_hour_info.dart';
@@ -70,8 +69,7 @@ class DataUtils{
   // 我的产品
   static Future myProduct() async {
     var response = await NetUtils.get(Api.MyProduct);
-    Product products = Product.fromJson(response['data']);
-    return products;
+    return response['data'];
   }
 
   // 询盘列表
