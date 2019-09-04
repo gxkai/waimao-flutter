@@ -18,27 +18,12 @@ class ArealDistribution extends StatefulWidget {
 
 class ArealDistributionState extends State<ArealDistribution>
     with SingleTickerProviderStateMixin {
+  bool click = false;
   bool _loading = false;
   TabController tabController;
   List<LinearSales> lsList = new List();
   List<VisitByCountryInfo> items = new List();
-  final _kTabs = <Tab>[
-    Tab(
-      text: '今日',
-    ),
-    Tab(
-      text: '昨天',
-    ),
-    Tab(
-      text: '最近7天',
-    ),
-    Tab(
-      text: '最近30天',
-    ),
-    Tab(
-      text: '自定义',
-    ),
-  ];
+  List<Tab> _kTabs;
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
   static var formatter = new DateFormat('yyyy-MM-dd');
@@ -265,6 +250,41 @@ class ArealDistributionState extends State<ArealDistribution>
     fromDate = b0;
     toDate = b0;
     _initData(fromDate, toDate);
+    _kTabs = <Tab>[
+      Tab(
+        text: '今日',
+      ),
+      Tab(
+        text: '昨天',
+      ),
+      Tab(
+        text: '最近7天',
+      ),
+      Tab(
+        text: '最近30天',
+      ),
+      Tab(
+        child: GestureDetector(
+          child: Text("自定义"),
+          onTap: () async {
+            click = true;
+            tabController.animateTo(4);
+            final List<DateTime> picked = await DateRagePicker.showDatePicker(
+                context: context,
+                locale: Locale("zh"),
+                initialFirstDate: new DateTime.now(),
+                initialLastDate: new DateTime.now(),
+                firstDate: new DateTime(2000),
+                lastDate: new DateTime.now());
+            if (picked != null && picked.length == 2) {
+              fromDate = formatter.format(picked[0]);
+              toDate = formatter.format(picked[1]);
+              _initData(fromDate, toDate);
+            }
+          },
+        ),
+      ),
+    ];
     // 添加监听器
     tabController = TabController(length: _kTabs.length, vsync: this)
       ..addListener(() async {
@@ -296,17 +316,21 @@ class ArealDistributionState extends State<ArealDistribution>
               break;
             case 4:
               print(4);
-              final List<DateTime> picked = await DateRagePicker.showDatePicker(
-                  context: context,
-                  locale: Locale("zh"),
-                  initialFirstDate: new DateTime.now(),
-                  initialLastDate: new DateTime.now(),
-                  firstDate: new DateTime(2000),
-                  lastDate: new DateTime.now());
-              if (picked != null && picked.length == 2) {
-                fromDate = formatter.format(picked[0]);
-                toDate = formatter.format(picked[1]);
-                _loadData(fromDate, toDate);
+              if(click == false) {
+                final List<DateTime> picked = await DateRagePicker.showDatePicker(
+                    context: context,
+                    locale: Locale("zh"),
+                    initialFirstDate: new DateTime.now(),
+                    initialLastDate: new DateTime.now(),
+                    firstDate: new DateTime(2000),
+                    lastDate: new DateTime.now());
+                if (picked != null && picked.length == 2) {
+                  fromDate = formatter.format(picked[0]);
+                  toDate = formatter.format(picked[1]);
+                  _loadData(fromDate, toDate);
+                }
+              } else {
+                click = false;
               }
               break;
           }

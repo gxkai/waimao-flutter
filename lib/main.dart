@@ -11,6 +11,7 @@ import 'package:waimao/views/keyword_ranking/keyword_ranking.dart';
 import 'package:waimao/views/login_page.dart';
 import 'package:waimao/views/message/message.dart';
 import 'package:waimao/views/mine/index.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 //import 'views/welcome_page/index.dart';
 
@@ -58,6 +59,14 @@ class _MyAppState extends State<MyApp> {
       home: new Scaffold(body: showWelcomePage()),
       debugShowCheckedModeBanner: false,
       routes: routes,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      supportedLocales: [
+        const Locale("zh", "CH"),
+        const Locale("en", "US")
+      ],
     );
   }
 }
