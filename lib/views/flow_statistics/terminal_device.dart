@@ -244,6 +244,7 @@ class TerminalDeviceState extends State<TerminalDevice>
               print(4);
               final List<DateTime> picked = await DateRagePicker.showDatePicker(
                   context: context,
+                  locale: Locale("zh"),
                   initialFirstDate: new DateTime.now(),
                   initialLastDate: new DateTime.now(),
                   firstDate: new DateTime(2000),

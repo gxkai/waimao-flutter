@@ -664,10 +664,12 @@ class AccessTimeState extends State<AccessTime>
               print(4);
               final List<DateTime> picked = await DateRagePicker.showDatePicker(
                   context: context,
+                  locale: Locale("zh"),
                   initialFirstDate: new DateTime.now(),
                   initialLastDate: new DateTime.now(),
                   firstDate: new DateTime(2000),
-                  lastDate: new DateTime.now());
+                  lastDate: new DateTime.now()
+              );
               if (picked != null && picked.length == 2) {
                 fromDate = formatter.format(picked[0]);
                 toDate = formatter.format(picked[1]);
