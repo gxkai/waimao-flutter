@@ -14,7 +14,7 @@ class KeywordRanking extends StatefulWidget {
 
 class KeywordRankingState extends State<KeywordRanking> {
   bool _loading = false;
-  int _limit = 5;
+  int _limit = 8;
   int _currentPage = 1;
   int _lastPage = 1;
   List<TableRow> _tableRows = new List();
@@ -23,6 +23,9 @@ class KeywordRankingState extends State<KeywordRanking> {
   num first = 0;
   num second = 0;
   num third = 0;
+
+  Map<num, String> _rank = {1:'首', 2:'二', 3:'三'};
+
   @override
   Widget build(BuildContext context) {
     final RankingCount = Container(
@@ -140,7 +143,7 @@ class KeywordRankingState extends State<KeywordRanking> {
               defaultVerticalAlignment: TableCellVerticalAlignment.middle,
               columnWidths: const {
                 //列宽
-                0: FlexColumnWidth(0.5),
+                0: FlexColumnWidth(0.6),
                 1: FlexColumnWidth(2.0),
                 2: FlexColumnWidth(1.0),
               },
@@ -243,13 +246,10 @@ class KeywordRankingState extends State<KeywordRanking> {
           ),
           children: [
             // 表头
-            Padding(
-              padding: EdgeInsets.all(10),
-              child: Text(
-                '序号',
-                style: TextStyle(color: Colors.black, fontSize: 14),
-                textAlign: TextAlign.center,
-              ),
+            Text(
+              '序号',
+              style: TextStyle(color: Colors.black, fontSize: 14),
+              textAlign: TextAlign.center,
             ),
             Padding(
               padding: EdgeInsets.all(10),
@@ -284,13 +284,14 @@ class KeywordRankingState extends State<KeywordRanking> {
     List<KeywordData> list = keyword.data;
     num currentPage = keyword.currentPage;
     num lastPage = keyword.lastPage;
+    num serialNumber = _limit * (currentPage - 1); // 序号累加数
     if (_tableRows.length > 1) {
       _tableRows.removeRange(1, _tableRows.length);
     }
     list.forEach((item) {
       _tableRows.add(TableRow(children: [
         Text(
-          (list.indexOf(item) + 1).toString(),
+          (list.indexOf(item) + 1 + serialNumber).toString(),
           textAlign: TextAlign.center,
         ),
         Padding(
@@ -310,13 +311,7 @@ class KeywordRankingState extends State<KeywordRanking> {
             textColor: Colors.white,
             highlightColor: Colors.blue[700],
             splashColor: Colors.blue[700],
-            shape: RoundedRectangleBorder(
-                side: BorderSide(
-                  color: Colors.white,
-                  width: 1,
-                ),
-                borderRadius: BorderRadius.circular(8)),
-            child: Text('${item.page}：${item.number}'),
+            child: Text('${_rank[item.page]}: ${item.number}'),
           ),
         ),
       ]));
