@@ -6,6 +6,7 @@ import 'package:waimao/model/visit_by_day_info.dart';
 import 'package:waimao/utils/data_utils.dart';
 import 'package:waimao/views/flow_statistics/visitors_info_select.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:waimao/views/home_page.dart';
 
 class FlowStatistics extends StatefulWidget {
   static String tag = 'flow-statistics';
@@ -37,7 +38,7 @@ class FlowStatisticsState extends State<FlowStatistics> {
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.of(context).popAndPushNamed(HomePage.tag);
             }),
         actions: <Widget>[
           IconButton(
@@ -57,7 +58,7 @@ class FlowStatisticsState extends State<FlowStatistics> {
         controller: _refreshController,
         onRefresh: _onRefresh,
         child: Container(
-          padding: EdgeInsets.all(15),
+          padding: EdgeInsets.all(10),
           alignment: AlignmentDirectional.topCenter,
           color: Color.fromRGBO(237, 237, 237, 1),
           child: ListView(
@@ -78,7 +79,7 @@ class FlowStatisticsState extends State<FlowStatistics> {
                           ),
                           Container(
                             height: 300,
-                            padding: EdgeInsets.all(16.0),
+                            padding: EdgeInsets.symmetric(vertical: 5.0),
                             child: ListView(
                               children: <Widget>[
                                 DataTable(
@@ -98,7 +99,7 @@ class FlowStatisticsState extends State<FlowStatistics> {
                                     return DataRow(cells: [
                                       DataCell(Text(new DateFormat('yyyy-MM-dd')
                                           .format(row.key))),
-                                      DataCell(Text(row.pv.toString())),
+                                      DataCell(Text(row.pv.toString(),textAlign: TextAlign.end,)),
                                       DataCell(Text(row.uv.toString())),
                                     ]);
                                   }).toList(),

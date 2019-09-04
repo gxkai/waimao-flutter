@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'dart:convert';
 import 'package:waimao/utils/data_utils.dart';
+import 'package:waimao/utils/shared_preferences.dart';
+
+SpUtil sp;
 
 class MyProduct extends StatefulWidget {
 
@@ -9,12 +13,8 @@ class MyProduct extends StatefulWidget {
 }
 
 class _MyProductState extends State<MyProduct> {
-  var product = {
-    'name': '55555',
-    'package': '55555',
-    'started': '55555',
-    'year': 1
-  };
+
+  dynamic product;
 
   @override
   Widget build(BuildContext context) {
@@ -42,22 +42,22 @@ class _MyProductState extends State<MyProduct> {
                   children: <Widget>[
                     ListTile(
                         title: Text('网站名称'),
-                        trailing: Text("${ product['name'] }")
+                        trailing: Text(product != null ? "${ product['name'] }" :'555')
                     ),
                     Divider(),
                     ListTile(
                       title: Text('套餐版本'),
-                      trailing: Text('${ product['package'] }'),
+                      trailing: Text(product != null ? "${ product['package'] }" :'555'),
                     ),
                     Divider(),
                     ListTile(
                       title: Text('服务开始时间'),
-                      trailing: Text('${ product['started'] }'),
+                      trailing: Text(product != null ? "${ product['started_at'] }" :'555'),
                     ),
                     Divider(),
                     ListTile(
                       title: Text('服务年限'),
-                      trailing: Text('${ product['year'] }年'),
+                      trailing: Text(product != null ? "${ product['year'] }年" :'1年'),
                     ),
                     Divider()
                   ],
@@ -74,14 +74,18 @@ class _MyProductState extends State<MyProduct> {
     loadData();
   }
 
-  loadData() {
-    DataUtils.myProduct().then((result) {
-      setState(() {
-        product['name'] = result.name;
-        product['package'] = result.package;
-        product['started'] = result.started;
-        product['year'] = result.year;
-      });
+  loadData() async{
+   sp = await SpUtil.getInstance();
+   dynamic list = sp.getString('product');
+
+    if ( list == null ) {
+      list = await DataUtils.myProduct();
+      list = json.encode(list);
+      sp.putString('product', list);
+    }
+
+    setState(() {
+      product = json.decode(list);
     });
   }
 

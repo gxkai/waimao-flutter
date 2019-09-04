@@ -7,6 +7,7 @@ import 'package:waimao/utils/data_utils.dart';
 import 'package:waimao/utils/progress_dialog.dart';
 import 'package:waimao/views/flow_statistics/visitors_info_select.dart';
 import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;
+import 'package:waimao/views/home_page.dart';
 
 class ArealDistribution extends StatefulWidget {
   static String tag = 'areal-distribution';
@@ -62,7 +63,7 @@ class ArealDistributionState extends State<ArealDistribution>
   @override
   Widget build(BuildContext context) {
     final _kTabPageContainer = Container(
-      padding: EdgeInsets.all(15),
+      padding: EdgeInsets.all(10),
       alignment: AlignmentDirectional.topCenter,
       color: Color.fromRGBO(237, 237, 237, 1),
       child: ListView(
@@ -134,7 +135,12 @@ class ArealDistributionState extends State<ArealDistribution>
                             return DataRow(cells: [
                               DataCell(
                                   Text((items.indexOf(item) + 1).toString())),
-                              DataCell(Text(item.key)),
+                              DataCell(
+                                SizedBox(
+                                  width: 80.0,
+                                  child:Text(item.key)
+                                ),
+                              ),
                               DataCell(Text(item.pv.toString())),
                               DataCell(Text(item.uv.toString())),
                             ]);
@@ -168,7 +174,7 @@ class ArealDistributionState extends State<ArealDistribution>
         leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.of(context).popAndPushNamed(HomePage.tag);
             }),
         actions: <Widget>[
           IconButton(

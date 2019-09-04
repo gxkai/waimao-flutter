@@ -44,64 +44,81 @@ class FlowStatisticsSelectState extends State<FlowStatisticsSelect> {
           padding: EdgeInsets.only(top: 10),
           child: GridView.count(
               crossAxisCount: 4,
+              childAspectRatio: 1.5,
               padding: EdgeInsets.all(20),
               children: [
-                GestureDetector(
-                  child: Column(
-                    children: <Widget>[
-                      Icon(IconData(0xe636, fontFamily: "iconfont")),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("流量统计")
-                    ],
+                Material(
+                  child: InkWell(
+                    splashColor: Colors.blue[200],
+                    highlightColor: Colors.transparent,
+                    child: Column(
+                      children: <Widget>[
+                        Icon(IconData(0xe636, fontFamily: "iconfont")),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text("流量统计")
+                      ],
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pushNamed(FlowStatistics.tag);
+                    },
                   ),
-                  onTap: () {
-                    Navigator.of(context).pushNamed(FlowStatistics.tag);
-                  },
                 ),
-                GestureDetector(
-                  child: Column(
-                    children: <Widget>[
-                      Icon(IconData(0xe619, fontFamily: "iconfont")),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("访问时间")
-                    ],
+                Material(
+                  child: InkWell(
+                    splashColor: Colors.blue[200],
+                    highlightColor: Colors.transparent,
+                    child: Column(
+                      children: <Widget>[
+                        Icon(IconData(0xe619, fontFamily: "iconfont")),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text("访问时间")
+                      ],
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pushNamed(AccessTime.tag);
+                    },
                   ),
-                  onTap: () {
-                    Navigator.of(context).pushNamed(AccessTime.tag);
-                  },
                 ),
-                GestureDetector(
-                  child: Column(
-                    children: <Widget>[
-                      Icon(IconData(0xe65b, fontFamily: "iconfont")),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("地域分布")
-                    ],
+                Material(
+                  child: InkWell(
+                    splashColor: Colors.blue[200],
+                    highlightColor: Colors.transparent,
+                    child: Column(
+                      children: <Widget>[
+                        Icon(IconData(0xe65b, fontFamily: "iconfont")),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text("地域分布")
+                      ],
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pushNamed(ArealDistribution.tag);
+                    },
                   ),
-                  onTap: () {
-                    Navigator.of(context).pushNamed(ArealDistribution.tag);
-                  },
                 ),
-                GestureDetector(
-                  child: Column(
-                    children: <Widget>[
-                      Icon(IconData(0xe673, fontFamily: "iconfont")),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("终端设备")
-                    ],
+                Material(
+                  child: InkWell(
+                    splashColor: Colors.blue[200],
+                    highlightColor: Colors.transparent,
+                    child: Column(
+                      children: <Widget>[
+                        Icon(IconData(0xe673, fontFamily: "iconfont")),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text("终端设备")
+                      ],
+                    ),
+                    onTap: () {
+                      Navigator.of(context).pushNamed(TerminalDevice.tag);
+                    },
                   ),
-                  onTap: () {
-                    Navigator.of(context).pushNamed(TerminalDevice.tag);
-                  },
-                ),
+                )
               ]),
         ));
   }
