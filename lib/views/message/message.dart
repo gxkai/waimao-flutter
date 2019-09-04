@@ -149,7 +149,7 @@ class _RenderListState extends State<RenderList> {
                     const EdgeInsets.only(bottom: 10.0, left: 5.0, right: 5.0),
                 children: <Widget>[
                   DataTable(
-                    columnSpacing: 30.0,
+                    columnSpacing: 15.0,
                     columns: [
                       DataColumn(label: Text('发件人')),
                       DataColumn(label: Text('状态')),
@@ -158,27 +158,38 @@ class _RenderListState extends State<RenderList> {
                     ],
                     rows: messages.map((row) {
                       return DataRow(cells: [
-                        DataCell(Text(row.name)),
+                        DataCell(SizedBox(width: 80, child: Text(row.name))),
                         DataCell(
-                          SizedBox(
-                              width: 60.0,
-                              child: RaisedButton(
-                                  color: row.isRead == 1
-                                      ? Colors.grey
-                                      : Colors.blue,
-                                  child: Text(
-                                    row.isRead == 1 ? '已读' : '未读',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  onPressed: () {})),
+                          Container(
+                              padding: EdgeInsets.all(4.0),
+                              margin: EdgeInsets.symmetric(vertical: 10.0),
+                              decoration: BoxDecoration(
+                                color: row.isRead == 1
+                                    ? Colors.grey
+                                    : Colors.blue,
+                                borderRadius: BorderRadius.circular(4.0)
+                              ),
+                              
+                              child: Text(
+                                row.isRead == 1 ? '已读' : '未读',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                          ),
                         ),
                         DataCell(Text(new DateFormat('yyyy-MM-dd')
                             .format(row.createdAt))),
-                        DataCell(Text('查看'), onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => DetailPage(message: row),
-                          ));
-                        })
+                        DataCell(
+                          SizedBox(
+                            width: 60.0,
+                            child:RaisedButton(
+                              color: Colors.blue,
+                              child: Text('查看', style: TextStyle(color:Colors.white)),
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage(message: row)));
+                              }
+                            )
+                          )
+                        )
                       ]);
                     }).toList(),
                   ),
@@ -191,9 +202,12 @@ class _RenderListState extends State<RenderList> {
                           ))
                       : _isLoading ?Column(
                         children: <Widget>[
-                          SizedBox(
-                              height: 30.0,
-                              child: Image.asset('assets/images/loading.gif')
+                          Padding(
+                            padding: EdgeInsets.only(top: 10.0),
+                            child: SizedBox(
+                                height: 30.0,
+                                child: Image.asset('assets/images/loading.gif')
+                            ),
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(vertical: 10.0),
