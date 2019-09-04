@@ -114,7 +114,7 @@ class ArealDistributionState extends State<ArealDistribution>
                     height: 300,
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: ListView(
-                      padding: EdgeInsets.only(bottom: 70.0),
+                      padding: EdgeInsets.only(bottom: 20.0),
                       children: <Widget>[
                         DataTable(
                           columnSpacing: 20,
