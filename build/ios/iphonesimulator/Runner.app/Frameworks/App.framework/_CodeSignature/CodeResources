@@ -20,9 +20,17 @@
 		<data>
 		fPAlZIHOEuY3SCNBJSyVQc9G4mw=
 		</data>
+		<key>flutter_assets/assets/app.db</key>
+		<data>
+		pHclo5AqNqdhgw5yF19/VrYmIfE=
+		</data>
 		<key>flutter_assets/assets/fonts/iconfont.ttf</key>
 		<data>
 		2QyuxRUYjw5ifWnb1paVnHtcT+c=
+		</data>
+		<key>flutter_assets/assets/images/loading.gif</key>
+		<data>
+		tBwRYpTgCSz2eHAIe8DLoM3vd94=
 		</data>
 		<key>flutter_assets/assets/images/login_bg.png</key>
 		<data>
@@ -31,6 +39,10 @@
 		<key>flutter_assets/assets/images/logo.png</key>
 		<data>
 		1gNyZ1awSR3tlCYVdWa6Ljl7Pp4=
+		</data>
+		<key>flutter_assets/assets/images/wm.png</key>
+		<data>
+		6N6xrkc3kU7FQgukljftDpAJ6wY=
 		</data>
 		<key>flutter_assets/fonts/MaterialIcons-Regular.ttf</key>
 		<data>
@@ -76,11 +88,25 @@
 			3eGTDuSDrxJkUdv5YptDIP4Hzl8sX2us1K8xzAJp19Q=
 			</data>
 		</dict>
+		<key>flutter_assets/assets/app.db</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			8mlH3vdCy73WnWB+2i7hApAm5OzUt0e7SE+WJCYiUVg=
+			</data>
+		</dict>
 		<key>flutter_assets/assets/fonts/iconfont.ttf</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			So2OVdeOK8atxwPAbyOQ+80wKNdu64IVUlCOOvUHbsE=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/images/loading.gif</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			usX3COVyWTa6sodhsfS7eyanzrrm0dlGpqHJ6FzopKU=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/images/login_bg.png</key>
@@ -95,6 +121,13 @@
 			<key>hash2</key>
 			<data>
 			rFUK11c34CjA+mVm7o6T2J8TlmxyKjGQsCG+ezk4qxY=
+			</data>
+		</dict>
+		<key>flutter_assets/assets/images/wm.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			ZNhr1IZ1oRrLmPutCWT44Z/UHmvAA+AOSDWgJpILhf8=
 			</data>
 		</dict>
 		<key>flutter_assets/fonts/MaterialIcons-Regular.ttf</key>
