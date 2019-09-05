@@ -3,6 +3,7 @@ import 'package:waimao/model/keyword_count.dart';
 import 'package:waimao/models/keyword.dart';
 import 'package:waimao/models/keywordData.dart';
 import 'package:waimao/utils/data_utils.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:waimao/utils/progress_dialog.dart';
 
 class KeywordRanking extends StatefulWidget {
@@ -13,6 +14,9 @@ class KeywordRanking extends StatefulWidget {
 }
 
 class KeywordRankingState extends State<KeywordRanking> {
+  RefreshController _refreshController =
+    RefreshController(initialRefresh: false);
+
   bool _loading = false;
   int _limit = 8;
   int _currentPage = 1;
@@ -25,6 +29,16 @@ class KeywordRankingState extends State<KeywordRanking> {
   num third = 0;
 
   Map<num, String> _rank = {1:'首', 2:'二', 3:'三'};
+
+  void _onRefresh() async {
+    try {
+      await _loadData();
+      // if failed,use refreshFailed()
+      _refreshController.refreshCompleted();
+    } catch (e) {
+      _refreshController.refreshFailed();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -212,26 +226,35 @@ class KeywordRankingState extends State<KeywordRanking> {
                 Navigator.pop(context);
               }),
         ),
-        body: Stack(
-          children: <Widget>[
-            Container(
-              color: Colors.grey[200],
-              child: Container(
-                  margin: EdgeInsets.all(10.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                  child:
-                      ListView(children: <Widget>[RankingCount, RankingList])),
-            ),
-            ProgressDialog(
-                isLoading: _loading,
-                message: '正在加载...',
-                alpha: 0.35,
-                child: Container()),
-          ],
-        ));
+        body:
+          SmartRefresher(
+          enablePullDown: true,
+          enablePullUp: false,
+          header: WaterDropHeader(),
+          controller: _refreshController,
+          onRefresh: _onRefresh,
+          child: Stack(
+            children: <Widget>[
+              Container(
+                color: Colors.grey[200],
+                child: Container(
+                    margin: EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(5.0),
+                    ),
+                    child: ListView(children: <Widget>[RankingCount, RankingList])
+                ),
+              ),
+              ProgressDialog(
+                  isLoading: _loading,
+                  message: '正在加载...',
+                  alpha: 0.35,
+                  child: Container()),
+            ],
+          )
+        )
+    );
   }
 
   @override
