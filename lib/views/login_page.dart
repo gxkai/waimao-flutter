@@ -3,7 +3,6 @@ import 'package:waimao/model/user_info_cache.dart';
 import 'package:waimao/utils/data_utils.dart';
 import 'package:waimao/utils/progress_dialog.dart';
 import 'package:waimao/views/home_page.dart';
-import 'package:loading_overlay/loading_overlay.dart';
 
 class LoginPage extends StatefulWidget {
   static String tag = 'login-page';
@@ -216,12 +215,10 @@ class _LoginPageState extends State<LoginPage> {
       print(result);
       try {
         _userInfoControlModel.deleteAll().then((result) {
-          // print('删除结果：$result');
           _userInfoControlModel
               .insert(
                   UserInfo(password: password, username: username, site: site))
               .then((value) {
-            // print('存储成功:$value');
             Navigator.of(context).pushAndRemoveUntil(
                 new MaterialPageRoute(builder: (context) => HomePage()),
                 (route) => route == null);
