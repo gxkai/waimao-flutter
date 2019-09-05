@@ -280,7 +280,7 @@ class KeywordRankingState extends State<KeywordRanking> {
             ),
           ]),
     );
-    _loadData();
+    _initData();
   }
 
   _loadKeywordCount() async {
@@ -338,18 +338,22 @@ class KeywordRankingState extends State<KeywordRanking> {
     });
   }
 
-  _loadData() async {
+  _initData() async {
     try {
       setState(() {
         _loading = true;
       });
-      await _loadKeywordCount();
-      await _loadKeyword();
+      await _loadData();
     } finally {
       setState(() {
         _loading = false;
       });
     }
+  }
+
+  _loadData() async {
+    await _loadKeywordCount();
+    await _loadKeyword();
   }
 
   @override
