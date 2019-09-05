@@ -46,502 +46,500 @@ class AccessTimeState extends State<AccessTime>
 
   @override
   Widget build(BuildContext context) {
-    final _kTabPageContainer = Container(
-      padding: EdgeInsets.all(10),
-      alignment: AlignmentDirectional.topCenter,
-      color: Color.fromRGBO(237, 237, 237, 1),
-      child: ListView(
-        children: <Widget>[
-          Card(
-              color: Colors.white,
-              child: Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            "访客时间统计表（24小时）",
-                            style: TextStyle(color: Colors.black),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                              child: Table(
-                            border: TableBorder.all(
-                                color: Color.fromRGBO(227, 227, 227, 1),
-                                width: 1.0,
-                                style: BorderStyle.solid),
-                            children: [
-                              TableRow(
-                                decoration: BoxDecoration(
-                                    color: Color.fromRGBO(241, 241, 241, 1)),
-                                children: [
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('00'),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('01'),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('02'),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('03'),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('04'),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('05'),
-                                    ),
-                                  )),
-                                ],
-                              ),
-                              TableRow(
-                                decoration: BoxDecoration(
-                                    color: Color.fromRGBO(255, 255, 255, 1)),
-                                children: [
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[0].docCount.toString()),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[1].docCount.toString()),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[2].docCount.toString()),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[3].docCount.toString()),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[4].docCount.toString()),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[5].docCount.toString()),
-                                    ),
-                                  )),
-                                ],
-                              ),
-                              TableRow(
-                                decoration: BoxDecoration(
-                                    color: Color.fromRGBO(241, 241, 241, 1)),
-                                children: [
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('06'),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('07'),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('08'),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('09'),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('10'),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('11'),
-                                    ),
-                                  )),
-                                ],
-                              ),
-                              TableRow(
-                                decoration: BoxDecoration(
-                                    color: Color.fromRGBO(255, 255, 255, 1)),
-                                children: [
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[6].docCount.toString()),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[7].docCount.toString()),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[8].docCount.toString()),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[9].docCount.toString()),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[10].docCount.toString()),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[11].docCount.toString()),
-                                    ),
-                                  )),
-                                ],
-                              ),
-                              TableRow(
-                                decoration: BoxDecoration(
-                                    color: Color.fromRGBO(241, 241, 241, 1)),
-                                children: [
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('12'),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('13'),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('14'),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('15'),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('16'),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('17'),
-                                    ),
-                                  )),
-                                ],
-                              ),
-                              TableRow(
-                                decoration: BoxDecoration(
-                                    color: Color.fromRGBO(255, 255, 255, 1)),
-                                children: [
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[12].docCount.toString()),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[13].docCount.toString()),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[14].docCount.toString()),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[15].docCount.toString()),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[16].docCount.toString()),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[17].docCount.toString()),
-                                    ),
-                                  )),
-                                ],
-                              ),
-                              TableRow(
-                                decoration: BoxDecoration(
-                                    color: Color.fromRGBO(241, 241, 241, 1)),
-                                children: [
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('18'),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('19'),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('20'),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('21'),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('22'),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text('23'),
-                                    ),
-                                  )),
-                                ],
-                              ),
-                              TableRow(
-                                decoration: BoxDecoration(
-                                    color: Color.fromRGBO(255, 255, 255, 1)),
-                                children: [
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[18].docCount.toString()),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[19].docCount.toString()),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[20].docCount.toString()),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[21].docCount.toString()),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[22].docCount.toString()),
-                                    ),
-                                  )),
-                                  TableCell(
-                                      child: SizedBox(
-                                    height: 30,
-                                    child: Center(
-                                      child: Text(items.isEmpty
-                                          ? '0'
-                                          : items[23].docCount.toString()),
-                                    ),
-                                  )),
-                                ],
-                              ),
-                            ],
-                          ))
-                        ],
-                      )
-                    ],
-                  ))),
-          SizedBox(
-            height: 10,
-          ),
-          Card(
-              color: Colors.white,
-              child: Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            "访问时间分布",
-                            style: TextStyle(color: Colors.black),
-                          )
-                        ],
-                      ),
-                      Container(
-                        height: 200,
-                        child: NumericComboLinePointChart.withVisitByHourData(
-                            items),
-                      )
-                    ],
-                  ))),
-        ],
-      ),
+    final _kTabPageContainer = ListView(
+      padding: EdgeInsets.all(20),
+      children: <Widget>[
+        Card(
+            color: Colors.white,
+            child: Container(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          "访客时间统计表（24小时）",
+                          style: TextStyle(color: Colors.black),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                            child: Table(
+                              border: TableBorder.all(
+                                  color: Color.fromRGBO(227, 227, 227, 1),
+                                  width: 1.0,
+                                  style: BorderStyle.solid),
+                              children: [
+                                TableRow(
+                                  decoration: BoxDecoration(
+                                      color: Color.fromRGBO(241, 241, 241, 1)),
+                                  children: [
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('00'),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('01'),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('02'),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('03'),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('04'),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('05'),
+                                          ),
+                                        )),
+                                  ],
+                                ),
+                                TableRow(
+                                  decoration: BoxDecoration(
+                                      color: Color.fromRGBO(255, 255, 255, 1)),
+                                  children: [
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[0].docCount.toString()),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[1].docCount.toString()),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[2].docCount.toString()),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[3].docCount.toString()),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[4].docCount.toString()),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[5].docCount.toString()),
+                                          ),
+                                        )),
+                                  ],
+                                ),
+                                TableRow(
+                                  decoration: BoxDecoration(
+                                      color: Color.fromRGBO(241, 241, 241, 1)),
+                                  children: [
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('06'),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('07'),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('08'),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('09'),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('10'),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('11'),
+                                          ),
+                                        )),
+                                  ],
+                                ),
+                                TableRow(
+                                  decoration: BoxDecoration(
+                                      color: Color.fromRGBO(255, 255, 255, 1)),
+                                  children: [
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[6].docCount.toString()),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[7].docCount.toString()),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[8].docCount.toString()),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[9].docCount.toString()),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[10].docCount.toString()),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[11].docCount.toString()),
+                                          ),
+                                        )),
+                                  ],
+                                ),
+                                TableRow(
+                                  decoration: BoxDecoration(
+                                      color: Color.fromRGBO(241, 241, 241, 1)),
+                                  children: [
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('12'),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('13'),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('14'),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('15'),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('16'),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('17'),
+                                          ),
+                                        )),
+                                  ],
+                                ),
+                                TableRow(
+                                  decoration: BoxDecoration(
+                                      color: Color.fromRGBO(255, 255, 255, 1)),
+                                  children: [
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[12].docCount.toString()),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[13].docCount.toString()),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[14].docCount.toString()),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[15].docCount.toString()),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[16].docCount.toString()),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[17].docCount.toString()),
+                                          ),
+                                        )),
+                                  ],
+                                ),
+                                TableRow(
+                                  decoration: BoxDecoration(
+                                      color: Color.fromRGBO(241, 241, 241, 1)),
+                                  children: [
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('18'),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('19'),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('20'),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('21'),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('22'),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text('23'),
+                                          ),
+                                        )),
+                                  ],
+                                ),
+                                TableRow(
+                                  decoration: BoxDecoration(
+                                      color: Color.fromRGBO(255, 255, 255, 1)),
+                                  children: [
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[18].docCount.toString()),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[19].docCount.toString()),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[20].docCount.toString()),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[21].docCount.toString()),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[22].docCount.toString()),
+                                          ),
+                                        )),
+                                    TableCell(
+                                        child: SizedBox(
+                                          height: 30,
+                                          child: Center(
+                                            child: Text(items.isEmpty
+                                                ? '0'
+                                                : items[23].docCount.toString()),
+                                          ),
+                                        )),
+                                  ],
+                                ),
+                              ],
+                            ))
+                      ],
+                    )
+                  ],
+                ))),
+        SizedBox(
+          height: 10,
+        ),
+        Card(
+            color: Colors.white,
+            child: Container(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          "访问时间分布",
+                          style: TextStyle(color: Colors.black),
+                        )
+                      ],
+                    ),
+                    Container(
+                      height: 200,
+                      child: NumericComboLinePointChart.withVisitByHourData(
+                          items),
+                    )
+                  ],
+                )
+            )
+        ),
+      ],
     );
     final _kTabPage = SmartRefresher(
       enablePullDown: true,
@@ -578,6 +576,7 @@ class AccessTimeState extends State<AccessTime>
         ],
       ),
       body: Scaffold(
+          backgroundColor: Color.fromRGBO(237, 237, 237, 1),
           appBar: PreferredSize(
               child: AppBar(
                 backgroundColor: Colors.white,

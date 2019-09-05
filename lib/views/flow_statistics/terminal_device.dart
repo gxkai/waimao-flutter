@@ -46,48 +46,44 @@ class TerminalDeviceState extends State<TerminalDevice>
 
   @override
   Widget build(BuildContext context) {
-    final _kTabPageContainer = Container(
-      padding: EdgeInsets.all(10),
-      alignment: AlignmentDirectional.topCenter,
-      color: Color.fromRGBO(237, 237, 237, 1),
-      child: ListView(
-        children: <Widget>[
-          Card(
-              color: Colors.white,
-              child: Container(
-                  padding: EdgeInsets.all(10),
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            "终端比重",
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                            ),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Text(
-                            "日期范围:$fromDate-$toDate",
-                            style: TextStyle(fontSize: 12),
-                          )
-                        ],
-                      ),
-                      Container(
-                        height: 200,
-                        child: DatumLegendWithMeasures.withSampleData(lsList),
-                      )
-                    ],
-                  ))),
-        ],
-      ),
+    final _kTabPageContainer = ListView(
+      padding: EdgeInsets.all(20),
+      children: <Widget>[
+        Card(
+            color: Colors.white,
+            child: Container(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: <Widget>[
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          "终端比重",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          "日期范围:$fromDate-$toDate",
+                          style: TextStyle(fontSize: 12),
+                        )
+                      ],
+                    ),
+                    Container(
+                      height: 200,
+                      child: DatumLegendWithMeasures.withSampleData(lsList),
+                    )
+                  ],
+                ))),
+      ],
     );
     final _kTabPage = SmartRefresher(
       enablePullDown: true,
@@ -124,6 +120,7 @@ class TerminalDeviceState extends State<TerminalDevice>
         ],
       ),
       body: Scaffold(
+          backgroundColor: Color.fromRGBO(237, 237, 237, 1),
           appBar: PreferredSize(
               child: AppBar(
                 backgroundColor: Colors.white,

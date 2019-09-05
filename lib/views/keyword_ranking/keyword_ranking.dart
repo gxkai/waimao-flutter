@@ -15,7 +15,7 @@ class KeywordRanking extends StatefulWidget {
 
 class KeywordRankingState extends State<KeywordRanking> {
   RefreshController _refreshController =
-    RefreshController(initialRefresh: false);
+      RefreshController(initialRefresh: false);
 
   bool _loading = false;
   int _limit = 8;
@@ -28,7 +28,7 @@ class KeywordRankingState extends State<KeywordRanking> {
   num second = 0;
   num third = 0;
 
-  Map<num, String> _rank = {1:'首', 2:'二', 3:'三'};
+  Map<num, String> _rank = {1: '首', 2: '二', 3: '三'};
 
   void _onRefresh() async {
     try {
@@ -43,6 +43,7 @@ class KeywordRankingState extends State<KeywordRanking> {
   @override
   Widget build(BuildContext context) {
     final RankingCount = Container(
+      color: Colors.white,
       padding: EdgeInsets.symmetric(vertical: 30, horizontal: 15),
       child: Column(
         children: <Widget>[
@@ -150,6 +151,7 @@ class KeywordRankingState extends State<KeywordRanking> {
       ),
     );
     final RankingList = Container(
+        color: Colors.white,
         padding: EdgeInsets.only(left: 15, right: 15),
         child: Column(
           children: <Widget>[
@@ -218,6 +220,7 @@ class KeywordRankingState extends State<KeywordRanking> {
           ],
         ));
     return Scaffold(
+        backgroundColor: Color.fromRGBO(237, 237, 237, 1),
         appBar: AppBar(
           title: Text('关键词排名'),
           leading: IconButton(
@@ -226,35 +229,24 @@ class KeywordRankingState extends State<KeywordRanking> {
                 Navigator.pop(context);
               }),
         ),
-        body:
-          SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
-          child: Stack(
-            children: <Widget>[
-              Container(
-                color: Colors.grey[200],
-                child: Container(
-                    margin: EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: ListView(children: <Widget>[RankingCount, RankingList])
-                ),
-              ),
-              ProgressDialog(
-                  isLoading: _loading,
-                  message: '正在加载...',
-                  alpha: 0.35,
-                  child: Container()),
-            ],
-          )
-        )
-    );
+        body: Stack(
+          children: <Widget>[
+            SmartRefresher(
+                enablePullDown: true,
+                enablePullUp: false,
+                header: WaterDropHeader(),
+                controller: _refreshController,
+                onRefresh: _onRefresh,
+                child: ListView(
+                    padding: EdgeInsets.all(20),
+                    children: <Widget>[RankingCount, RankingList])),
+            ProgressDialog(
+                isLoading: _loading,
+                message: '正在加载...',
+                alpha: 0.35,
+                child: Container()),
+          ],
+        ));
   }
 
   @override

@@ -33,6 +33,7 @@ class FlowStatisticsState extends State<FlowStatistics> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromRGBO(237, 237, 237, 1),
       appBar: AppBar(
         title: Text('流量统计'),
         leading: IconButton(
@@ -57,85 +58,81 @@ class FlowStatisticsState extends State<FlowStatistics> {
         header: WaterDropHeader(),
         controller: _refreshController,
         onRefresh: _onRefresh,
-        child: Container(
-          padding: EdgeInsets.all(10),
-          alignment: AlignmentDirectional.topCenter,
-          color: Color.fromRGBO(237, 237, 237, 1),
-          child: ListView(
-            children: <Widget>[
-              Card(
-                  color: Colors.white,
-                  child: Container(
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        children: <Widget>[
-                          Row(
+        child: ListView(
+          padding: EdgeInsets.all(20),
+          children: <Widget>[
+            Card(
+                color: Colors.white,
+                child: Container(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              "最近30天浏览/访客量",
+                              style: TextStyle(color: Colors.black),
+                            )
+                          ],
+                        ),
+                        Container(
+                          height: 300,
+                          padding: EdgeInsets.symmetric(vertical: 5.0),
+                          child: ListView(
                             children: <Widget>[
-                              Text(
-                                "最近30天浏览/访客量",
-                                style: TextStyle(color: Colors.black),
-                              )
+                              DataTable(
+                                columnSpacing: 20,
+                                columns: [
+                                  DataColumn(
+                                    label: Text('日期'),
+                                  ),
+                                  DataColumn(
+                                    label: Text('浏览量uv'),
+                                  ),
+                                  DataColumn(
+                                    label: Text('访客量pv'),
+                                  ),
+                                ],
+                                rows: rows.map((row) {
+                                  return DataRow(cells: [
+                                    DataCell(Text(new DateFormat('yyyy-MM-dd')
+                                        .format(row.key))),
+                                    DataCell(Text(row.pv.toString(),textAlign: TextAlign.end,)),
+                                    DataCell(Text(row.uv.toString())),
+                                  ]);
+                                }).toList(),
+                              ),
                             ],
                           ),
-                          Container(
-                            height: 300,
-                            padding: EdgeInsets.symmetric(vertical: 5.0),
-                            child: ListView(
-                              children: <Widget>[
-                                DataTable(
-                                  columnSpacing: 20,
-                                  columns: [
-                                    DataColumn(
-                                      label: Text('日期'),
-                                    ),
-                                    DataColumn(
-                                      label: Text('浏览量uv'),
-                                    ),
-                                    DataColumn(
-                                      label: Text('访客量pv'),
-                                    ),
-                                  ],
-                                  rows: rows.map((row) {
-                                    return DataRow(cells: [
-                                      DataCell(Text(new DateFormat('yyyy-MM-dd')
-                                          .format(row.key))),
-                                      DataCell(Text(row.pv.toString(),textAlign: TextAlign.end,)),
-                                      DataCell(Text(row.uv.toString())),
-                                    ]);
-                                  }).toList(),
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ))),
-              SizedBox(
-                height: 10,
-              ),
-              Card(
-                  color: Colors.white,
-                  child: Container(
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Text(
-                                "最近30天浏览/访客量折线图",
-                                style: TextStyle(color: Colors.black),
-                              )
-                            ],
-                          ),
-                          Container(
-                            height: 200,
-                            child:
-                                DateTimeComboLinePointChart.withVisitByDayData(
-                                    rows),
-                          )
-                        ],
-                      ))),
-            ],
-          ),
+                        )
+                      ],
+                    ))),
+            SizedBox(
+              height: 10,
+            ),
+            Card(
+                color: Colors.white,
+                child: Container(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          children: <Widget>[
+                            Text(
+                              "最近30天浏览/访客量折线图",
+                              style: TextStyle(color: Colors.black),
+                            )
+                          ],
+                        ),
+                        Container(
+                          height: 200,
+                          child:
+                          DateTimeComboLinePointChart.withVisitByDayData(
+                              rows),
+                        )
+                      ],
+                    ))),
+          ],
         ),
       ),
     );

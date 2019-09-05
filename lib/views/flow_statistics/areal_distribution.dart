@@ -47,97 +47,92 @@ class ArealDistributionState extends State<ArealDistribution>
 
   @override
   Widget build(BuildContext context) {
-    final _kTabPageContainer = Container(
-      padding: EdgeInsets.all(10),
-      alignment: AlignmentDirectional.topCenter,
-      color: Color.fromRGBO(237, 237, 237, 1),
-      child: ListView(
-        children: items.isEmpty
-            ? [
-                Center(
-                  child: Text("没有数据"),
-                )
-              ]
-            : [
-                Card(
-                    color: Colors.white,
-                    child: Container(
-                        padding: EdgeInsets.all(10),
-                        child: Column(
-                          children: <Widget>[
-                            Row(
-                              children: <Widget>[
-                                Text(
-                                  "访问者国家地区比重",
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18,
-                                  ),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Text(
-                                  "日期范围:$fromDate-$toDate",
-                                  style: TextStyle(fontSize: 12),
-                                )
-                              ],
-                            ),
-                            Container(
-                              height: 200,
-                              child: DatumLegendWithMeasures.withSampleData(
-                                  lsList),
-                            )
-                          ],
-                        ))),
-                Card(
-                  child: Container(
-                    height: 300,
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: ListView(
-                      padding: EdgeInsets.only(bottom: 20.0),
+    final _kTabPageContainer = ListView(
+      padding: EdgeInsets.all(20),
+      children: items.isEmpty
+          ? [
+        Center(
+          child: Text("没有数据"),
+        )
+      ]
+          : [
+        Card(
+            color: Colors.white,
+            child: Container(
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  children: <Widget>[
+                    Row(
                       children: <Widget>[
-                        DataTable(
-                          columnSpacing: 20,
-                          columns: [
-                            DataColumn(
-                              label: Text('序列'),
-                            ),
-                            DataColumn(
-                              label: Text('国家地区'),
-                            ),
-                            DataColumn(
-                              label: Text('浏览量uv'),
-                            ),
-                            DataColumn(
-                              label: Text('访客量pv'),
-                            ),
-                          ],
-                          rows: items.map((item) {
-                            return DataRow(cells: [
-                              DataCell(
-                                  Text((items.indexOf(item) + 1).toString())),
-                              DataCell(
-                                SizedBox(
-                                  width: 80.0,
-                                  child:Text(item.key)
-                                ),
-                              ),
-                              DataCell(Text(item.pv.toString())),
-                              DataCell(Text(item.uv.toString())),
-                            ]);
-                          }).toList(),
-                        ),
+                        Text(
+                          "访问者国家地区比重",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 18,
+                          ),
+                        )
                       ],
                     ),
-                  ),
-                )
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: <Widget>[
+                        Text(
+                          "日期范围:$fromDate-$toDate",
+                          style: TextStyle(fontSize: 12),
+                        )
+                      ],
+                    ),
+                    Container(
+                      height: 200,
+                      child: DatumLegendWithMeasures.withSampleData(
+                          lsList),
+                    )
+                  ],
+                ))),
+        Card(
+          child: Container(
+            height: 300,
+            padding: EdgeInsets.symmetric(horizontal: 16.0),
+            child: ListView(
+              children: <Widget>[
+                DataTable(
+                  columnSpacing: 20,
+                  columns: [
+                    DataColumn(
+                      label: Text('序列'),
+                    ),
+                    DataColumn(
+                      label: Text('国家地区'),
+                    ),
+                    DataColumn(
+                      label: Text('浏览量uv'),
+                    ),
+                    DataColumn(
+                      label: Text('访客量pv'),
+                    ),
+                  ],
+                  rows: items.map((item) {
+                    return DataRow(cells: [
+                      DataCell(
+                          Text((items.indexOf(item) + 1).toString())),
+                      DataCell(
+                        SizedBox(
+                            width: 80.0,
+                            child:Text(item.key)
+                        ),
+                      ),
+                      DataCell(Text(item.pv.toString())),
+                      DataCell(Text(item.uv.toString())),
+                    ]);
+                  }).toList(),
+                ),
               ],
-      ),
+            ),
+          ),
+        )
+      ],
     );
     final _kTabPage = SmartRefresher(
       enablePullDown: true,
@@ -174,6 +169,7 @@ class ArealDistributionState extends State<ArealDistribution>
         ],
       ),
       body: Scaffold(
+          backgroundColor: Color.fromRGBO(237, 237, 237, 1),
           appBar: PreferredSize(
               child: AppBar(
                 backgroundColor: Colors.white,
