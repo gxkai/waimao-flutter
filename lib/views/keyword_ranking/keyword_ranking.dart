@@ -32,6 +32,9 @@ class KeywordRankingState extends State<KeywordRanking> {
 
   void _onRefresh() async {
     try {
+      setState(() {
+        _currentPage = 1;
+      });
       await _loadData();
       // if failed,use refreshFailed()
       _refreshController.refreshCompleted();
@@ -226,33 +229,33 @@ class KeywordRankingState extends State<KeywordRanking> {
                 Navigator.pop(context);
               }),
         ),
-        body:
-          SmartRefresher(
-          enablePullDown: true,
-          enablePullUp: false,
-          header: WaterDropHeader(),
-          controller: _refreshController,
-          onRefresh: _onRefresh,
-          child: Stack(
+        body: Stack(
             children: <Widget>[
-              Container(
-                color: Colors.grey[200],
-                child: Container(
-                    margin: EdgeInsets.all(10.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: ListView(children: <Widget>[RankingCount, RankingList])
-                ),
+              SmartRefresher(
+                  enablePullDown: true,
+                  enablePullUp: false,
+                  header: WaterDropHeader(),
+                  controller: _refreshController,
+                  onRefresh: _onRefresh,
+                  child:  Container(
+                      color: Colors.grey[200],
+                      child: Container(
+                        margin: EdgeInsets.all(10.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5.0),
+                        ),
+                        child: ListView(children: <Widget>[RankingCount, RankingList])
+                      )
+                  )
               ),
+
               ProgressDialog(
                   isLoading: _loading,
                   message: '正在加载...',
                   alpha: 0.35,
                   child: Container()),
             ],
-          )
         )
     );
   }
@@ -289,6 +292,9 @@ class KeywordRankingState extends State<KeywordRanking> {
           ]),
     );
     _loadData();
+    setState(() {
+      _loading = true;
+    });
   }
 
   _loadKeywordCount() async {
@@ -308,6 +314,13 @@ class KeywordRankingState extends State<KeywordRanking> {
     num currentPage = keyword.currentPage;
     num lastPage = keyword.lastPage;
     num serialNumber = _limit * (currentPage - 1); // 序号累加数
+
+    if (currentPage > 1) {
+      setState(() {
+        _loading = true;
+      });
+    }
+
     if (_tableRows.length > 1) {
       _tableRows.removeRange(1, _tableRows.length);
     }
@@ -348,9 +361,6 @@ class KeywordRankingState extends State<KeywordRanking> {
 
   _loadData() async {
     try {
-      setState(() {
-        _loading = true;
-      });
       await _loadKeywordCount();
       await _loadKeyword();
     } finally {

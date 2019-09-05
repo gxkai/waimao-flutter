@@ -22,6 +22,7 @@ class TerminalDeviceState extends State<TerminalDevice>
   bool _loading = false;
   TabController tabController;
   List<LinearSales> lsList = new List();
+  List<VisitByOsInfo> items = new List();
   List<Tab>_kTabs;
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
@@ -51,7 +52,7 @@ class TerminalDeviceState extends State<TerminalDevice>
       alignment: AlignmentDirectional.topCenter,
       color: Color.fromRGBO(237, 237, 237, 1),
       child: ListView(
-        children: <Widget>[
+        children: items.isEmpty ? <Widget>[ Center(child: Text("没有数据"),) ] : <Widget>[
           Card(
               color: Colors.white,
               child: Container(
@@ -85,7 +86,9 @@ class TerminalDeviceState extends State<TerminalDevice>
                         child: DatumLegendWithMeasures.withSampleData(lsList),
                       )
                     ],
-                  ))),
+                  )
+              )
+          ),
         ],
       ),
     );
@@ -111,7 +114,8 @@ class TerminalDeviceState extends State<TerminalDevice>
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {
               Navigator.of(context).popAndPushNamed(HomePage.tag);
-            }),
+            }
+        ),
         actions: <Widget>[
           IconButton(
               icon: Icon(
@@ -186,6 +190,7 @@ class TerminalDeviceState extends State<TerminalDevice>
     lsList.add(new LinearSales("移动端", mobile));
     lsList.add(new LinearSales("PC端", pc));
     setState(() {
+      items = list;
       lsList = lsList;
     });
   }

@@ -5,7 +5,8 @@ import 'package:waimao/views/components/drawer.dart';
 import 'package:waimao/utils/data_utils.dart';
 import 'package:waimao/models/dashboard.dart';
 import 'package:waimao/views/flow_statistics/flow_statistics.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';  // 下拉刷新
+import 'package:waimao/utils/progress_dialog.dart';     // 加载动画
 
 class HomePage extends StatefulWidget {
   static String tag = '首页';
@@ -36,7 +37,9 @@ class HomeContent extends StatefulWidget {
 class _HomeContentState extends State<HomeContent> {
 
   RefreshController _refreshController =
-    RefreshController(initialRefresh: true);
+    RefreshController(initialRefresh: false);
+
+  bool _loading = false;
 
   int messageCount = 0;
   int todayCount = 0;
@@ -67,7 +70,20 @@ class _HomeContentState extends State<HomeContent> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    getData();
+    _initData();
+  }
+
+  void _initData() async {
+    try {
+      setState(() {
+        _loading = true;
+      });
+      await getData();
+    } finally {
+      setState(() {
+        _loading = false;
+      });
+    }
   }
 
   getData() async{
@@ -94,109 +110,103 @@ class _HomeContentState extends State<HomeContent> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return SmartRefresher(
-      enablePullDown: true,
-      enablePullUp: false,
-      header: WaterDropHeader(),
-      controller: _refreshController,
-      onRefresh: _onRefresh,
-      child:ListView(
-        children: <Widget>[
-          Card(
-            elevation: 5.0,
-            margin: const EdgeInsets.all(10.0),
-            child: Material(
-              borderRadius: BorderRadius.circular(4.0),
-              color: Colors.lightBlue,
-              child:InkWell(
-                onTap: (){
-                  Navigator.of(context).pushNamed(MessageList.tag);
-                },
-                child: new Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    new ListTile(
-                      title: Text(
-                        '询盘数量',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.w500
-                        ),
-                      ),
-                      trailing: Icon(Icons.more_horiz, color: Colors.white,),
-                    ),
-                    ListTile(
-                      leading: Icon(IconData(0xe6fd, fontFamily: "iconfont"), size: 40.0, color: Colors.white,),
-                      contentPadding: EdgeInsets.fromLTRB(30, 10, 30, 10),
-                      trailing: Text(
-                        '${ messageCount }',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 40.0,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
-                    Divider(height:10.0, indent:0.0, color: Colors.white,),
-                    new Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10.0),
-                            child:  new Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                new Text("${ todayCount }", style: TextStyle(color: Colors.white, fontSize: 20.0)),
-                                new Text(""),
-                                new Text("今日询盘", style: TextStyle(color: Colors.white)),
-                              ],
-                            ),
-                          ),
-                          flex: 1,
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10.0),
-                            child:  new Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                new Text("${ unread }", style: TextStyle(color: Colors.white, fontSize: 20.0)),
-                                new Text(""),
-                                new Text("未读询盘", style: TextStyle(color: Colors.white)),
-                              ],
-                            ),
-                          ),
-                          flex: 1,
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10.0),
-                            child:  new Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                new Text("${ isRead }", style: TextStyle(color: Colors.white, fontSize: 20.0)),
-                                new Text(""),
-                                new Text("已读询盘", style: TextStyle(color: Colors.white)),
-                              ],
-                            ),
 
+    final Widget _index = ListView(
+      children: <Widget>[
+        Card(
+          elevation: 5.0,
+          margin: const EdgeInsets.all(10.0),
+          child: Material(
+            borderRadius: BorderRadius.circular(4.0),
+            color: Colors.lightBlue,
+            child:InkWell(
+              onTap: (){
+                Navigator.of(context).pushNamed(MessageList.tag);
+              },
+              child: new Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  new ListTile(
+                    title: Text(
+                      '询盘数量',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.w500
+                      ),
+                    ),
+                    trailing: Icon(Icons.more_horiz, color: Colors.white,),
+                  ),
+                  ListTile(
+                    leading: Icon(IconData(0xe6fd, fontFamily: "iconfont"), size: 40.0, color: Colors.white,),
+                    contentPadding: EdgeInsets.fromLTRB(30, 10, 30, 10),
+                    trailing: Text(
+                      '${ messageCount }',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 40.0,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  Divider(height:10.0, indent:0.0, color: Colors.white,),
+                  new Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10.0),
+                          child:  new Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              new Text("${ todayCount }", style: TextStyle(color: Colors.white, fontSize: 20.0)),
+                              new Text(""),
+                              new Text("今日询盘", style: TextStyle(color: Colors.white)),
+                            ],
                           ),
-                          flex: 1,
                         ),
-                      ],
-                    )
-                  ],
-                ),
+                        flex: 1,
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10.0),
+                          child:  new Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              new Text("${ unread }", style: TextStyle(color: Colors.white, fontSize: 20.0)),
+                              new Text(""),
+                              new Text("未读询盘", style: TextStyle(color: Colors.white)),
+                            ],
+                          ),
+                        ),
+                        flex: 1,
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10.0),
+                          child:  new Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              new Text("${ isRead }", style: TextStyle(color: Colors.white, fontSize: 20.0)),
+                              new Text(""),
+                              new Text("已读询盘", style: TextStyle(color: Colors.white)),
+                            ],
+                          ),
+
+                        ),
+                        flex: 1,
+                      ),
+                    ],
+                  )
+                ],
               ),
             ),
           ),
+        ),
 
-          Card(
-            elevation: 5.0,
-            margin: const EdgeInsets.only(left: 10.0, right: 10.0),
-            child: Material(
+        Card(
+          elevation: 5.0,
+          margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+          child: Material(
               borderRadius: BorderRadius.circular(4.0),
               color: Colors.lightBlueAccent,
               child: InkWell(
@@ -280,110 +290,135 @@ class _HomeContentState extends State<HomeContent> {
                   ],
                 ),
               )
-            ),
           ),
+        ),
 
-          Card(
-            elevation: 5.0,
-            margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
-            child: Material(
+        Card(
+          elevation: 5.0,
+          margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+          child: Material(
               borderRadius: BorderRadius.circular(4.0),
               color: Colors.deepPurpleAccent,
-                child:InkWell(
-                  onTap: () {
-                    Navigator.of(context).pushNamed(FlowStatistics.tag);
-                  },
-                  child: new Column(
-                    //横轴起始测对齐
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      new ListTile(
-                        title: Text(
-                          '访客流量',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20.0,
-                              fontWeight: FontWeight.w500
-                          ),
-                        ),
-                        trailing: Icon(Icons.more_horiz, color: Colors.white,),
-                      ),
-                      ListTile(
-                        leading: Icon(IconData(0xe61f, fontFamily: "iconfont"), size: 40.0, color: Colors.white,),
-                        contentPadding: EdgeInsets.fromLTRB(30, 10, 30, 10),
-                        trailing: Text(
-                          '${ pv }',
-                          style: TextStyle(
+              child:InkWell(
+                onTap: () {
+                  Navigator.of(context).pushNamed(FlowStatistics.tag);
+                },
+                child: new Column(
+                  //横轴起始测对齐
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    new ListTile(
+                      title: Text(
+                        '访客流量',
+                        style: TextStyle(
                             color: Colors.white,
-                            fontSize: 40.0,
-                            fontWeight: FontWeight.w700,
-                          ),
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.w500
                         ),
                       ),
-                      Divider(height:10.0, indent:0.0, color: Colors.white,),
+                      trailing: Icon(Icons.more_horiz, color: Colors.white,),
+                    ),
+                    ListTile(
+                      leading: Icon(IconData(0xe61f, fontFamily: "iconfont"), size: 40.0, color: Colors.white,),
+                      contentPadding: EdgeInsets.fromLTRB(30, 10, 30, 10),
+                      trailing: Text(
+                        '${ pv }',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 40.0,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                    Divider(height:10.0, indent:0.0, color: Colors.white,),
 
-                      new Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 10.0),
-                              child:  new Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  new Text("${ pv }", style: TextStyle(color: Colors.white, fontSize: 20.0)),
-                                  new Text(""),
-                                  new Text("浏览量PV", style: TextStyle(color: Colors.white)),
-                                ],
-                              ),
+                    new Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10.0),
+                            child:  new Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                new Text("${ pv }", style: TextStyle(color: Colors.white, fontSize: 20.0)),
+                                new Text(""),
+                                new Text("浏览量PV", style: TextStyle(color: Colors.white)),
+                              ],
                             ),
-                            flex: 2,
                           ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 10.0),
-                              child:  new Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  new Text("${ uv }", style: TextStyle(color: Colors.white, fontSize: 20.0)),
-                                  new Text(""),
-                                  new Text("访客量UV", style: TextStyle(color: Colors.white)),
-                                ],
-                              ),
+                          flex: 2,
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10.0),
+                            child:  new Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                new Text("${ uv }", style: TextStyle(color: Colors.white, fontSize: 20.0)),
+                                new Text(""),
+                                new Text("访客量UV", style: TextStyle(color: Colors.white)),
+                              ],
                             ),
-                            flex: 2,
                           ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 10.0),
-                              child:  new Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  new Text("${ newVisit }%", style: TextStyle(color: Colors.white, fontSize: 20.0)),
-                                  new Text(""),
-                                  new Text("新访量百分比", style: TextStyle(color: Colors.white)),
-                                ],
-                              ),
+                          flex: 2,
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10.0),
+                            child:  new Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                new Text("${ newVisit }%", style: TextStyle(color: Colors.white, fontSize: 20.0)),
+                                new Text(""),
+                                new Text("新访量百分比", style: TextStyle(color: Colors.white)),
+                              ],
                             ),
-                            flex: 2,
                           ),
-                        ],
-                      )
-                    ],
-                  ),
-                )
-            ),
+                          flex: 2,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              )
           ),
+        ),
 
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 10.0),
-            child: Text(
-                "Copyright ©2019 祥云平台",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 12.0, color: Colors.grey)
-            ),
-          )
-        ],
-      )
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          child: Text(
+              "Copyright ©2019 祥云平台",
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 12.0, color: Colors.grey)
+          ),
+        )
+      ],
     );
+
+    // TODO: implement build
+    return Stack(
+          children: <Widget>[
+            SmartRefresher(
+              enablePullDown: true,
+              enablePullUp: false,
+              header: WaterDropHeader(),
+              controller: _refreshController,
+              onRefresh: _onRefresh,
+              child: _index,
+            ),
+            ProgressDialog(
+                isLoading: _loading,
+                message: '正在加载...',
+                alpha: 0.35,
+                child: Container()
+            ),
+          ]
+      );
+  }
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _refreshController.dispose();
   }
 }
