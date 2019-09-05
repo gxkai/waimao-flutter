@@ -249,7 +249,6 @@ class _HomeContentState extends State<HomeContent> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 new Text("${ firstPageKeywords }", style: TextStyle(color: Colors.white, fontSize: 20.0)),
-                                new Text(""),
                                 new Text("第一页排名数量", style: TextStyle(color: Colors.white)),
                               ],
                             ),
@@ -263,7 +262,6 @@ class _HomeContentState extends State<HomeContent> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 new Text("${ secondPageKeywords }", style: TextStyle(color: Colors.white, fontSize: 20.0)),
-                                new Text(""),
                                 new Text("第二页排名数量", style: TextStyle(color: Colors.white)),
                               ],
                             ),
@@ -277,7 +275,6 @@ class _HomeContentState extends State<HomeContent> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 new Text("${ thirdPageKeywords }", style: TextStyle(color: Colors.white, fontSize: 20.0)),
-                                new Text(""),
                                 new Text("第三页排名数量", style: TextStyle(color: Colors.white)),
                               ],
                             ),
@@ -318,7 +315,7 @@ class _HomeContentState extends State<HomeContent> {
                       trailing: Icon(Icons.more_horiz, color: Colors.white,),
                     ),
                     ListTile(
-                      leading: Icon(IconData(0xe61f, fontFamily: "iconfont"), size: 40.0, color: Colors.white,),
+                      leading: Icon(IconData(0xe601, fontFamily: "iconfont"), size: 40.0, color: Colors.white,),
                       contentPadding: EdgeInsets.fromLTRB(30, 10, 30, 10),
                       trailing: Text(
                         '${ pv }',
@@ -340,7 +337,6 @@ class _HomeContentState extends State<HomeContent> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 new Text("${ pv }", style: TextStyle(color: Colors.white, fontSize: 20.0)),
-                                new Text(""),
                                 new Text("浏览量PV", style: TextStyle(color: Colors.white)),
                               ],
                             ),
@@ -354,7 +350,6 @@ class _HomeContentState extends State<HomeContent> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 new Text("${ uv }", style: TextStyle(color: Colors.white, fontSize: 20.0)),
-                                new Text(""),
                                 new Text("访客量UV", style: TextStyle(color: Colors.white)),
                               ],
                             ),
@@ -368,7 +363,6 @@ class _HomeContentState extends State<HomeContent> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 new Text("${ newVisit }%", style: TextStyle(color: Colors.white, fontSize: 20.0)),
-                                new Text(""),
                                 new Text("新访量百分比", style: TextStyle(color: Colors.white)),
                               ],
                             ),
