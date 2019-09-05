@@ -18,7 +18,7 @@ class MinePage extends StatelessWidget {
         title: Text("我的"),
         leading: Builder(builder: (context) {
           return IconButton(
-            icon: Icon(Icons.menu),
+            icon: Icon(IconData(0xe64f, fontFamily: "iconfont"), size: 16,),
             onPressed: () {
               // 打开侧边菜单
               Scaffold.of(context).openDrawer();

@@ -23,7 +23,7 @@ class _HomePageState extends State<HomePage> {
       key: _scaffoldKey,
       appBar: AppBar(
         title: Text("外贸易"),
-        leading: IconButton(icon: Icon(IconData(0xe64f, fontFamily: "iconfont")), onPressed: () => _scaffoldKey.currentState.openDrawer()),
+        leading: IconButton(icon: Icon(IconData(0xe64f, fontFamily: "iconfont"), size: 16,), onPressed: () => _scaffoldKey.currentState.openDrawer()),
       ),
       drawer: new MyDrawer(), //侧边栏
       body: new HomeContent(),
