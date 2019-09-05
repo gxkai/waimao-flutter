@@ -16,12 +16,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
+  final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         title: Text("外贸易"),
+        leading: IconButton(icon: Icon(IconData(0xe64f, fontFamily: "iconfont")), onPressed: () => _scaffoldKey.currentState.openDrawer()),
       ),
       drawer: new MyDrawer(), //侧边栏
       body: new HomeContent(),
@@ -138,7 +140,7 @@ class _HomeContentState extends State<HomeContent> {
                     trailing: Icon(Icons.more_horiz, color: Colors.white,),
                   ),
                   ListTile(
-                    leading: Icon(IconData(0xe6fd, fontFamily: "iconfont"), size: 40.0, color: Colors.white,),
+                    leading: Icon(IconData(0xe834, fontFamily: "iconfont"), size: 40.0, color: Colors.white,),
                     contentPadding: EdgeInsets.fromLTRB(30, 10, 30, 10),
                     trailing: Text(
                       '${ messageCount }',
@@ -159,7 +161,6 @@ class _HomeContentState extends State<HomeContent> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               new Text("${ todayCount }", style: TextStyle(color: Colors.white, fontSize: 20.0)),
-                              new Text(""),
                               new Text("今日询盘", style: TextStyle(color: Colors.white)),
                             ],
                           ),
@@ -173,7 +174,6 @@ class _HomeContentState extends State<HomeContent> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               new Text("${ unread }", style: TextStyle(color: Colors.white, fontSize: 20.0)),
-                              new Text(""),
                               new Text("未读询盘", style: TextStyle(color: Colors.white)),
                             ],
                           ),
@@ -187,7 +187,6 @@ class _HomeContentState extends State<HomeContent> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               new Text("${ isRead }", style: TextStyle(color: Colors.white, fontSize: 20.0)),
-                              new Text(""),
                               new Text("已读询盘", style: TextStyle(color: Colors.white)),
                             ],
                           ),

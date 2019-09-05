@@ -78,7 +78,7 @@ class MyDrawer extends StatelessWidget {
                       Divider(height:10.0,indent:0.0,color: Colors.black26,),
 
                       ListTile(
-                        leading: const Icon(Icons.trending_up),
+                        leading: const Icon(IconData(0xe601, fontFamily: "iconfont")),
                         title: const Text('访客流量'),
                         contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
                         onTap: (){
