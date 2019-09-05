@@ -72,6 +72,7 @@ class _MyAppState extends State<MyApp> {
 }
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final provider = new Provider();
   await provider.init(true);
   sp = await SpUtil.getInstance();
