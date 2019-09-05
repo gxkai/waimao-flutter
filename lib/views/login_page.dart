@@ -82,6 +82,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.white,
                   ),
                   hintText: "账号",
+                  contentPadding: EdgeInsets.all(15.0),
                   hintStyle: TextStyle(color: Colors.white),
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)),
@@ -91,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                       borderSide: BorderSide(color: Colors.grey)),
                   focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey))),
-              style: new TextStyle(fontSize: 16, color: Colors.white),
+              style: new TextStyle(fontSize: 16, color: Colors.white, textBaseline: TextBaseline.alphabetic),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "账号不可为空!";
@@ -118,6 +119,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.white,
                   ),
                   hintText: "密码",
+                  contentPadding: EdgeInsets.all(15.0),
                   hintStyle: TextStyle(color: Colors.white),
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)),
@@ -127,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                       borderSide: BorderSide(color: Colors.grey)),
                   focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey))),
-              style: new TextStyle(fontSize: 16, color: Colors.white),
+              style: new TextStyle(fontSize: 16, color: Colors.white, textBaseline: TextBaseline.alphabetic),
               obscureText: true,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -155,6 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: Colors.white,
                   ),
                   hintText: "网址",
+                  contentPadding: EdgeInsets.all(15.0),
                   hintStyle: TextStyle(color: Colors.white),
                   enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey)),
@@ -164,7 +167,7 @@ class _LoginPageState extends State<LoginPage> {
                       borderSide: BorderSide(color: Colors.grey)),
                   focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey))),
-              style: new TextStyle(fontSize: 16, color: Colors.white),
+              style: new TextStyle(fontSize: 16, color: Colors.white, textBaseline: TextBaseline.alphabetic),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "网址不可为空!";

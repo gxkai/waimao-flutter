@@ -158,6 +158,7 @@ class _RenderListState extends State<RenderList> {
             padding: const EdgeInsets.all(15.0),
             children: <Widget>[
               Container(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(5.0)
@@ -165,12 +166,20 @@ class _RenderListState extends State<RenderList> {
                 child: Column(
                   children: <Widget>[
                     DataTable(
-                      columnSpacing: 13.0,
+                      columnSpacing: 10,
+                      horizontalMargin: 0,
                       columns: [
                         DataColumn(label: Text('发件人')),
-                        DataColumn(label: Text('状态')),
-                        DataColumn(label: Text('询盘时间')),
-                        DataColumn(label: Text('操作')),
+                        DataColumn(label: Text('状态', textAlign: TextAlign.center,)),
+                        DataColumn(label:  SizedBox(
+                            width: 65.0,
+                            child: Text('询盘时间', textAlign: TextAlign.center,))
+                        ),
+                        DataColumn(label: SizedBox(
+                            width: 70.0,
+                            child:Text('操作', textAlign: TextAlign.center,)
+                          ),
+                        )
                       ],
                       rows: messages.map((row) {
                         return DataRow(cells: [
@@ -196,7 +205,7 @@ class _RenderListState extends State<RenderList> {
                               .format(row.createdAt))),
                           DataCell(
                               SizedBox(
-                                  width: 60.0,
+                                  width: 70.0,
                                   child:RaisedButton(
                                       color: Colors.blue,
                                       child: Text('查看', style: TextStyle(color:Colors.white)),
