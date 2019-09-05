@@ -98,7 +98,7 @@ class ArealDistributionState extends State<ArealDistribution>
             child: ListView(
               children: <Widget>[
                 DataTable(
-                  columnSpacing: 20,
+                  columnSpacing: 10,
                   columns: [
                     DataColumn(
                       label: Text('序列'),
