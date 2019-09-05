@@ -238,7 +238,7 @@ class KeywordRankingState extends State<KeywordRanking> {
                 controller: _refreshController,
                 onRefresh: _onRefresh,
                 child: ListView(
-                    padding: EdgeInsets.all(20),
+                    padding: EdgeInsets.all(15),
                     children: <Widget>[RankingCount, RankingList])),
             ProgressDialog(
                 isLoading: _loading,

@@ -30,9 +30,9 @@ class _MyProductState extends State<MyProduct> {
         ),
       ),
       body: Container(
-            color: Colors.grey[200],
+            color: Color.fromRGBO(237, 237, 237, 1),
             child: Container(
-              margin: const EdgeInsets.all(10.0),
+              margin: const EdgeInsets.all(15.0),
               padding: const EdgeInsets.symmetric(horizontal: 10.0),
               decoration: BoxDecoration(
                 color: Colors.white,

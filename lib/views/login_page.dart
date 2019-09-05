@@ -288,7 +288,7 @@ class _LoginPageState extends State<LoginPage> {
         ),
         ProgressDialog(
             isLoading: _loading,
-            message: '正在登陆...',
+            message: '正在登录...',
             alpha: 0.35,
             child: Container()
         ),

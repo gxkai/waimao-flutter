@@ -74,6 +74,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      backgroundColor: Color.fromRGBO(237, 237, 237, 1),
       appBar: AppBar(
         title: Text('修改密码'),
         leading: IconButton(
@@ -85,7 +86,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.all(10.0),
+          margin: EdgeInsets.all(15.0),
           padding: EdgeInsets.symmetric(vertical: 20.0,horizontal: 15.0),
           decoration: BoxDecoration(
             color: Colors.white,

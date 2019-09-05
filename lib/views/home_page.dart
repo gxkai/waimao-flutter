@@ -115,7 +115,7 @@ class _HomeContentState extends State<HomeContent> {
       children: <Widget>[
         Card(
           elevation: 5.0,
-          margin: const EdgeInsets.all(10.0),
+          margin: const EdgeInsets.all(15.0),
           child: Material(
             borderRadius: BorderRadius.circular(4.0),
             color: Colors.lightBlue,
@@ -205,7 +205,7 @@ class _HomeContentState extends State<HomeContent> {
 
         Card(
           elevation: 5.0,
-          margin: const EdgeInsets.only(left: 10.0, right: 10.0),
+          margin: const EdgeInsets.only(left: 15.0, right: 15.0),
           child: Material(
               borderRadius: BorderRadius.circular(4.0),
               color: Colors.lightBlueAccent,
@@ -295,7 +295,7 @@ class _HomeContentState extends State<HomeContent> {
 
         Card(
           elevation: 5.0,
-          margin: const EdgeInsets.only(left: 10.0, right: 10.0, top: 10.0),
+          margin: const EdgeInsets.only(left: 15.0, right: 15.0, top: 15.0),
           child: Material(
               borderRadius: BorderRadius.circular(4.0),
               color: Colors.deepPurpleAccent,

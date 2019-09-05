@@ -82,11 +82,11 @@ class _IndexState extends State{
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
-      color: Colors.grey[200],
+      color: Color.fromRGBO(237, 237, 237, 1),
         child:ListView(
             children: <Widget>[
               Container(
-                margin: const EdgeInsets.all(10.0),
+                margin: const EdgeInsets.all(15.0),
                 decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(5.0)
@@ -98,7 +98,7 @@ class _IndexState extends State{
                 ),
               ),
               Container(
-                margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                margin: const EdgeInsets.symmetric(horizontal: 15.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(5.0)
@@ -140,7 +140,7 @@ class _IndexState extends State{
                 )
               ),
               Container(
-                margin: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 10.0),
+                margin: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 15.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(5.0)

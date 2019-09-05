@@ -44,7 +44,7 @@ class FlowStatisticsSelectState extends State<FlowStatisticsSelect> {
           padding: EdgeInsets.only(top: 10),
           child: GridView.count(
               crossAxisCount: 4,
-              childAspectRatio: 1.5,
+              childAspectRatio: 1.3,
               padding: EdgeInsets.all(20),
               children: [
                 Material(

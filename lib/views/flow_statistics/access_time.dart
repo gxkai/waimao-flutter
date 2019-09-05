@@ -47,7 +47,7 @@ class AccessTimeState extends State<AccessTime>
   @override
   Widget build(BuildContext context) {
     final _kTabPageContainer = ListView(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(15),
       children: <Widget>[
         Card(
             color: Colors.white,
@@ -659,25 +659,25 @@ class AccessTimeState extends State<AccessTime>
               print(0);
               fromDate = b0;
               toDate = b0;
-              _loadData(fromDate, toDate);
+              _initData(fromDate, toDate);
               break;
             case 1:
               print(1);
               fromDate = b1;
               toDate = b1;
-              _loadData(fromDate, toDate);
+              _initData(fromDate, toDate);
               break;
             case 2:
               print(2);
               fromDate = b6;
               toDate = b0;
-              _loadData(fromDate, toDate);
+              _initData(fromDate, toDate);
               break;
             case 3:
               print(3);
               fromDate = b29;
               toDate = b0;
-              _loadData(fromDate, toDate);
+              _initData(fromDate, toDate);
               break;
             case 4:
               print(4);

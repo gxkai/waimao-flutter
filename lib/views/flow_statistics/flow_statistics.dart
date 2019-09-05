@@ -62,7 +62,7 @@ class FlowStatisticsState extends State<FlowStatistics> {
           controller: _refreshController,
           onRefresh: _onRefresh,
           child: ListView(
-            padding: EdgeInsets.all(20),
+            padding: EdgeInsets.all(15),
             children: <Widget>[
               Card(
                   color: Colors.white,

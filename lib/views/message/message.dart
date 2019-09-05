@@ -20,6 +20,7 @@ class _MessageState extends State<MessageList> {
     return new DefaultTabController(
       length: 3,
       child: new Scaffold(
+        backgroundColor: Color.fromRGBO(237, 237, 237, 1),
         appBar: new AppBar(
             title: new Text('询盘信息'),
             leading: IconButton(
@@ -74,7 +75,7 @@ class _RenderListState extends State<RenderList> {
 
   bool _loading = false;
   // 上拉加载提示
-  bool _isLoading = false;
+  bool _loadingMore = false;
   bool _isAll = false;
 
   RefreshController _refreshController =
@@ -128,9 +129,9 @@ class _RenderListState extends State<RenderList> {
   }
 
   _getMore(int type) async {
-    if (!_isLoading) {
+    if (!_loadingMore) {
       setState(() {
-        _isLoading = true;
+        _loadingMore = true;
       });
       int newPage = _page + 1;
       List<Message> newList =
@@ -144,7 +145,7 @@ class _RenderListState extends State<RenderList> {
           setState(() {
             messages.addAll(newList);
             _page = newPage;
-            _isLoading = false;
+            _loadingMore = false;
           });
         });
       }
@@ -153,88 +154,88 @@ class _RenderListState extends State<RenderList> {
 
   @override
   Widget build(BuildContext context) {
-    final Widget _messageList = Container(
-        padding: const EdgeInsets.all(10.0),
-        color: Colors.grey[300],
-        child: Container(
-          decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(5.0)),
-          child: ListView(
-            padding:
-            const EdgeInsets.only(bottom: 10.0, left: 5.0, right: 5.0),
+    final Widget _messageList = ListView(
+            padding: const EdgeInsets.all(15.0),
             children: <Widget>[
-              DataTable(
-                columnSpacing: 15.0,
-                columns: [
-                  DataColumn(label: Text('发件人')),
-                  DataColumn(label: Text('状态')),
-                  DataColumn(label: Text('询盘时间')),
-                  DataColumn(label: Text('操作')),
-                ],
-                rows: messages.map((row) {
-                  return DataRow(cells: [
-                    DataCell(SizedBox(width: 80, child: Text(row.name))),
-                    DataCell(
-                      Container(
-                        padding: EdgeInsets.all(4.0),
-                        margin: EdgeInsets.symmetric(vertical: 10.0),
-                        decoration: BoxDecoration(
-                            color: row.isRead == 1
-                                ? Colors.grey
-                                : Colors.blue,
-                            borderRadius: BorderRadius.circular(4.0)
-                        ),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(5.0)
+                ),
+                child: Column(
+                  children: <Widget>[
+                    DataTable(
+                      columnSpacing: 17.0,
+                      columns: [
+                        DataColumn(label: Text('发件人')),
+                        DataColumn(label: Text('状态')),
+                        DataColumn(label: Text('询盘时间')),
+                        DataColumn(label: Text('操作')),
+                      ],
+                      rows: messages.map((row) {
+                        return DataRow(cells: [
+                          DataCell(SizedBox(width: 80, child: Text(row.name))),
+                          DataCell(
+                            Container(
+                              padding: EdgeInsets.all(4.0),
+                              margin: EdgeInsets.symmetric(vertical: 10.0),
+                              decoration: BoxDecoration(
+                                  color: row.isRead == 1
+                                      ? Colors.grey
+                                      : Colors.blue,
+                                  borderRadius: BorderRadius.circular(4.0)
+                              ),
 
+                              child: Text(
+                                row.isRead == 1 ? '已读' : '未读',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          DataCell(Text(new DateFormat('yyyy-MM-dd')
+                              .format(row.createdAt))),
+                          DataCell(
+                              SizedBox(
+                                  width: 60.0,
+                                  child:RaisedButton(
+                                      color: Colors.blue,
+                                      child: Text('查看', style: TextStyle(color:Colors.white)),
+                                      onPressed: () {
+                                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage(message: row)));
+                                      }
+                                  )
+                              )
+                          )
+                        ]);
+                      }).toList(),
+                    ),
+                    _isAll
+                        ? Container(
+                        padding: EdgeInsets.symmetric(vertical: 10.0),
                         child: Text(
-                          row.isRead == 1 ? '已读' : '未读',
-                          style: TextStyle(color: Colors.white),
+                          '没有更多内容',
+                          textAlign: TextAlign.center,
+                        ))
+                        : _loadingMore ? Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(top: 10.0),
+                          child: SizedBox(
+                              height: 30.0,
+                              child: Image.asset('assets/images/loading.gif')
+                          ),
                         ),
-                      ),
-                    ),
-                    DataCell(Text(new DateFormat('yyyy-MM-dd')
-                        .format(row.createdAt))),
-                    DataCell(
-                        SizedBox(
-                            width: 60.0,
-                            child:RaisedButton(
-                                color: Colors.blue,
-                                child: Text('查看', style: TextStyle(color:Colors.white)),
-                                onPressed: () {
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage(message: row)));
-                                }
-                            )
+                        Padding(
+                          padding: EdgeInsets.symmetric(vertical: 10.0),
+                          child: Text('加载更多'),
                         )
-                    )
-                  ]);
-                }).toList(),
-              ),
-              _isAll
-                  ? Container(
-                  padding: EdgeInsets.symmetric(vertical: 10.0),
-                  child: Text(
-                    '没有更多内容',
-                    textAlign: TextAlign.center,
-                  ))
-                  : _isLoading ?Column(
-                children: <Widget>[
-                  Padding(
-                    padding: EdgeInsets.only(top: 10.0),
-                    child: SizedBox(
-                        height: 30.0,
-                        child: Image.asset('assets/images/loading.gif')
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10.0),
-                    child: Text('加载更多'),
-                  )
-                ],
-              ) : Container()
+                      ],
+                    ) : Container()
+                  ]
+                )
+              )
             ],
             controller: _scrollController,
-          ),
-        )
     );
 
     return Stack(
@@ -297,13 +298,13 @@ class DetailPage extends StatelessWidget {
             }),
       ),
       body: Container(
-        padding: const EdgeInsets.all(10.0),
-        color: Colors.grey[200],
+        padding: const EdgeInsets.all(15.0),
+        color: Color.fromRGBO(237, 237, 237, 1),
         child: Container(
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(5.0)),
           child: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            padding: const EdgeInsets.all(15),
             children: <Widget>[
               ListTile(
                 title: Text('发件人: ${message.name}'),
