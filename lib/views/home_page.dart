@@ -315,7 +315,7 @@ class _HomeContentState extends State<HomeContent> {
                       trailing: Icon(Icons.more_horiz, color: Colors.white,),
                     ),
                     ListTile(
-                      leading: Icon(IconData(0xe601, fontFamily: "iconfont"), size: 40.0, color: Colors.white,),
+                      leading: Icon(IconData(0xe636, fontFamily: "iconfont"), size: 40.0, color: Colors.white,),
                       contentPadding: EdgeInsets.fromLTRB(30, 10, 30, 10),
                       trailing: Text(
                         '${ pv }',
