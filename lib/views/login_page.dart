@@ -254,46 +254,47 @@ class _LoginPageState extends State<LoginPage> {
         body: Stack(
       children: <Widget>[
         SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-//          color: Theme.of(context).primaryColor,
-            alignment: AlignmentDirectional.topCenter,
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/images/login_bg.png"),
-                    fit: BoxFit.cover)),
             child: Container(
-              width: MediaQuery.of(context).size.width * 0.85,
-              child: Stack(
-                children: <Widget>[
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              alignment: AlignmentDirectional.topCenter,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage("assets/images/login_bg.png"),
+                      fit: BoxFit.cover)),
+              child: Container(
+                width: MediaQuery.of(context).size.width * 0.85,
+                child: Center(
+                  child: Stack(
                     children: <Widget>[
-                      SizedBox(height: 150.0),
-                      Image.asset(
-                        'assets/images/logo.png',
-                        fit: BoxFit.contain,
-                        width: 50.0,
-                        height: 50.0,
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Image.asset(
+                            'assets/images/logo.png',
+                            fit: BoxFit.contain,
+                            width: 50.0,
+                            height: 50.0,
+                          ),
+                          SizedBox(height: 50.0),
+                          buildSignInTextForm(),
+                          SizedBox(height: 50.0),
+                          buildSignInButton(),
+                          SizedBox(height: 35.0),
+                        ],
                       ),
-                      SizedBox(height: 50.0),
-                      buildSignInTextForm(),
-                      SizedBox(height: 50.0),
-                      buildSignInButton(),
-                      SizedBox(height: 35.0),
                     ],
                   ),
-                ],
+                )
               ),
             ),
-          ),
         ),
         ProgressDialog(
             isLoading: _loading,
             message: '正在加载...',
             alpha: 0.35,
-            child: Container()),
+            child: Container()
+        ),
       ],
     ));
   }
