@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:waimao/utils/data_utils.dart';
 import 'package:waimao/model/message.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';  // 下拉刷新
+import 'package:waimao/utils/progress_dialog.dart';     // 加载动画
 
 class MessageList extends StatefulWidget {
   static String tag = '询盘信息';
@@ -53,6 +54,12 @@ class _MessageState extends State<MessageList> {
       ),
     );
   }
+
+  @override
+  void didUpdateWidget(MessageList oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
+  }
 }
 
 class RenderList extends StatefulWidget {
@@ -65,12 +72,13 @@ class RenderList extends StatefulWidget {
 class _RenderListState extends State<RenderList> {
   List<Message> messages = [];
 
+  bool _loading = false;
   // 上拉加载提示
   bool _isLoading = false;
   bool _isAll = false;
 
   RefreshController _refreshController =
-      RefreshController(initialRefresh: true);
+      RefreshController(initialRefresh: false);
   ScrollController _scrollController = ScrollController(); //listview的控制器
   int _page = 1; //加载的页数
 
@@ -78,6 +86,7 @@ class _RenderListState extends State<RenderList> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    _initData();
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
@@ -94,6 +103,19 @@ class _RenderListState extends State<RenderList> {
       _refreshController.refreshCompleted();
     } catch (e) {
       _refreshController.loadFailed();
+    }
+  }
+
+  void _initData() async {
+    try {
+      setState(() {
+        _loading = true;
+      });
+      await getData(widget.type);
+    } finally {
+      setState(() {
+        _loading = false;
+      });
     }
   }
 
@@ -131,94 +153,120 @@ class _RenderListState extends State<RenderList> {
 
   @override
   Widget build(BuildContext context) {
-    return SmartRefresher(
-        enablePullDown: true,
-        enablePullUp: false,
-        header: WaterDropHeader(),
-        controller: _refreshController,
-        onRefresh: _onRefresh,
+    final Widget _messageList = Container(
+        padding: const EdgeInsets.all(10.0),
+        color: Colors.grey[300],
         child: Container(
-            padding: const EdgeInsets.all(10.0),
-            color: Colors.grey[300],
-            child: Container(
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(5.0)),
-              child: ListView(
-                padding:
-                    const EdgeInsets.only(bottom: 10.0, left: 5.0, right: 5.0),
-                children: <Widget>[
-                  DataTable(
-                    columnSpacing: 15.0,
-                    columns: [
-                      DataColumn(label: Text('发件人')),
-                      DataColumn(label: Text('状态')),
-                      DataColumn(label: Text('询盘时间')),
-                      DataColumn(label: Text('操作')),
-                    ],
-                    rows: messages.map((row) {
-                      return DataRow(cells: [
-                        DataCell(SizedBox(width: 80, child: Text(row.name))),
-                        DataCell(
-                          Container(
-                              padding: EdgeInsets.all(4.0),
-                              margin: EdgeInsets.symmetric(vertical: 10.0),
-                              decoration: BoxDecoration(
-                                color: row.isRead == 1
-                                    ? Colors.grey
-                                    : Colors.blue,
-                                borderRadius: BorderRadius.circular(4.0)
-                              ),
-                              
-                              child: Text(
-                                row.isRead == 1 ? '已读' : '未读',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                          ),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(5.0)),
+          child: ListView(
+            padding:
+            const EdgeInsets.only(bottom: 10.0, left: 5.0, right: 5.0),
+            children: <Widget>[
+              DataTable(
+                columnSpacing: 15.0,
+                columns: [
+                  DataColumn(label: Text('发件人')),
+                  DataColumn(label: Text('状态')),
+                  DataColumn(label: Text('询盘时间')),
+                  DataColumn(label: Text('操作')),
+                ],
+                rows: messages.map((row) {
+                  return DataRow(cells: [
+                    DataCell(SizedBox(width: 80, child: Text(row.name))),
+                    DataCell(
+                      Container(
+                        padding: EdgeInsets.all(4.0),
+                        margin: EdgeInsets.symmetric(vertical: 10.0),
+                        decoration: BoxDecoration(
+                            color: row.isRead == 1
+                                ? Colors.grey
+                                : Colors.blue,
+                            borderRadius: BorderRadius.circular(4.0)
                         ),
-                        DataCell(Text(new DateFormat('yyyy-MM-dd')
-                            .format(row.createdAt))),
-                        DataCell(
-                          SizedBox(
+
+                        child: Text(
+                          row.isRead == 1 ? '已读' : '未读',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                    DataCell(Text(new DateFormat('yyyy-MM-dd')
+                        .format(row.createdAt))),
+                    DataCell(
+                        SizedBox(
                             width: 60.0,
                             child:RaisedButton(
-                              color: Colors.blue,
-                              child: Text('查看', style: TextStyle(color:Colors.white)),
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage(message: row)));
-                              }
+                                color: Colors.blue,
+                                child: Text('查看', style: TextStyle(color:Colors.white)),
+                                onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => DetailPage(message: row)));
+                                }
                             )
-                          )
                         )
-                      ]);
-                    }).toList(),
-                  ),
-                  _isAll
-                      ? Container(
-                          padding: EdgeInsets.symmetric(vertical: 10.0),
-                          child: Text(
-                            '没有更多内容',
-                            textAlign: TextAlign.center,
-                          ))
-                      : _isLoading ?Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(top: 10.0),
-                            child: SizedBox(
-                                height: 30.0,
-                                child: Image.asset('assets/images/loading.gif')
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(vertical: 10.0),
-                            child: Text('加载更多'),
-                          )
-                        ],
-                      ) : Container()
-                ],
-                controller: _scrollController,
+                    )
+                  ]);
+                }).toList(),
               ),
-            )));
+              _isAll
+                  ? Container(
+                  padding: EdgeInsets.symmetric(vertical: 10.0),
+                  child: Text(
+                    '没有更多内容',
+                    textAlign: TextAlign.center,
+                  ))
+                  : _isLoading ?Column(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(top: 10.0),
+                    child: SizedBox(
+                        height: 30.0,
+                        child: Image.asset('assets/images/loading.gif')
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 10.0),
+                    child: Text('加载更多'),
+                  )
+                ],
+              ) : Container()
+            ],
+            controller: _scrollController,
+          ),
+        )
+    );
+
+    return Stack(
+      children: <Widget>[
+        SmartRefresher(
+          enablePullDown: true,
+          enablePullUp: false,
+          header: WaterDropHeader(),
+          controller: _refreshController,
+          onRefresh: _onRefresh,
+          child: _messageList,
+        ),
+        ProgressDialog(
+            isLoading: _loading,
+            message: '正在加载...',
+            alpha: 0.35,
+            child: Container()
+        ),
+      ],
+    );
+  }
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+
+  @override
+  void didUpdateWidget(RenderList oldWidget) {
+    // TODO: implement didUpdateWidget
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
@@ -226,6 +274,7 @@ class _RenderListState extends State<RenderList> {
     // TODO: implement dispose
     super.dispose();
     _scrollController.dispose();
+    _refreshController.dispose();
   }
 }
 

@@ -22,6 +22,7 @@ class TerminalDeviceState extends State<TerminalDevice>
   bool _loading = false;
   TabController tabController;
   List<LinearSales> lsList = new List();
+  List<VisitByOsInfo> items = new List();
   List<Tab>_kTabs;
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
@@ -183,6 +184,7 @@ class TerminalDeviceState extends State<TerminalDevice>
     lsList.add(new LinearSales("移动端", mobile));
     lsList.add(new LinearSales("PC端", pc));
     setState(() {
+      items = list;
       lsList = lsList;
     });
   }

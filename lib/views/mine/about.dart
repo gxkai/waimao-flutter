@@ -45,7 +45,8 @@ class _AboutState extends State<About> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Image.asset('assets/images/wm.png', width: 100.0,),
-              Text('版本信息${ version }')
+              SizedBox(height: 20.0),
+              Text('${ version }')
             ],
           ),
         ),
