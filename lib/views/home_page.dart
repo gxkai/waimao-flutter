@@ -19,13 +19,14 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
+    AppBar appBar = AppBar(
+      title: Text("外贸易"),
+      leading: IconButton(icon: Icon(IconData(0xe64f, fontFamily: "iconfont"),size: 10,), onPressed: () => _scaffoldKey.currentState.openDrawer()),
+    );
     return Scaffold(
       key: _scaffoldKey,
-      appBar: AppBar(
-        title: Text("外贸易"),
-        leading: IconButton(icon: Icon(IconData(0xe64f, fontFamily: "iconfont")), onPressed: () => _scaffoldKey.currentState.openDrawer()),
-      ),
-      drawer: new MyDrawer(), //侧边栏
+      appBar: appBar,
+      drawer: new MyDrawer(height: appBar.preferredSize.height), //侧边栏
       body: new HomeContent(),
     );
   }
@@ -129,6 +130,7 @@ class _HomeContentState extends State<HomeContent> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   new ListTile(
+                    contentPadding: EdgeInsets.only(top: 16, left:16,right: 16),
                     title: Text(
                       '询盘数量',
                       style: TextStyle(
@@ -141,7 +143,7 @@ class _HomeContentState extends State<HomeContent> {
                   ),
                   ListTile(
                     leading: Icon(IconData(0xe834, fontFamily: "iconfont"), size: 40.0, color: Colors.white,),
-                    contentPadding: EdgeInsets.fromLTRB(30, 10, 30, 10),
+                    contentPadding: EdgeInsets.fromLTRB(30, 0, 30, 10),
                     trailing: Text(
                       '${ messageCount }',
                       style: TextStyle(
@@ -152,7 +154,7 @@ class _HomeContentState extends State<HomeContent> {
                     ),
                   ),
                   Divider(height:10.0, indent:0.0, color: Colors.white,),
-                  new Row(
+                  Row(
                     children: <Widget>[
                       Expanded(
                         child: Padding(
@@ -195,7 +197,8 @@ class _HomeContentState extends State<HomeContent> {
                         flex: 1,
                       ),
                     ],
-                  )
+                  ),
+                  SizedBox(height: 16,)
                 ],
               ),
             ),
@@ -217,6 +220,7 @@ class _HomeContentState extends State<HomeContent> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     new ListTile(
+                      contentPadding: EdgeInsets.only(top: 16, left:16,right: 16),
                       title: Text(
                         '关键词排名',
                         style: TextStyle(
@@ -229,7 +233,7 @@ class _HomeContentState extends State<HomeContent> {
                     ),
                     ListTile(
                       leading: Icon(IconData(0xe661, fontFamily: "iconfont"), size: 40.0, color: Colors.white,),
-                      contentPadding: EdgeInsets.fromLTRB(30, 10, 30, 10),
+                      contentPadding: EdgeInsets.fromLTRB(30, 0, 30, 10),
                       trailing: Text(
                         '${ keywords }',
                         style: TextStyle(
@@ -282,7 +286,8 @@ class _HomeContentState extends State<HomeContent> {
                           flex: 1,
                         ),
                       ],
-                    )
+                    ),
+                    SizedBox(height: 16,)
                   ],
                 ),
               )
@@ -304,6 +309,7 @@ class _HomeContentState extends State<HomeContent> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     new ListTile(
+                      contentPadding: EdgeInsets.only(top: 16, left:16,right: 16),
                       title: Text(
                         '访客流量',
                         style: TextStyle(
@@ -316,7 +322,7 @@ class _HomeContentState extends State<HomeContent> {
                     ),
                     ListTile(
                       leading: Icon(IconData(0xe636, fontFamily: "iconfont"), size: 40.0, color: Colors.white,),
-                      contentPadding: EdgeInsets.fromLTRB(30, 10, 30, 10),
+                      contentPadding: EdgeInsets.fromLTRB(30, 0, 30, 10),
                       trailing: Text(
                         '${ pv }',
                         style: TextStyle(
@@ -370,7 +376,8 @@ class _HomeContentState extends State<HomeContent> {
                           flex: 2,
                         ),
                       ],
-                    )
+                    ),
+                    SizedBox(height: 16,)
                   ],
                 ),
               )
