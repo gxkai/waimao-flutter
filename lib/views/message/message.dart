@@ -165,7 +165,7 @@ class _RenderListState extends State<RenderList> {
                 child: Column(
                   children: <Widget>[
                     DataTable(
-                      columnSpacing: 17.0,
+                      columnSpacing: 13.0,
                       columns: [
                         DataColumn(label: Text('发件人')),
                         DataColumn(label: Text('状态')),

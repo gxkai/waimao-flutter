@@ -161,7 +161,7 @@ class KeywordRankingState extends State<KeywordRanking> {
                 //列宽
                 0: FlexColumnWidth(0.6),
                 1: FlexColumnWidth(2.0),
-                2: FlexColumnWidth(1.0),
+                2: FlexColumnWidth(1.2),
               },
               //表格边框样式
               border: TableBorder.all(
@@ -314,19 +314,18 @@ class KeywordRankingState extends State<KeywordRanking> {
           child: Text(
             item.keyword,
             maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.0),
           child: FlatButton(
-            onPressed: () {
-              print('');
-            },
+            onPressed: (){},
             color: Colors.blue,
             textColor: Colors.white,
             highlightColor: Colors.blue[700],
             splashColor: Colors.blue[700],
-            child: Text('${_rank[item.page]}: ${item.number}'),
+            child: Text('${_rank[item.page]}: ${item.number}', style: TextStyle(fontSize: 13),),
           ),
         ),
       ]));
