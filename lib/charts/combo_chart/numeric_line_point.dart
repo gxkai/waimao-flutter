@@ -79,13 +79,6 @@ class NumericComboLinePointChart extends StatelessWidget {
         measureFn: (LinearSales sales, _) => sales.sales,
         data: uvList,
       ),
-      new charts.Series<LinearSales, int>(
-        id: 'pv',
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
-        domainFn: (LinearSales sales, _) => sales.year,
-        measureFn: (LinearSales sales, _) => sales.sales,
-        data: uvList,
-      ),
     ];
   }
 }

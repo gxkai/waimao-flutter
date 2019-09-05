@@ -87,7 +87,7 @@ class DateTimeComboLinePointChart extends StatelessWidget {
       ),
       new charts.Series<TimeSeriesSales, DateTime>(
         id: 'pv',
-        colorFn: (_, __) => charts.MaterialPalette.red.shadeDefault,
+        colorFn: (_, __) => charts.Color(r: 104, g: 186, b: 244),
         domainFn: (TimeSeriesSales sales, _) => sales.time,
         measureFn: (TimeSeriesSales sales, _) => sales.sales,
         data: pvList,
