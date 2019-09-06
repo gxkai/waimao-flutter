@@ -40,7 +40,7 @@ class _DrawerState extends State<MyDrawer> {
                         children: <Widget>[
                           Padding(
                             padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
+                                const EdgeInsets.only(left: 12, right: 25),
                             child: ClipOval(
                               child: Image.asset(
                                 "assets/images/logo.png",

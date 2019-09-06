@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     AppBar appBar = AppBar(
       title: Text("外贸易"),
-      leading: IconButton(icon: Icon(IconData(0xe64f, fontFamily: "iconfont"),size: 10,), onPressed: () => _scaffoldKey.currentState.openDrawer()),
+      leading: IconButton(icon: Icon(IconData(0xe64f, fontFamily: "iconfont"),size: 15), onPressed: () => _scaffoldKey.currentState.openDrawer()),
     );
     return Scaffold(
       key: _scaffoldKey,

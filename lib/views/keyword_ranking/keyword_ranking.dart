@@ -43,7 +43,10 @@ class KeywordRankingState extends State<KeywordRanking> {
   @override
   Widget build(BuildContext context) {
     final RankingCount = Container(
-      color: Colors.white,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.only(topLeft: Radius.circular(5), topRight: Radius.circular(5.0)),
+      ),
       padding: EdgeInsets.symmetric(vertical: 30, horizontal: 15),
       child: Column(
         children: <Widget>[
@@ -151,7 +154,11 @@ class KeywordRankingState extends State<KeywordRanking> {
       ),
     );
     final RankingList = Container(
-        color: Colors.white,
+
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(5.0), bottomRight: Radius.circular(5.0))
+        ),
         padding: EdgeInsets.only(left: 15, right: 15),
         child: Column(
           children: <Widget>[
