@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:waimao/event/event_bus.dart';
 import 'package:waimao/views/keyword_ranking/keyword_ranking.dart';
+import 'package:waimao/views/login_page.dart';
 import 'package:waimao/views/message/message.dart';
 import 'package:waimao/views/components/drawer.dart';
 import 'package:waimao/utils/data_utils.dart';
@@ -72,6 +74,11 @@ class _HomeContentState extends State<HomeContent> {
   @override
   void initState() {
     // TODO: implement initState
+    EventBusUtil.getInstance().on<PageEvent>().listen((data) {
+      Navigator.of(context).pushAndRemoveUntil(
+          new MaterialPageRoute(builder: (context) => LoginPage()),
+              (route) => route == null);
+    });
     super.initState();
     _initData();
   }

@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
+import 'package:waimao/event/event_bus.dart';
 import 'package:waimao/main.dart';
 import 'dart:convert';
 import 'package:fluttertoast/fluttertoast.dart';
-
 class NetUtils {
   static dynamic ctx;
   static Dio instance() {
     Map<String, dynamic> optHeader = {
       'accept-language': 'zh-cn',
-      'content-type': 'application/json'
+      'Accept': 'application/json'
     };
 
     var dio = new Dio(BaseOptions(connectTimeout: 5000,  headers: optHeader));
@@ -38,10 +38,19 @@ class NetUtils {
         // 接口报错时处理
         onError: (DioError error) {
           print('onError');
-          Fluttertoast.showToast(
-              msg: '网络异常',
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.CENTER);
+          if(error.response.statusCode == 401) {
+            Fluttertoast.showToast(
+                msg: "token 失效，请重新登陆 ",
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER);
+            Future.delayed(Duration(seconds: 2));
+            EventBusUtil.getInstance().fire(PageEvent("111"));
+          } else {
+            Fluttertoast.showToast(
+                msg: '网络异常',
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.CENTER);
+          }
           return error;
         },
       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:waimao/event/event_bus.dart';
 import 'package:waimao/model/user_info_cache.dart';
 import 'package:waimao/utils/data_utils.dart';
 import 'package:waimao/utils/progress_dialog.dart';
@@ -30,7 +31,6 @@ class _LoginPageState extends State<LoginPage> {
   String username = '';
   String password = '';
   String site = '';
-  bool _isLoading = false;
 
   @override
   void initState() {
@@ -92,7 +92,10 @@ class _LoginPageState extends State<LoginPage> {
                       borderSide: BorderSide(color: Colors.grey)),
                   focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey))),
-              style: new TextStyle(fontSize: 16, color: Colors.white, textBaseline: TextBaseline.alphabetic),
+              style: new TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  textBaseline: TextBaseline.alphabetic),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "账号不可为空!";
@@ -129,7 +132,10 @@ class _LoginPageState extends State<LoginPage> {
                       borderSide: BorderSide(color: Colors.grey)),
                   focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey))),
-              style: new TextStyle(fontSize: 16, color: Colors.white, textBaseline: TextBaseline.alphabetic),
+              style: new TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  textBaseline: TextBaseline.alphabetic),
               obscureText: true,
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -167,7 +173,10 @@ class _LoginPageState extends State<LoginPage> {
                       borderSide: BorderSide(color: Colors.grey)),
                   focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.grey))),
-              style: new TextStyle(fontSize: 16, color: Colors.white, textBaseline: TextBaseline.alphabetic),
+              style: new TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  textBaseline: TextBaseline.alphabetic),
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return "网址不可为空!";
@@ -254,15 +263,15 @@ class _LoginPageState extends State<LoginPage> {
         body: Stack(
       children: <Widget>[
         SingleChildScrollView(
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            alignment: AlignmentDirectional.topCenter,
+            decoration: BoxDecoration(
+                image: DecorationImage(
+                    image: AssetImage("assets/images/login_bg.png"),
+                    fit: BoxFit.cover)),
             child: Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              alignment: AlignmentDirectional.topCenter,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage("assets/images/login_bg.png"),
-                      fit: BoxFit.cover)),
-              child: Container(
                 width: MediaQuery.of(context).size.width * 0.85,
                 child: Center(
                   child: Stack(
@@ -285,16 +294,14 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ],
                   ),
-                )
-              ),
-            ),
+                )),
+          ),
         ),
         ProgressDialog(
             isLoading: _loading,
             message: '正在登录...',
             alpha: 0.35,
-            child: Container()
-        ),
+            child: Container()),
       ],
     ));
   }
