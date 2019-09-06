@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:waimao/charts/combo_chart/numeric_line_point.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:waimao/model/visit_by_hour_info.dart';
 import 'package:waimao/utils/data_utils.dart';
 import 'package:waimao/utils/progress_dialog.dart';
@@ -530,10 +530,12 @@ class AccessTimeState extends State<AccessTime>
                         )
                       ],
                     ),
+                    SizedBox(height: 10,),
                     Container(
                       height: 200,
-                      child: NumericComboLinePointChart.withVisitByHourData(
-                          items),
+                      child: getLegendCustomizedChart(true)
+//                      NumericComboLinePointChart.withVisitByHourData(
+//                          items),
                     )
                   ],
                 )
@@ -740,5 +742,45 @@ class AccessTimeState extends State<AccessTime>
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
+  }
+
+  SfCartesianChart getLegendCustomizedChart(bool isTileView) {
+    return SfCartesianChart(
+        plotAreaBorderColor: Colors.transparent,
+        title: ChartTitle(
+            text: isTileView ? '' : 'Automobile production by category'),
+        legend: Legend(
+          isVisible: false,
+          overflowMode: LegendItemOverflowMode.wrap,
+        ),
+        primaryXAxis: NumericAxis(
+            edgeLabelPlacement: EdgeLabelPlacement.shift,
+            majorGridLines: MajorGridLines(width: 0),
+        ),
+        primaryYAxis: NumericAxis(
+          minimum: 0,
+          axisLine: AxisLine(width: 0),
+          majorTickLines: MajorTickLines(size: 0),
+        ),
+        series: getLineSeries(isTileView),
+        trackballBehavior: TrackballBehavior(
+            enable: true,
+            activationMode: ActivationMode.singleTap,
+            tooltipSettings: InteractiveTooltip(
+                format: 'point.x : point.y', borderWidth: 0)));
+  }
+
+  List<ChartSeries<VisitByHourInfo, num>> getLineSeries(bool isTileView) {
+    return <ChartSeries<VisitByHourInfo, num>>[
+      LineSeries<VisitByHourInfo, num>(
+        width: 2,
+        markerSettings: MarkerSettings(isVisible: false),
+        dataSource: items,
+        color: Color.fromRGBO(104, 186, 244, 1),
+        xValueMapper: (VisitByHourInfo sales, _) => int.parse(sales.key),
+        yValueMapper: (VisitByHourInfo sales, _) => sales.docCount,
+        name: 'uv',
+      ),
+    ];
   }
 }
