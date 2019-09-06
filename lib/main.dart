@@ -12,7 +12,7 @@ import 'package:waimao/views/login_page.dart';
 import 'package:waimao/views/message/message.dart';
 import 'package:waimao/views/mine/index.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
+import 'package:waimao/utils/ServiceLocator.dart';
 //import 'views/welcome_page/index.dart';
 
 SpUtil sp;
@@ -72,6 +72,9 @@ class _MyAppState extends State<MyApp> {
 }
 
 void main() async {
+  // 注册服务
+  setupLocator();
+
   WidgetsFlutterBinding.ensureInitialized();
   final provider = new Provider();
   await provider.init(true);

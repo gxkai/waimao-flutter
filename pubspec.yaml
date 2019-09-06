@@ -22,7 +22,10 @@ dependencies:
   image_picker: ^0.6.0+1
   sqflite: ^1.1.5
   flutter_markdown: ^0.2.0
+  # 电话，短信，邮箱功能
   url_launcher: ^5.0.2
+  get_it: ^1.0.3+2
+
   # 图表
   charts_flutter: ^0.7.0
   # 本地存储、收藏功能
