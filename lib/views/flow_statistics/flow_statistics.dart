@@ -211,6 +211,7 @@ class FlowStatisticsState extends State<FlowStatistics> {
         title: ChartTitle(
             text: isTileView ? '' : 'Automobile production by category'),
         legend: Legend(
+          position: LegendPosition.top,
           isVisible: true,
           overflowMode: LegendItemOverflowMode.wrap,
         ),

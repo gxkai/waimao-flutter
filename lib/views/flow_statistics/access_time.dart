@@ -750,6 +750,7 @@ class AccessTimeState extends State<AccessTime>
         title: ChartTitle(
             text: isTileView ? '' : 'Automobile production by category'),
         legend: Legend(
+          position: LegendPosition.top,
           isVisible: false,
           overflowMode: LegendItemOverflowMode.wrap,
         ),
