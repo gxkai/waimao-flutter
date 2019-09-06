@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:waimao/charts/legends/datum_legend_with_measures.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:waimao/model/visit_by_os_info.dart';
 import 'package:waimao/utils/data_utils.dart';
 import 'package:waimao/utils/progress_dialog.dart';
@@ -21,7 +21,6 @@ class TerminalDeviceState extends State<TerminalDevice>
   bool click = false;
   bool _loading = false;
   TabController tabController;
-  List<LinearSales> lsList = new List();
   List<VisitByOsInfo> items = new List();
   List<Tab>_kTabs;
   RefreshController _refreshController =
@@ -80,7 +79,7 @@ class TerminalDeviceState extends State<TerminalDevice>
                     ),
                     Container(
                       height: 200,
-                      child: DatumLegendWithMeasures.withSampleData(lsList),
+                      child: getLegendDefaultChart(true)
                     )
                   ],
                 ))),
@@ -170,22 +169,8 @@ class TerminalDeviceState extends State<TerminalDevice>
   _loadData(String fromDate, String toDate) async {
     List<VisitByOsInfo> list =
         await DataUtils.visitByOs({'fromDate': fromDate, 'toDate': toDate});
-    lsList.clear();
-    int mobile = 0;
-    int pc = 0;
-    RegExp m = new RegExp(r"^(Windows|Mac|Linux)");
-    list.forEach((item) {
-      if (m.hasMatch(item.key)) {
-        pc += item.docCount;
-      } else {
-        mobile += item.docCount;
-      }
-    });
-    lsList.add(new LinearSales("移动端", mobile));
-    lsList.add(new LinearSales("PC端", pc));
     setState(() {
       items = list;
-      lsList = lsList;
     });
   }
 
@@ -301,5 +286,27 @@ class TerminalDeviceState extends State<TerminalDevice>
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
+  }
+
+  SfCircularChart getLegendDefaultChart(bool isTileView) {
+    return SfCircularChart(
+      title: ChartTitle(text: isTileView ? '' : 'Electricity sectors'),
+      legend: Legend(isVisible: true, overflowMode: LegendItemOverflowMode.none),
+      series: getPieSeries(isTileView),
+      tooltipBehavior: TooltipBehavior(enable: true),
+    );
+  }
+
+  List<DoughnutSeries<VisitByOsInfo, String>> getPieSeries(bool isTileView) {
+    return <DoughnutSeries<VisitByOsInfo, String>>[
+      DoughnutSeries<VisitByOsInfo, String>(
+          dataSource: items,
+          xValueMapper: (VisitByOsInfo data, _) => data.key,
+          yValueMapper: (VisitByOsInfo data, _) => data.docCount,
+          startAngle: 90,
+          endAngle: 90,
+          dataLabelSettings: DataLabelSettings(
+              isVisible: true, labelPosition: LabelPosition.inside)),
+    ];
   }
 }

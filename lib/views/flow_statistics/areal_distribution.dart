@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:waimao/charts/legends/datum_legend_with_measures.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:waimao/model/visit_by_country_info.dart';
 import 'package:waimao/utils/data_utils.dart';
 import 'package:waimao/utils/progress_dialog.dart';
@@ -21,7 +21,6 @@ class ArealDistributionState extends State<ArealDistribution>
   bool click = false;
   bool _loading = false;
   TabController tabController;
-  List<LinearSales> lsList = new List();
   List<VisitByCountryInfo> items = new List();
   List<Tab> _kTabs;
   RefreshController _refreshController =
@@ -86,8 +85,7 @@ class ArealDistributionState extends State<ArealDistribution>
                     ),
                     Container(
                       height: 200,
-                      child: DatumLegendWithMeasures.withSampleData(
-                          lsList),
+                      child: getLegendDefaultChart(true)
                     )
                   ],
                 ))),
@@ -123,8 +121,8 @@ class ArealDistributionState extends State<ArealDistribution>
                             child:Text(item.key)
                         ),
                       ),
-                      DataCell(Text(item.pv.toString())),
                       DataCell(Text(item.uv.toString())),
+                      DataCell(Text(item.pv.toString())),
                     ]);
                   }).toList(),
                 ),
@@ -217,25 +215,8 @@ class ArealDistributionState extends State<ArealDistribution>
   _loadData(String fromDate, String toDate) async {
     List<VisitByCountryInfo> list = await DataUtils.visitByCountry(
         {'fromDate': fromDate, 'toDate': toDate});
-    lsList.clear();
-
-    int count = 0;
-
-    for(int i = 0; i < list.length; i++) {
-      if (i < 6) {
-        lsList.add(new LinearSales(list[i].key, list[i].pv));
-      } else {
-        count += list[i].pv;
-      }
-    }
-
-    if (list.length > 6) {
-      lsList.add(new LinearSales('其他', count));
-    }
-
     setState(() {
       items = list;
-      lsList = lsList;
     });
   }
 
@@ -350,5 +331,27 @@ class ArealDistributionState extends State<ArealDistribution>
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
+  }
+
+  SfCircularChart getLegendDefaultChart(bool isTileView) {
+    return SfCircularChart(
+      title: ChartTitle(text: isTileView ? '' : 'Electricity sectors'),
+      legend: Legend(isVisible: true, overflowMode: LegendItemOverflowMode.none),
+      series: getPieSeries(isTileView),
+      tooltipBehavior: TooltipBehavior(enable: true),
+    );
+  }
+
+  List<DoughnutSeries<VisitByCountryInfo, String>> getPieSeries(bool isTileView) {
+  return <DoughnutSeries<VisitByCountryInfo, String>>[
+  DoughnutSeries<VisitByCountryInfo, String>(
+  dataSource: items,
+  xValueMapper: (VisitByCountryInfo data, _) => data.key,
+  yValueMapper: (VisitByCountryInfo data, _) => data.pv,
+  startAngle: 90,
+  endAngle: 90,
+  dataLabelSettings: DataLabelSettings(
+  isVisible: true, labelPosition: LabelPosition.inside)),
+  ];
   }
 }
