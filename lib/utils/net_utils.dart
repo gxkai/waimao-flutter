@@ -12,7 +12,7 @@ class NetUtils {
       'content-type': 'application/json'
     };
 
-    var dio = new Dio(BaseOptions(connectTimeout: 5000, headers: optHeader));
+    var dio = new Dio(BaseOptions(connectTimeout: 5000,  headers: optHeader));
     // 增加拦截器
     dio.interceptors.add(
       InterceptorsWrapper(
