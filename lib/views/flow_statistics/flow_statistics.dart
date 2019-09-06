@@ -177,6 +177,7 @@ class FlowStatisticsState extends State<FlowStatistics> {
         await DataUtils.visitByDay({'fromDate': fromDate, 'toDate': toDate});
     setState(() {
       rows = list;
+      rows.sort((a, b) => b.key.compareTo(a.key));
     });
   }
 
