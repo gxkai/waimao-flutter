@@ -1,5 +1,5 @@
 import 'dart:async' show Future;
-
+import 'dart:convert';
 import 'package:waimao/api/api.dart';
 import 'package:waimao/main.dart';
 import 'package:waimao/model/keyword_count.dart';
@@ -23,6 +23,7 @@ class DataUtils{
     sp.putString('Authorization', "${response['data']['token']['token_type']} ${response['data']['token']['access_token']}");
     sp.putString('role', userInfo.role);            // 角色
     sp.putString('username', userInfo.username);    // 用户名
+    sp.putString('site', userInfo.site);            // 网址
     sp.putString('version', userInfo.version);      // 程序版本
     return userInfo;
   }
@@ -131,7 +132,7 @@ class DataUtils{
 
   // 修改密码
   static Future changePassword(Map<String, String> params) async {
-    var response = await NetUtils.post(Api.ChangePassword, params);
-    return response['state'];
+      var response = await NetUtils.post(Api.ChangePassword, params);
+      return json.encode(response);
   }
 }
