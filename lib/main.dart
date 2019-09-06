@@ -55,7 +55,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return new MaterialApp(
-      title: 'title',
+      title: '外贸易',
       home: new Scaffold(body: showWelcomePage()),
       debugShowCheckedModeBanner: false,
       routes: routes,
