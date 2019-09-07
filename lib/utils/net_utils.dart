@@ -38,7 +38,7 @@ class NetUtils {
         // 接口报错时处理
         onError: (DioError error) {
           print('onError');
-          if(error.response.statusCode == 401) {
+          if(error != null && error.response != null && error.response.statusCode == 401) {
             Fluttertoast.showToast(
                 msg: "token 失效，请重新登陆 ",
                 toastLength: Toast.LENGTH_SHORT,
