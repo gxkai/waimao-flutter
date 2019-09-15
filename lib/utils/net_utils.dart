@@ -45,11 +45,6 @@ class NetUtils {
                 gravity: ToastGravity.CENTER
             );
             Future.delayed(Duration(seconds: 2), () => EventBusUtil.getInstance().fire(PageEvent("111")));
-          } else {
-            Fluttertoast.showToast(
-                msg: '网络异常',
-                toastLength: Toast.LENGTH_SHORT,
-                gravity: ToastGravity.CENTER);
           }
           return error;
         },
