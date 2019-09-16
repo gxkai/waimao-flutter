@@ -15,7 +15,7 @@ abstract class ViewStatePlainModel<T> extends ViewStateModel {
   refresh({bool init = false}) async {
     try {
       await loadData();
-      setBusy(true);
+      setBusy(false);
       if(init) {
       } else {
         notifyListeners();
@@ -26,5 +26,5 @@ abstract class ViewStatePlainModel<T> extends ViewStateModel {
   }
 
   // 加载数据
-  Future<T> loadData();
+  Future loadData();
 }

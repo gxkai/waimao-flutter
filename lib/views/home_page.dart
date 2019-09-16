@@ -71,7 +71,7 @@ class _HomeContentState extends State<HomeContent> {
                     color: Colors.lightBlue,
                     child: InkWell(
                       onTap: () {
-                        Navigator.of(context).pushNamed(MessageList.tag);
+                        Navigator.of(context).pushNamed(Message.tag);
                       },
                       child: new Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

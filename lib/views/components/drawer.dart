@@ -79,7 +79,7 @@ class _DrawerState extends State<MyDrawer> {
                           title: const Text('询盘信息'),
                           contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
                           onTap: () {
-                            Navigator.of(context).pushNamed(MessageList.tag);
+                            Navigator.of(context).pushNamed(Message.tag);
                           }),
                       Divider(
                         height: 10.0,

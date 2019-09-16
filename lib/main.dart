@@ -13,7 +13,6 @@ import 'package:waimao/views/message/message.dart';
 import 'package:waimao/views/mine/index.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:waimao/utils/ServiceLocator.dart';
-//import 'views/welcome_page/index.dart';
 
 SpUtil sp;
 var db;
@@ -29,7 +28,7 @@ class _MyAppState extends State<MyApp> {
     LoginPage.tag: (context) => LoginPage(),
     HomePage.tag: (context) => HomePage(),
     MinePage.tag: (context) => MinePage(),
-    MessageList.tag: (context) => MessageList(),
+    Message.tag: (context) => Message(),
     FlowStatistics.tag: (context) => FlowStatistics(),
     AccessTime.tag: (context) => AccessTime(),
     TerminalDevice.tag: (context) => TerminalDevice(),

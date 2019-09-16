@@ -10,6 +10,7 @@ import 'package:waimao/model/visit_by_hour_info.dart';
 import 'package:waimao/model/visit_by_os_info.dart';
 import 'package:waimao/models/keyword.dart';
 import 'package:waimao/models/dashboard.dart';
+import 'package:waimao/models/product.dart';
 
 import './net_utils.dart';
 import '../model/user_info.dart';
@@ -70,7 +71,7 @@ class DataUtils{
   // 我的产品
   static Future myProduct() async {
     var response = await NetUtils.get(Api.MyProduct);
-    return response['data'];
+    return Product.fromJson(response['data']);
   }
 
   // 询盘列表

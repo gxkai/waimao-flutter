@@ -5,7 +5,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:waimao/model/visit_by_country_info.dart';
 import 'package:waimao/provider/provider_widget.dart';
 import 'package:waimao/provider/view_state_widget.dart';
-import 'package:waimao/view_model/areal_distribution.dart';
+import 'package:waimao/view_model/areal_distribution_model.dart';
 import 'package:waimao/views/flow_statistics/visitors_info_select.dart';
 import 'package:waimao/views/home_page.dart';
 import 'package:date_range_picker/date_range_picker.dart' as DateRagePicker;

@@ -1,11 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:waimao/main.dart';
 import 'package:waimao/model/user_info_cache.dart';
-import 'package:waimao/utils/shared_preferences.dart';
 import 'package:waimao/utils/data_utils.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
-SpUtil sp;
 
 class ChangePassword extends StatefulWidget {
   @override
@@ -38,7 +36,6 @@ class _ChangePasswordState extends State<ChangePassword> {
         return;
       }
 
-      sp = await SpUtil.getInstance();
       String username = sp.get('username');
       String site = sp.get('site');
 

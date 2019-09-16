@@ -235,14 +235,18 @@ class KeywordRankingState extends State<KeywordRanking> {
                       children: <Widget>[
                         MaterialButton(
                           onPressed: () async {
+                            model.setBusy(true);
                             await model.loadPage(direction: Direction.backup);
+                            model.setBusy(false);
                           },
                           child: Text(model.currentPage > 1 ? '上一页' : ''),
                         ),
                         Text("${model.currentPage} / ${model.lastPage}"),
                         MaterialButton(
                           onPressed: () async {
-                            model.loadPage(direction: Direction.forward);
+                            model.setBusy(true);
+                            await model.loadPage(direction: Direction.forward);
+                            model.setBusy(false);
                           },
                           child: Text(
                               model.currentPage < model.lastPage ? '下一页' : ''),

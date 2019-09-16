@@ -4,9 +4,7 @@ import 'package:waimao/views/mine/product.dart';
 import 'package:waimao/views/mine/changePassword.dart';
 import 'package:waimao/views/mine/about.dart';
 import 'package:waimao/views/login_page.dart';
-import 'package:waimao/utils/shared_preferences.dart';
-
-SpUtil sp;
+import 'package:waimao/main.dart';
 
 class MinePage extends StatelessWidget {
   static String tag = '我的';
@@ -40,57 +38,42 @@ class Index extends StatefulWidget {
 }
 
 class _IndexState extends State {
-  String role;
-  String username;
-
-  // 退出登录弹窗
-  _logOutDialog() {
-    return AlertDialog(
-      content: Text('确定退出登录吗？'),
-      actions: <Widget>[
-        FlatButton(
-          child: Text(
-            '取消',
-            style: TextStyle(color: Colors.blue[500]),
-          ),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
-        ),
-        FlatButton(
-          child: Text(
-            '确定',
-            style: TextStyle(color: Colors.blue[500]),
-          ),
-          onPressed: () {
-            logOut();
-            Navigator.of(context).pushNamedAndRemoveUntil(
-                LoginPage.tag, (route) => route == null);
-          },
-        ),
-      ],
-    );
-  }
-
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getInfo();
-  }
-
-  getInfo() async {
-    sp = await SpUtil.getInstance();
-    print(sp.get('role'));
-    setState(() {
-      role = sp.get('role');
-      username = sp.get('username');
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    // 退出登录弹窗
+    _logOutDialog() {
+      return AlertDialog(
+        content: Text('确定退出登录吗？'),
+        actions: <Widget>[
+          FlatButton(
+            child: Text(
+              '取消',
+              style: TextStyle(color: Colors.blue[500]),
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          FlatButton(
+            child: Text(
+              '确定',
+              style: TextStyle(color: Colors.blue[500]),
+            ),
+            onPressed: () {
+              sp.clear();
+              Navigator.of(context).pushNamedAndRemoveUntil(
+                  LoginPage.tag, (route) => route == null);
+            },
+          ),
+        ],
+      );
+    }
     return Container(
         color: Color.fromRGBO(237, 237, 237, 1),
         child: ListView(children: <Widget>[
@@ -103,8 +86,8 @@ class _IndexState extends State {
                 "assets/images/logo.png",
                 width: 40.0,
               ),
-              title: Text("${role}"),
-              subtitle: Text("登录账号：${username}"),
+              title: Text("${sp.get('role')}"),
+              subtitle: Text("登录账号：${sp.get('username')}"),
             ),
           ),
           Container(
@@ -180,11 +163,5 @@ class _IndexState extends State {
                 ),
               ))
         ]));
-  }
-
-  void logOut() async {
-    sp = await SpUtil.getInstance();
-    // 清空本地存储的信息
-    sp.clear();
   }
 }

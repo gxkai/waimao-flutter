@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:waimao/utils/shared_preferences.dart';
-
-SpUtil sp;
+import 'package:waimao/main.dart';
 
 class About extends StatefulWidget {
   @override
@@ -9,25 +7,9 @@ class About extends StatefulWidget {
 }
 
 class _AboutState extends State<About> {
-  String version = 'v0.0.1';
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getVersion();
-  }
-
-  getVersion() async{
-    sp = await SpUtil.getInstance();
-    setState(() {
-      version = sp.get('version');
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return Scaffold(
       appBar: AppBar(
         title: Text('关于'),
@@ -46,7 +28,7 @@ class _AboutState extends State<About> {
             children: <Widget>[
               Image.asset('assets/images/wm.png', width: 100.0,),
               SizedBox(height: 20.0),
-              Text('${ version }')
+              Text('${ sp.get('version') }')
             ],
           ),
         ),

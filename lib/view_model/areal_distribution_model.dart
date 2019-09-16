@@ -1,5 +1,4 @@
 import 'package:waimao/model/visit_by_country_info.dart';
-import 'package:waimao/model/visit_by_hour_info.dart';
 import 'package:waimao/provider/view_state_refresh_plain_model.dart';
 import 'package:waimao/utils/data_utils.dart';
 
